@@ -36,7 +36,7 @@ class _RegisterTeacherState extends State<RegisterTeacher> {
                   if (_formKey.currentState!.validate()) {
                     print(email);
                     print(password);
-                    // TODO: Put Fahad's Function
+                    // TODO: Put Fahad's Function Authservices register
                   }
                 },
                 style: ElevatedButton.styleFrom(

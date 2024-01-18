@@ -40,6 +40,7 @@ class _ChooseState extends State<Choose> {
                         backgroundColor: MaterialStatePropertyAll(Colors.white),
                       ),
                       onPressed: () {
+                        //TODO navigate to RegisterTeacher
                         print('Register as a Teacher');
                       },
                       child: Text('Register as Teacher',style: TextStyle(color: Colors.black),),
@@ -67,6 +68,7 @@ class _ChooseState extends State<Choose> {
                     ),
                     ElevatedButton(
                       onPressed: () {
+                        //TODO Navigate to RegisterStudent
                         print('Register as a Student');
                       },
                       style: ButtonStyle(
