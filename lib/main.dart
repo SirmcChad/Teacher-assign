@@ -10,6 +10,7 @@ void main() async {
 
   await Firebase.initializeApp(options: FirebaseOptions(apiKey: "AIzaSyB3_khYTxEXJlp5PQHbDpQ3XBnnt4kRKoY", appId: "1:25180355323:web:ca7eff860643d4e3b3ce5e""1:25180355323:web:ca7eff860643d4e3b3ce5e", messagingSenderId: "25180355323", projectId: "teacherassign"));
 
+  print("Hello");
 
   runApp(StreamProvider<User?>.value(
     value: AuthServices().user,
