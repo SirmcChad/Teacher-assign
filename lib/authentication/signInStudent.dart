@@ -26,6 +26,17 @@ class _SignInStudentState extends State<SignInStudent> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Sign In Student'),
+        actions: [
+          Row(
+            children: [
+              IconButton(
+                  icon: Icon(Icons.person),
+                  onPressed: () {widget.toggleView();}
+              ),
+              Text("Sign Up")
+            ],
+          )
+        ],
         //TODO alternate between register/sign in button top right of the screen
       ),
       body: Padding(
@@ -62,9 +73,6 @@ class _SignInStudentState extends State<SignInStudent> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        widget.toggleView();
-      },),
     );
   }
 }

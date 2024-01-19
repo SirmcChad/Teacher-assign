@@ -27,6 +27,17 @@ class _RegisterStudentState extends State<RegisterStudent> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          Row(
+            children: [
+              IconButton(
+                  icon: Icon(Icons.person),
+                  onPressed: () {widget.toggleView();}
+              ),
+              Text("Sign In")
+            ],
+          )
+        ],
         title: Text('Sign Up Student'),
         //TODO alternate between register/sign in button top right of the screen
       ),
@@ -69,9 +80,6 @@ class _RegisterStudentState extends State<RegisterStudent> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        widget.toggleView();
-      },),
     );
   }
 }
