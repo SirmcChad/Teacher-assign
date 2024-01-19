@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:teacher_assign/authentication/SignInTeacher.dart';
 import 'package:teacher_assign/authentication/choose.dart';
 import 'package:teacher_assign/authentication/signInStudent.dart';
+import 'package:teacher_assign/home_pages/StudentHome.dart';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class Wrapper extends StatelessWidget {
       return Choose();
     }
       else{
-        return Choose();
+        return Student();
     }
 
   }

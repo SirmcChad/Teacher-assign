@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:teacher_assign/authentication/AuthenticateStudent.dart';
+import 'package:teacher_assign/authentication/AuthenticateTeacher.dart';
+import 'package:teacher_assign/authentication/RegisterStudent.dart';
+import 'package:teacher_assign/authentication/RegisterTeacher.dart';
+import 'package:teacher_assign/services/auth_services.dart';
 
 class Choose extends StatefulWidget {
   const Choose({super.key});
@@ -8,6 +13,10 @@ class Choose extends StatefulWidget {
 }
 
 class _ChooseState extends State<Choose> {
+
+  final _auth = AuthServices();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,9 +48,9 @@ class _ChooseState extends State<Choose> {
                       style: ButtonStyle(
                         backgroundColor: MaterialStatePropertyAll(Colors.white),
                       ),
-                      onPressed: () {
-                        //TODO navigate to RegisterTeacher
-                        print('Register as a Teacher');
+                      onPressed: () async{
+                        Navigator.push(context, MaterialPageRoute(builder: (context) =>  AuthenticateTeacher()));
+
                       },
                       child: Text('Register as Teacher',style: TextStyle(color: Colors.black),),
                     ),
@@ -68,8 +77,7 @@ class _ChooseState extends State<Choose> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        //TODO Navigate to RegisterStudent
-                        print('Register as a Student');
+                        Navigator.push(context, MaterialPageRoute(builder: (context) =>  AuthenticateStudent()));
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStatePropertyAll(Colors.white),

@@ -23,12 +23,12 @@ class _AuthenticateStudentState extends State<AuthenticateTeacher> {
   Widget build(BuildContext context) {
     if (showSignIn){
       return Container(
-        child: SignInTeacher(),
+        child: SignInTeacher(toggleView: toggleView,),
       );
     }
     else{
       return Container(
-        child: RegisterTeacher(),
+        child: RegisterTeacher(toggleView: toggleView,),
       );
     }
   }

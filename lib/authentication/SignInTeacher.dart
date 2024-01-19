@@ -4,7 +4,8 @@ import 'package:teacher_assign/shared/custom_text_field.dart';
 
 
 class SignInTeacher extends StatefulWidget {
-  const SignInTeacher({super.key});
+  Function toggleView;
+  SignInTeacher({super.key,required this.toggleView});
 
   @override
   State<SignInTeacher> createState() => _SignInTeacherState();
@@ -21,6 +22,7 @@ class _SignInTeacherState extends State<SignInTeacher> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Sign In Teacher'),
+        //TODO alternate between register/sign in button top right of the screen
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -55,6 +57,9 @@ class _SignInTeacherState extends State<SignInTeacher> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        widget.toggleView();
+      },),
     );
   }
 }
