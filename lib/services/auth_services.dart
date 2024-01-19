@@ -1,5 +1,6 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:teacher_assign/shared/custom_user.dart';
 
 class AuthServices {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -8,6 +9,10 @@ class AuthServices {
     print('invoked?');
     return _auth.authStateChanges();
   }
+
+  CustomUser? toCustom (User? user) {
+
+    }
 
   Future signInAnon()async{
     try {
@@ -32,7 +37,7 @@ class AuthServices {
     }
   }
 
-  Future signUpWithEmailAndPassword(String email,String password,bool isTeacher)async{
+  Future signUpWithEmailAndPassword(String email,String password)async{
     try{
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
@@ -47,10 +52,8 @@ class AuthServices {
 
   Future signOutUser() async{
     try{
-      print('signed out successfully');
       return _auth.signOut();
     }catch(e){
-      print('some error occured signing out');
       return null;
     }
 

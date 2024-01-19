@@ -46,7 +46,7 @@ class _RegisterStudentState extends State<RegisterStudent> {
               ElevatedButton(
                 onPressed: ()async {
                   if (_formKey.currentState!.validate()) {
-                    dynamic result = await _auth.signUpWithEmailAndPassword(email, password, false);
+                    dynamic result = await _auth.signUpWithEmailAndPassword(email, password);
                     if (result !=null){
                       Navigator.pop(context);
                     }
