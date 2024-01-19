@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:teacher_assign/shared/custom_password_field.dart';
 import 'package:teacher_assign/shared/custom_text_field.dart';
 
+import '../services/auth_services.dart';
 
 class SignInTeacher extends StatefulWidget {
   Function toggleView;
@@ -14,6 +15,7 @@ class SignInTeacher extends StatefulWidget {
 class _SignInTeacherState extends State<SignInTeacher> {
 
   final _formKey = GlobalKey<FormState>();
+  final _auth = AuthServices();
   String email = "";
   String password = "";
 
@@ -22,8 +24,27 @@ class _SignInTeacherState extends State<SignInTeacher> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Sign In Teacher'),
-        //TODO alternate between register/sign in button top right of the screen
+        actions: [
+          Row(
+            children: [
+              IconButton(
+                  icon: Icon(Icons.person),
+                  onPressed: () {widget.toggleView();}
+              ),
+              Text("Sign Up")
+            ],
+          )
+        ],
       ),
+        //
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(Icons.person),
+        //     onPressed: () {widget.toggleView();}
+        //   )
+        // ]
+        //TODO alternate between register/sign in button top right of the screen
+
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -41,6 +62,7 @@ class _SignInTeacherState extends State<SignInTeacher> {
                     print(email);
                     print(password);
                     // TODO: Put Fahad's Function AuthServices sign in Teacher
+                    _auth.signInWithEmailAndPassword(email, password);
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -57,9 +79,9 @@ class _SignInTeacherState extends State<SignInTeacher> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        widget.toggleView();
-      },),
+      // floatingActionButton: FloatingActionButton(onPressed: (){
+      //   widget.toggleView();
+      // },),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:teacher_assign/shared/custom_password_field.dart';
 import 'package:teacher_assign/shared/custom_text_field.dart';
+import 'package:teacher_assign/shared/custom_loading.dart';
 
 import '../services/auth_services.dart';
 
@@ -24,9 +25,24 @@ class _RegisterTeacherState extends State<RegisterTeacher> {
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading){
+      return Loading();
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Sign Up Teacher'),
+        actions: [
+          Row(
+            children: [
+              IconButton(
+                  icon: Icon(Icons.person),
+                  onPressed: () {widget.toggleView();}
+              ),
+              Text("Sign In")
+            ],
+          )
+        ],
         //TODO alternate between register/sign in button top right of the screen
 
       ),
@@ -47,13 +63,17 @@ class _RegisterTeacherState extends State<RegisterTeacher> {
                 onPressed: () async{
                   if (_formKey.currentState!.validate()) {
 
-                    dynamic result = await _auth.signUpWithEmailAndPassword(email, password);
+                    setState(() {isLoading = true;});
+                    dynamic result = await _auth.signUpWithEmailAndPassword(email, password,false);
+
+
                     if (result !=null){
                       Navigator.pop(context);
                     }
                     else{
                       //TODO handle displaying the error message
                     }
+                    setState(() {isLoading = false;});
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -70,9 +90,6 @@ class _RegisterTeacherState extends State<RegisterTeacher> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        widget.toggleView();
-      },),
     );
 
   }
