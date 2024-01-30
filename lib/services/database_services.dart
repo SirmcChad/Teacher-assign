@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseServices{
   final CollectionReference userCollection = FirebaseFirestore.instance.collection('users');
-  final CollectionReference courseCollection = FirebaseFirestore.instance.collection('cources');
+  final CollectionReference courseCollection = FirebaseFirestore.instance.collection('courses');
 
 
 
