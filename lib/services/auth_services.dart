@@ -1,5 +1,6 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:teacher_assign/services/database_services.dart';
 import 'package:teacher_assign/shared/custom_user.dart';
 
 class AuthServices {
@@ -37,10 +38,24 @@ class AuthServices {
     }
   }
 
-  Future signUpWithEmailAndPassword(String email,String password)async{
+  Future signUpWithEmailAndPasswordTeacher(String email,String password, String name)async{
     try{
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
+      DatabaseServices().updateUserData(user!.uid, true,name);
+      return user;
+    }catch(e){
+      print(e.toString());
+      print('some error occured creating a user with email and password');
+      return null;
+    }
+  }
+
+  Future signUpWithEmailAndPasswordStudent(String email,String password,String name)async{
+    try{
+      UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      User? user = result.user;
+      DatabaseServices().updateUserData(user!.uid, false,name);
       return user;
     }catch(e){
       print(e.toString());

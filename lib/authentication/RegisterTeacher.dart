@@ -21,7 +21,7 @@ class _RegisterTeacherState extends State<RegisterTeacher> {
   String password = "";
 
   bool isLoading = false;
-  //TODO implement a spinner for loading the screen
+  
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,6 @@ class _RegisterTeacherState extends State<RegisterTeacher> {
             ],
           )
         ],
-        //TODO alternate between register/sign in button top right of the screen
 
       ),
       body: Padding(
@@ -64,7 +63,7 @@ class _RegisterTeacherState extends State<RegisterTeacher> {
                   if (_formKey.currentState!.validate()) {
 
                     setState(() {isLoading = true;});
-                    dynamic result = await _auth.signUpWithEmailAndPassword(email, password,false);
+                    dynamic result = await _auth.signUpWithEmailAndPasswordTeacher(email, password, name);
 
 
                     if (result !=null){

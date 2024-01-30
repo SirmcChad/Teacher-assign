@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:teacher_assign/services/auth_services.dart';
+import 'package:teacher_assign/shared/custom_loading.dart';
 import 'package:teacher_assign/shared/custom_password_field.dart';
 import 'package:teacher_assign/shared/custom_text_field.dart';
 
@@ -21,8 +22,14 @@ class _SignInStudentState extends State<SignInStudent> {
   String email = "";
   String password = "";
 
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
+    if (isLoading){
+      return Loading();
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Sign In Student'),
@@ -51,12 +58,19 @@ class _SignInStudentState extends State<SignInStudent> {
               CustomPasswordField(title: "Password", initialPassword: password, visiblePassword: false, onChange: (value) {password = value;},),
               SizedBox(height: 20,),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async{
                   if (_formKey.currentState!.validate()) {
-                    print(email);
-                    print(password);
-                    // TODO: Put Fahad's Function Authservices sign in
-                    _auth.signInWithEmailAndPassword(email, password);
+                    setState(() {isLoading = true;});
+                    dynamic result = await _auth.signInWithEmailAndPassword(email, password);
+
+
+                    if (result !=null){
+                      Navigator.pop(context);
+                    }
+                    else{
+                      //TODO handle displaying the error message
+                    }
+                    setState(() {isLoading = false;});
                   }
                 },
                 style: ElevatedButton.styleFrom(
