@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:teacher_assign/shared/custom_password_field.dart';
 import 'package:teacher_assign/shared/custom_text_field.dart';
-
+import 'package:teacher_assign/shared/custom_loading.dart';
 import '../services/auth_services.dart';
 
 class RegisterStudent extends StatefulWidget {
@@ -21,10 +21,13 @@ class _RegisterStudentState extends State<RegisterStudent> {
   String name = '';
 
   bool isLoading = false;
-  //TODO implement a spinner for loading the screen
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading){
+      return Loading();
+    }
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -57,6 +60,8 @@ class _RegisterStudentState extends State<RegisterStudent> {
               ElevatedButton(
                 onPressed: ()async {
                   if (_formKey.currentState!.validate()) {
+                    setState(() {isLoading = true;});
+
                     dynamic result = await _auth.signUpWithEmailAndPasswordStudent(email, password,name);
                     if (result !=null){
                       Navigator.pop(context);
@@ -64,6 +69,8 @@ class _RegisterStudentState extends State<RegisterStudent> {
                     else{
                       //TODO handle displaying the error message
                     }
+
+                    setState(() {isLoading = false;});
                   }
                 },
                 style: ElevatedButton.styleFrom(
