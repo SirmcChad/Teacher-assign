@@ -43,6 +43,7 @@ class AuthServices {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
       DatabaseServices().updateUserData(user!.uid, true,name);
+      DatabaseServices().updateTeacherData(user!.uid, name, []);
       return user;
     }catch(e){
       print(e.toString());
