@@ -4,8 +4,7 @@ import 'package:teacher_assign/shared/custom_text_field.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:teacher_assign/Models/StudentModel.dart';
-import 'package:teacher_assign/Models/CourseModel.dart';
+import 'package:teacher_assign/models/StudentModel.dart';
 
 class Student extends StatefulWidget {
   const Student({Key? key}) : super(key: key);
