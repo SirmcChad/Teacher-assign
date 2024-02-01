@@ -1,13 +1,12 @@
-
-
+import 'package:teacher_assign/models/CourseModel.dart';
+import 'package:teacher_assign/models/StudentModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../models/CourseModel.dart';
 
 class DatabaseServices{
   final CollectionReference userCollection = FirebaseFirestore.instance.collection('users');
   final CollectionReference courseCollection = FirebaseFirestore.instance.collection('courses');
-  final CollectionReference teacherCollection = FirebaseFirestore.instance.collection('teachers');
+  final CollectionReference studentCollection = FirebaseFirestore.instance.collection('students');
+  final CollectionReference teacherCollection = FirebaseFirestore.instance.collection('teacher');
 
 
 
@@ -20,28 +19,42 @@ class DatabaseServices{
     );
   }
 
-  Future updateTeacherData(String uid, String name, List<CourseModel> courses) async {
-    return await teacherCollection.doc(uid).set(
-      {
-        'name': name,
-        'courses': courses
-      }
+  Future addCourseToStudent(String uid, CourseModel course) async{
+    await studentCollection.doc(uid).update({'courses': FieldValue.arrayUnion([course])});
+  }
+
+  Future addCourseToTeacher(String uid, CourseModel course) async{
+    await teacherCollection.doc(uid).update({'courses': FieldValue.arrayUnion([course])});
+  }
+
+  Future addStudentToCourse(String uid, StudentModel student) async{
+    await courseCollection.doc(uid).update({'courses': FieldValue.arrayUnion([student])});
+  }
+
+  StudentModel _studentModelFromSnapshot(DocumentSnapshot snapshot){
+    return StudentModel(
+      uid: snapshot.get('uid'),
+      name: snapshot.get('name'),
+      courses: snapshot.get('courses')
     );
   }
 
-  Future teacherAddCourse(String uid,String name, CourseModel course) async{
-    DocumentSnapshot snapshot = await teacherCollection.doc(uid).get();
-
-    if (snapshot.exists){
-      List<CourseModel> courses = snapshot['courses'];
-      courses.add(course);
-      return updateTeacherData(uid, name, courses);
-    }
-
-    Stream<DocumentSnapshot> getTeacherSnapshot (String uid){
-      return teacherCollection.doc(uid).snapshots();
-    }
+  Stream<StudentModel> getStudentData (String uid) {
+    return studentCollection.doc(uid).snapshots().map(_studentModelFromSnapshot);
+  }
 
 
+
+  CourseModel _courseModelFromSnapshot(DocumentSnapshot snapshot){
+    return CourseModel(
+        uid: snapshot.get('uid'),
+        students: snapshot.get('students'),
+        courseSubject: snapshot.get('courseSubject'),
+        numberOfTasks: snapshot.get('numberOfTasks')
+    );
+  }
+
+  Stream<CourseModel> getCourseData (String uid) {
+    return courseCollection.doc(uid).snapshots().map(_courseModelFromSnapshot);
   }
 }
