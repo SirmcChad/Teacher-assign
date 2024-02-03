@@ -1,5 +1,10 @@
+import 'CourseModel.dart';
+
 class StudentModel {
-  late String uid;
-  late String name;
+  String uid;
+  String name;
+  List<CourseModel> courses;
+
+  StudentModel({required this.uid,required this.name , required this.courses});
 
 }
