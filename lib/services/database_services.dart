@@ -50,14 +50,18 @@ class DatabaseServices{
     }
     );
   }
-  Future newCourse(String uid, String name)async{
-    return await courseCollection.doc(uid).set(
+  Future newCourse(String name)async{
+
+    final docRef = courseCollection.doc();
+
+     await docRef.set(
         {
           'name': name,
           'students': [],
           'tasks': 1,
         }
     );
+     return docRef.id;
   }
 
   StudentModel _studentModelFromSnapshot(DocumentSnapshot snapshot){
