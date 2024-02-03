@@ -14,6 +14,57 @@ class Student extends StatefulWidget {
 }
 
 class _StudentState extends State<Student> {
+  DatabaseServices services = DatabaseServices();
+
+  void addCourse(BuildContext context){
+    String courseName = 'default name';
+    final user = Provider.of<User?>(context);
+    final TextEditingController _textFieldController = TextEditingController();
+
+
+    showDialog(context: context, builder: (BuildContext context){
+      return AlertDialog(
+        title: Text('create a course'),
+        content: Column(
+          children: [
+            TextField(
+              controller: _textFieldController,
+              decoration: InputDecoration(
+                hintText: 'Enter course name',
+                suffixIcon: ElevatedButton(
+                  onPressed: ()async{
+                    try{
+                      String courseUid = _textFieldController.text;
+                      bool exists = await services.courseExists(courseUid);
+                      if(exists){
+                        services.addCourseToStudent(user!.uid,courseUid);
+                        services.addStudentToCourse(courseUid, user!.uid);
+                      }
+                      else{
+                        //TODO Does not exist
+                      }
+                    } catch(e){
+                      //TODO Print error network or something else
+                    }
+                  },
+                  child: Text("Add course")
+                )
+              ),
+              onChanged: (value){
+                courseName = value;
+              },
+            )
+          ],
+        ),
+
+      );
+    });
+
+    setState(() {
+
+    });
+
+  }
 
   String courseChoice = '';
 
@@ -23,7 +74,7 @@ class _StudentState extends State<Student> {
     final user = Provider.of<User?>(context);
 
     return StreamBuilder<StudentModel>(
-      stream: DatabaseServices().getStudentData(user!.uid),
+      stream: services.getStudentData(user!.uid),
       builder: (context, snapshot) {
         return Scaffold(
           appBar: AppBar(title: Text('Welcome Student!'),), // we should show their name here yeah?
