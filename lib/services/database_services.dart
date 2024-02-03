@@ -21,15 +21,24 @@ class DatabaseServices{
     );
   }
 
-  Future addCourseToStudent(String uid, CourseModel course) async{
+
+
+  Future addCourseToStudent(String uid, String courseUid) async{
+    DocumentSnapshot courseSnapshot = await courseCollection.doc(courseUid).get();
+    CourseModel course = _courseModelFromSnapshot(courseSnapshot);
     await studentCollection.doc(uid).update({'courses': FieldValue.arrayUnion([course])});
   }
 
-  Future addCourseToTeacher(String uid, CourseModel course) async{
+
+  Future addCourseToTeacher(String uid, String courseUid) async{
+    DocumentSnapshot courseSnapshot = await courseCollection.doc(courseUid).get();
+    CourseModel course = _courseModelFromSnapshot(courseSnapshot);
     await teacherCollection.doc(uid).update({'courses': FieldValue.arrayUnion([course])});
   }
 
-  Future addStudentToCourse(String uid, StudentModel student) async{
+  Future addStudentToCourse(String uid, String studentUid) async{
+    DocumentSnapshot studentSnapshot = await courseCollection.doc(studentUid).get();
+    StudentModel student = _studentModelFromSnapshot(studentSnapshot);
     await courseCollection.doc(uid).update({'students': FieldValue.arrayUnion([student])});
   }
 
@@ -58,6 +67,22 @@ class DatabaseServices{
           'tasks': 1,
         }
     );
+  }
+
+
+  Future courseExists(String uid) async{
+    try{
+      DocumentSnapshot snapshot = await courseCollection.doc(uid).get();
+      if (snapshot.exists){
+        return true;
+      }
+
+      else{
+        return false;
+      }
+    } catch(e){
+      return null;
+    }
   }
 
   StudentModel _studentModelFromSnapshot(DocumentSnapshot snapshot){
