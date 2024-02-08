@@ -26,20 +26,22 @@ class DatabaseServices{
   Future addCourseToStudent(String uid, String courseUid) async{
     DocumentSnapshot courseSnapshot = await courseCollection.doc(courseUid).get();
     CourseModel course = _courseModelFromSnapshot(courseSnapshot);
-    await studentCollection.doc(uid).update({'courses': FieldValue.arrayUnion([course])});
+    await studentCollection.doc(uid).update({'courses': FieldValue.arrayUnion([course]) });
   }
 
 
   Future addCourseToTeacher(String uid, String courseUid) async{
     DocumentSnapshot courseSnapshot = await courseCollection.doc(courseUid).get();
     CourseModel course = _courseModelFromSnapshot(courseSnapshot);
-    await teacherCollection.doc(uid).update({'courses': FieldValue.arrayUnion([course])});
+    final json = course.toJSON();
+    await teacherCollection.doc(uid).update({'courses': FieldValue.arrayUnion([json] )});
   }
+  // Firestore can't store non-primative lists
 
   Future addStudentToCourse(String uid, String studentUid) async{
     DocumentSnapshot studentSnapshot = await courseCollection.doc(studentUid).get();
     StudentModel student = _studentModelFromSnapshot(studentSnapshot);
-    await courseCollection.doc(uid).update({'students': FieldValue.arrayUnion([student])});
+    await courseCollection.doc(uid).update({'students': FieldValue.arrayUnion([student]) });
   }
 
   Future newStudent(String uid, String name)async{
@@ -52,10 +54,12 @@ class DatabaseServices{
   }
 
   Future newTeacher(String uid, String name)async{
+    print('new teacher created');
+    List<CourseModel> empty = [];
     return await teacherCollection.doc(uid).set(
         {
       'name': name,
-      'courses': [],
+      'courses': empty,
     }
     );
   }
@@ -70,7 +74,7 @@ class DatabaseServices{
           'tasks': 1,
         }
     );
-     return docRef.id;
+      return  docRef.id;
   }
 
 
@@ -123,6 +127,7 @@ class DatabaseServices{
     return courseCollection.doc(uid).snapshots().map(_courseModelFromSnapshot);
   }
   Stream<TeacherModel> getTeacherData(String uid){
+    print('changing data');
     return teacherCollection.doc(uid).snapshots().map(_teacherModelFromSnapshot);
   }
 }

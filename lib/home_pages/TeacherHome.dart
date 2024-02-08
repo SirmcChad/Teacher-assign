@@ -6,8 +6,11 @@ import 'package:teacher_assign/models/CourseModel.dart';
 import 'package:teacher_assign/services/auth_services.dart';
 import 'package:teacher_assign/services/database_services.dart';
 import 'package:teacher_assign/cards/course_card.dart';
+import 'package:teacher_assign/shared/custom_loading.dart';
 
 import '../models/TeacherModel.dart';
+
+
 class Teacher extends StatefulWidget {
   const Teacher({Key? key}) : super(key: key);
 
@@ -29,6 +32,8 @@ class _TeacherState extends State<Teacher> {
 
 
     showDialog(context: context, builder: (BuildContext context){
+      final user = Provider.of<User?>(context);
+
       return AlertDialog(
         title: Text('create a course'),
         content: Column(
@@ -39,10 +44,14 @@ class _TeacherState extends State<Teacher> {
                 courseName = value;
               },
             ),
+            SizedBox(height: 25,),
             ElevatedButton(
               onPressed: () async{
+                String courseuid = await DatabaseServices().newCourse(courseName);
+
                 setState(() {
-                  DatabaseServices().newCourse(courseName);
+                  DatabaseServices().addCourseToTeacher(user!.uid, courseuid);
+                  Navigator.pop(context);
                 });
               },
               child: const Text('Create'),
@@ -64,13 +73,21 @@ class _TeacherState extends State<Teacher> {
     });
 
 
+  }
+  List<CourseModel> fromListOfJSON( List<Map<String,dynamic>> mapList){
+    List<CourseModel> result = [];
+    for (int i =0; i< mapList.length;i++){
+      result.add(CourseModel.fromJson(mapList[i]));
+    }
+    return result;
+
 
   }
 
   @override
   Widget build(BuildContext context) {
 
-    List<CourseModel> coursesList = [];
+    List<CourseModel>? coursesList = [];
     final user = Provider.of<User?>(context);
 
 
@@ -79,8 +96,9 @@ class _TeacherState extends State<Teacher> {
       initialData: null,
       builder: (context, snapshot) {
         if (snapshot.hasData){
-          coursesList = snapshot.data!.courses;
-        }
+          //coursesList = snapshot.data!.courses.cast<CourseModel>();
+          List<Map<String,dynamic>>? mapList = snapshot.data!.courses.cast<Map<String, dynamic>>();
+          coursesList = fromListOfJSON(mapList);
         return Scaffold(
           appBar:AppBar(
             title: Text('Welcome ${snapshot.data!.name}!'),
@@ -89,11 +107,12 @@ class _TeacherState extends State<Teacher> {
               fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.brown,
             elevation: 5,
             actions: [
               IconButton(
-                icon: Icon(Icons.add), 
+                icon: Icon(Icons.add, color: Colors.white),
+                color: Colors.red[300],
                 onPressed: () {
                   setState(() {
                     addCourse(context);
@@ -109,8 +128,8 @@ class _TeacherState extends State<Teacher> {
                 children: [
                   Text('here are your courses:'),
                   Column(
-                    
-                    children: coursesList.map((e) => CourseCard(courseName: e.courseSubject)).toList(),
+
+                    children: coursesList!.map((e) => CourseCard(courseName: e.courseSubject)).toList(),
                   ),
                 ],
               ),
@@ -118,7 +137,13 @@ class _TeacherState extends State<Teacher> {
           ),
 
         );
+        }
+        else{
+          return Loading();
+        }
       }
     );
   }
+
+
 }
