@@ -70,7 +70,7 @@ class _TeacherState extends State<Teacher> {
   @override
   Widget build(BuildContext context) {
 
-    List<CourseModel> coursesList = [];
+    List<dynamic> coursesList = [];
     final user = Provider.of<User?>(context);
 
 

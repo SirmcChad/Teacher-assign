@@ -123,6 +123,7 @@ class DatabaseServices{
     return courseCollection.doc(uid).snapshots().map(_courseModelFromSnapshot);
   }
   Stream<TeacherModel> getTeacherData(String uid){
+    print("You are getting teacher data");
     return teacherCollection.doc(uid).snapshots().map(_teacherModelFromSnapshot);
   }
 }

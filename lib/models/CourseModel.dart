@@ -2,7 +2,7 @@ import 'StudentModel.dart';
 
 class CourseModel {
   String uid;
-  List<StudentModel> students;
+  List<dynamic> students;
   String courseSubject;
   int numberOfTasks;
 
