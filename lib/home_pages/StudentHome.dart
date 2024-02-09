@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:teacher_assign/models/StudentModel.dart';
 import 'package:teacher_assign/cards/course_card.dart';
+import 'package:teacher_assign/models/CourseModel.dart';
 
 class Student extends StatefulWidget {
   const Student({Key? key}) : super(key: key);
@@ -39,9 +40,13 @@ class _StudentState extends State<Student> {
                       String courseUid = _textFieldController.text;
                       bool exists = await services.courseExists(courseUid);
                       if(exists){
-                        services.addCourseToStudent(user!.uid,courseUid);
-                        services.addStudentToCourse(courseUid, user!.uid);
+                        setState(() {
+                          services.addCourseToStudent(user!.uid,courseUid);
+                          services.addStudentToCourse(courseUid, user!.uid);
+                          Navigator.pop(context);
+                        });
                       }
+
                       else{
                         print("Does not exist");
                       }
@@ -63,17 +68,27 @@ class _StudentState extends State<Student> {
     });
 
   }
+  List<CourseModel> fromListOfJSON( List<Map<String,dynamic>> mapList){
+    List<CourseModel> result = [];
+    for (int i =0; i< mapList.length;i++){
+      result.add(CourseModel.fromJson(mapList[i]));
+    }
+    return result;
+
+
+  }
 
   String courseChoice = '';
 
   @override
   Widget build(BuildContext context) {
-    List<dynamic> coursesList = [];
+    List<String> coursesList = [];
     final user = Provider.of<User?>(context);
 
     return StreamBuilder<StudentModel>(
       stream: services.getStudentData(user!.uid),
       builder: (context, snapshot) {
+        print(snapshot);
         if (snapshot.hasData){
           coursesList = snapshot.data!.courses;
           return Scaffold(
@@ -88,7 +103,8 @@ class _StudentState extends State<Student> {
               elevation: 5,
               actions: [
                 IconButton(
-                  icon: Icon(Icons.add),
+                  icon: Icon(Icons.add, color: Colors.white),
+                  color: Colors.red[300],
                   onPressed: () {
                     setState(() {
                       addCourse(context);
@@ -105,8 +121,8 @@ class _StudentState extends State<Student> {
                     children: [
                       Text('here are your courses:'),
                       Column(
-
-                        children: coursesList.map((e) => CourseCard(courseName: e.courseSubject)).toList(),
+                        //TODO, change the course card so that it takes a course uid
+                        children: coursesList.map((e) => CourseCard(courseName: e)).toList(),
                       ),
                     ],
                   ),

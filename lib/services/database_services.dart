@@ -24,38 +24,41 @@ class DatabaseServices{
 
 
   Future addCourseToStudent(String uid, String courseUid) async{
-    DocumentSnapshot courseSnapshot = await courseCollection.doc(courseUid).get();
-    CourseModel course = _courseModelFromSnapshot(courseSnapshot);
-    await studentCollection.doc(uid).update({'courses': FieldValue.arrayUnion([course]) });
+    // DocumentSnapshot courseSnapshot = await courseCollection.doc(courseUid).get();
+    // CourseModel course = _courseModelFromSnapshot(courseSnapshot);
+    // final json = course.toJSON();
+    await studentCollection.doc(uid).update({'courses': FieldValue.arrayUnion([courseUid]) });
   }
 
 
   Future addCourseToTeacher(String uid, String courseUid) async{
-    DocumentSnapshot courseSnapshot = await courseCollection.doc(courseUid).get();
-    CourseModel course = _courseModelFromSnapshot(courseSnapshot);
-    final json = course.toJSON();
-    await teacherCollection.doc(uid).update({'courses': FieldValue.arrayUnion([json] )});
+    // DocumentSnapshot courseSnapshot = await courseCollection.doc(courseUid).get();
+    // CourseModel course = _courseModelFromSnapshot(courseSnapshot);
+    // final json = course.toJSON();
+    await teacherCollection.doc(uid).update({'courses': FieldValue.arrayUnion([courseUid] )});
   }
   // Firestore can't store non-primative lists
 
   Future addStudentToCourse(String uid, String studentUid) async{
-    DocumentSnapshot studentSnapshot = await courseCollection.doc(studentUid).get();
-    StudentModel student = _studentModelFromSnapshot(studentSnapshot);
-    await courseCollection.doc(uid).update({'students': FieldValue.arrayUnion([student]) });
+    // DocumentSnapshot studentSnapshot = await studentCollection.doc(studentUid).get();
+    // StudentModel student = _studentModelFromSnapshot(studentSnapshot);
+    // final json = student.toJSON();
+    await courseCollection.doc(uid).update({'students': FieldValue.arrayUnion([studentUid]) });
   }
 
   Future newStudent(String uid, String name)async{
+    List<String> empty = [];
     return await studentCollection.doc(uid).set(
         {
           'name': name,
-          'courses': [],
+          'courses': empty,
         }
     );
   }
 
   Future newTeacher(String uid, String name)async{
     print('new teacher created');
-    List<CourseModel> empty = [];
+    List<String> empty = [];
     return await teacherCollection.doc(uid).set(
         {
       'name': name,
@@ -66,11 +69,11 @@ class DatabaseServices{
   Future newCourse(String name)async{
 
     final docRef = courseCollection.doc();
-
+    List<String> empty = [];
      await docRef.set(
         {
           'name': name,
-          'students': [],
+          'students': empty,
           'tasks': 1,
         }
     );
@@ -94,10 +97,13 @@ class DatabaseServices{
   }
 
   StudentModel _studentModelFromSnapshot(DocumentSnapshot snapshot){
+    print(snapshot);
+    print(snapshot.get('name'));
+    print(snapshot.get('courses'));
     return StudentModel(
       uid: snapshot.id,
       name: snapshot.get('name'),
-      courses: snapshot.get('courses')
+      courses: snapshot.get('courses').cast<String>()
     );
   }
 
@@ -112,14 +118,14 @@ class DatabaseServices{
         uid: snapshot.id,
         students: snapshot.get('students'),
         courseSubject: snapshot.get('name'),
-        numberOfTasks: snapshot.get('tasks')
+        numberOfTasks: snapshot.get('tasks').cast<String>()
     );
   }
   TeacherModel _teacherModelFromSnapshot(DocumentSnapshot snapshot){
     return TeacherModel(
         uid: snapshot.id,
         name: snapshot.get('name'),
-        courses: snapshot.get('courses')
+        courses: snapshot.get('courses').cast<String>()
     );
   }
 
