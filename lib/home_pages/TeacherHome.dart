@@ -87,7 +87,7 @@ class _TeacherState extends State<Teacher> {
   @override
   Widget build(BuildContext context) {
 
-    List<CourseModel>? coursesList = [];
+    List<String>? coursesList = [];
     final user = Provider.of<User?>(context);
 
 
@@ -96,12 +96,13 @@ class _TeacherState extends State<Teacher> {
       initialData: null,
       builder: (context, snapshot) {
         if (snapshot.hasData){
-          //coursesList = snapshot.data!.courses.cast<CourseModel>();
-          List<Map<String,dynamic>>? mapList = snapshot.data!.courses.cast<Map<String, dynamic>>();
-          coursesList = fromListOfJSON(mapList);
+          String name = snapshot.data!.name;
+          coursesList = snapshot.data!.courses;
+          // List<Map<String,dynamic>>? mapList = snapshot.data!.courses.cast<Map<String, dynamic>>();
+          // coursesList = fromListOfJSON(mapList);
         return Scaffold(
           appBar:AppBar(
-            title: Text('Welcome ${snapshot.data!.name}!'),
+            title: Text('Welcome ${name}!'),
             titleTextStyle: TextStyle(
               color: Colors.white,
               fontSize: 24,
@@ -129,7 +130,7 @@ class _TeacherState extends State<Teacher> {
                   Text('here are your courses:'),
                   Column(
 
-                    children: coursesList!.map((e) => CourseCard(courseName: e.courseSubject)).toList(),
+                    children: coursesList!.map((courseUID) => CourseCard(courseUid: courseUID)).toList(),
                   ),
                 ],
               ),
