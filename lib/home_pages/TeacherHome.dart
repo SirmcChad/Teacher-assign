@@ -27,7 +27,7 @@ class _TeacherState extends State<Teacher> {
 
 
 
-  void addCourse(BuildContext context){
+  void addCourse(BuildContext context,String teacherName){
     String courseName = 'default name';
 
 
@@ -47,7 +47,7 @@ class _TeacherState extends State<Teacher> {
             SizedBox(height: 25,),
             ElevatedButton(
               onPressed: () async{
-                String courseuid = await DatabaseServices().newCourse(courseName);
+                String courseuid = await DatabaseServices().newCourse(courseName,teacherName);
 
                 setState(() {
                   DatabaseServices().addCourseToTeacher(user!.uid, courseuid);
@@ -74,15 +74,13 @@ class _TeacherState extends State<Teacher> {
 
 
   }
-  List<CourseModel> fromListOfJSON( List<Map<String,dynamic>> mapList){
-    List<CourseModel> result = [];
-    for (int i =0; i< mapList.length;i++){
-      result.add(CourseModel.fromJson(mapList[i]));
-    }
-    return result;
-
-
-  }
+  // List<CourseModel> fromListOfJSON( List<Map<String,dynamic>> mapList){
+  //   List<CourseModel> result = [];
+  //   for (int i =0; i< mapList.length;i++){
+  //     result.add(CourseModel.fromJson(mapList[i]));
+  //   }
+  //   return result;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +94,7 @@ class _TeacherState extends State<Teacher> {
       initialData: null,
       builder: (context, snapshot) {
         if (snapshot.hasData){
+          String name = snapshot.data!.name;
           //coursesList = snapshot.data!.courses.cast<CourseModel>();
           coursesList = snapshot.data!.courses;
         return Scaffold(
@@ -114,7 +113,7 @@ class _TeacherState extends State<Teacher> {
                 color: Colors.red[300],
                 onPressed: () {
                   setState(() {
-                    addCourse(context);
+                    addCourse(context,name);
                   });
                 },
               ),
@@ -128,7 +127,7 @@ class _TeacherState extends State<Teacher> {
                   Text('here are your courses:'),
                   Column(
 
-                    children: coursesList!.map((e) => CourseCard(courseUid: e)).toList(),
+                    children: coursesList!.map((e) => CourseCard(courseUid: e,isTeacher: true,)).toList(),
                   ),
                 ],
               ),

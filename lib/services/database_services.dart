@@ -57,7 +57,6 @@ class DatabaseServices{
   }
 
   Future newTeacher(String uid, String name)async{
-    print('new teacher created');
     List<String> empty = [];
     return await teacherCollection.doc(uid).set(
         {
@@ -66,7 +65,7 @@ class DatabaseServices{
     }
     );
   }
-  Future newCourse(String name)async{
+  Future newCourse(String name, String teacherName)async{
 
     final docRef = courseCollection.doc();
     List<String> empty = [];
@@ -75,6 +74,7 @@ class DatabaseServices{
           'name': name,
           'students': empty,
           'tasks': 1,
+          'teacherName' : teacherName,
         }
     );
       return  docRef.id;
@@ -118,7 +118,8 @@ class DatabaseServices{
         uid: snapshot.id,
         students: snapshot.get('students'),
         courseSubject: snapshot.get('name'),
-        numberOfTasks: snapshot.get('tasks').cast<String>()
+        numberOfTasks: snapshot.get('tasks').cast<String>(),
+        teacherName: snapshot.get('teacherName'),
     );
   }
   TeacherModel _teacherModelFromSnapshot(DocumentSnapshot snapshot){
@@ -133,7 +134,6 @@ class DatabaseServices{
     return courseCollection.doc(uid).snapshots().map(_courseModelFromSnapshot);
   }
   Stream<TeacherModel> getTeacherData(String uid){
-    print('changing data');
     return teacherCollection.doc(uid).snapshots().map(_teacherModelFromSnapshot);
   }
 }

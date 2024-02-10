@@ -68,15 +68,13 @@ class _StudentState extends State<Student> {
     });
 
   }
-  List<CourseModel> fromListOfJSON( List<Map<String,dynamic>> mapList){
-    List<CourseModel> result = [];
-    for (int i =0; i< mapList.length;i++){
-      result.add(CourseModel.fromJson(mapList[i]));
-    }
-    return result;
-
-
-  }
+  // List<CourseModel> fromListOfJSON( List<Map<String,dynamic>> mapList){
+  //   List<CourseModel> result = [];
+  //   for (int i =0; i< mapList.length;i++){
+  //     result.add(CourseModel.fromJson(mapList[i]));
+  //   }
+  //   return result;
+  // }
 
   String courseChoice = '';
 
@@ -122,7 +120,7 @@ class _StudentState extends State<Student> {
                       Text('here are your courses:'),
                       Column(
                         //TODO, change the course card so that it takes a course uid
-                        children: coursesList.map((e) => CourseCard(courseUid: e)).toList(),
+                        children: coursesList.map((e) => CourseCard(courseUid: e,isTeacher: false,)).toList(),
                       ),
                     ],
                   ),

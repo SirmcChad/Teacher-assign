@@ -4,7 +4,8 @@ import 'package:teacher_assign/services/database_services.dart';
 
 class CourseCard extends StatelessWidget {
   String courseUid;
-   CourseCard({Key? key,required this.courseUid}) : super(key: key);
+  bool isTeacher;
+   CourseCard({Key? key,required this.courseUid, required this.isTeacher}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
