@@ -116,9 +116,9 @@ class DatabaseServices{
   CourseModel _courseModelFromSnapshot(DocumentSnapshot snapshot){
     return CourseModel(
         uid: snapshot.id,
-        students: snapshot.get('students'),
+        students: snapshot.get('students').cast<String>(),
         courseSubject: snapshot.get('name'),
-        numberOfTasks: snapshot.get('tasks').cast<String>(),
+        numberOfTasks: snapshot.get('tasks'),
         teacherName: snapshot.get('teacherName'),
     );
   }
