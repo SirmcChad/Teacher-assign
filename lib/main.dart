@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:teacher_assign/Wrapper.dart';
 import 'package:teacher_assign/services/auth_services.dart';
+import 'home_pages/CourseHomeStudent.dart';
+import 'home_pages/CourseHomeTeacher.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,8 +17,12 @@ void main() async {
     value: AuthServices().user,
     catchError: (User, user){},
     initialData: null,
-    child: const MaterialApp(
+    child: MaterialApp(
       home: Wrapper(),
+      routes: {
+        '/courseStudent': (context) => CourseStudent(),
+        // '/courseTeacher': (context) => SecondScreen(),
+      },
     ),
   ));
 }
