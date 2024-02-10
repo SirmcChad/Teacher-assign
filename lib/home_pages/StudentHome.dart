@@ -122,7 +122,7 @@ class _StudentState extends State<Student> {
                       Text('here are your courses:'),
                       Column(
                         //TODO, change the course card so that it takes a course uid
-                        children: coursesList.map((e) => CourseCard(courseName: e)).toList(),
+                        children: coursesList.map((e) => CourseCard(courseUid: e)).toList(),
                       ),
                     ],
                   ),

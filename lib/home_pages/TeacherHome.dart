@@ -128,7 +128,7 @@ class _TeacherState extends State<Teacher> {
                   Text('here are your courses:'),
                   Column(
 
-                    children: coursesList!.map((e) => CourseCard(courseName: e)).toList(),
+                    children: coursesList!.map((e) => CourseCard(courseUid: e)).toList(),
                   ),
                 ],
               ),
