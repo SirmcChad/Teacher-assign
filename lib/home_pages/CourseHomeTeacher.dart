@@ -42,12 +42,20 @@ class _CourseTeacherState extends State<CourseTeacher> {
                   ),
                 ],
               ),
-              body: ListView.builder(
-                itemCount: studentUids.length,
-                itemBuilder: (context, index) {
-                  return StudentCard(studentUid: studentUids[index]);
-
-                },
+              body: ReorderableListView.builder(
+                  onReorder: (oldIndex, newIndex){
+                    if (oldIndex < newIndex){
+                      newIndex = newIndex -1;
+                    }
+                    studentUids.insert(newIndex, studentUids.removeAt(oldIndex));
+                  },
+                  itemCount: studentUids.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                        key: GlobalKey(),
+                        child: StudentCard(studentUid: studentUids[index])
+                    );
+                  }
               ),
               drawer: Drawer(
                 child: ListView(
