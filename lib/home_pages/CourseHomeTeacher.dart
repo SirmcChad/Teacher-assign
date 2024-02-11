@@ -46,22 +46,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
                 itemCount: studentUids.length,
                 itemBuilder: (context, index) {
                   return StudentCard(studentUid: studentUids[index]);
-                  // ListTile(
-                  //   leading: CircleAvatar(
-                  //     backgroundImage: NetworkImage(
-                  //         'https://picsum.photos/200'), // TODO: replace with student profile image
-                  //   ),
-                  //   title: Text(studentUids[index]),
-                  //   // TODO: replace with student name
-                  //   subtitle: Text('Enrolled on ${DateTime.now()}'),
-                  //   // TODO: replace with enrollment date
-                  //   trailing: IconButton(
-                  //     icon: Icon(Icons.message),
-                  //     onPressed: () {
-                  //       // TODO: implement message functionality
-                  //     },
-                  //   ),
-                  // );
+
                 },
               ),
               drawer: Drawer(

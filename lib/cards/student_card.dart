@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:teacher_assign/home_pages/CourseHomeTeacher.dart';
 import 'package:teacher_assign/services/database_services_student.dart';
 
 class StudentCard extends StatelessWidget {
@@ -35,14 +34,19 @@ class StudentCard extends StatelessWidget {
 
                 String studentName = studentData?['name'];
                 return ListTile(
-                  title: Text(
-                    studentName,
-                    // Add some style to the text
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  leading: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        'https://picsum.photos/200'), // TODO: replace with student profile image
+                  ),
+                  title: Text(studentName),
+                  // TODO: replace with student name
+                  subtitle: Text('Enrolled on ${DateTime.now()}'),
+                  // TODO: replace with enrollment date
+                  trailing: IconButton(
+                    icon: Icon(Icons.message),
+                    onPressed: () {
+                      // TODO: implement message functionality
+                    },
                   ),
                 );
               }
