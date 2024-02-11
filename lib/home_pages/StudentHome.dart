@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:teacher_assign/services/database_services.dart';
+import 'package:teacher_assign/services/database_services_courses.dart';
+import 'package:teacher_assign/services/database_services_student.dart';
 import 'package:teacher_assign/shared/custom_loading.dart';
 import 'package:teacher_assign/shared/custom_text_field.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,8 @@ class Student extends StatefulWidget {
 }
 
 class _StudentState extends State<Student> {
-  DatabaseServices services = DatabaseServices();
+  DatabaseServicesCourses courseServices = DatabaseServicesCourses();
+  DatabaseServicesStudent studentServices = DatabaseServicesStudent();
 
   void addCourse(BuildContext context){
     String courseName = 'default name';
@@ -38,11 +40,11 @@ class _StudentState extends State<Student> {
                   onPressed: ()async{
                     try{
                       String courseUid = _textFieldController.text;
-                      bool exists = await services.courseExists(courseUid);
+                      bool exists = await courseServices.courseExists(courseUid);
                       if(exists){
                         setState(() {
-                          services.addCourseToStudent(user!.uid,courseUid);
-                          services.addStudentToCourse(courseUid, user!.uid);
+                          studentServices.addCourseToStudent(user!.uid,courseUid);
+                          courseServices.addStudentToCourse(courseUid, user!.uid);
                           Navigator.pop(context);
                         });
                       }
@@ -84,7 +86,7 @@ class _StudentState extends State<Student> {
     final user = Provider.of<User?>(context);
 
     return StreamBuilder<StudentModel>(
-      stream: services.getStudentData(user!.uid),
+      stream: studentServices.getStudentData(user!.uid),
       builder: (context, snapshot) {
         print(snapshot);
         if (snapshot.hasData){

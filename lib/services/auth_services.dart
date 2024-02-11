@@ -1,6 +1,8 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:teacher_assign/services/database_services.dart';
+import 'package:teacher_assign/services/database_services_student.dart';
+import 'package:teacher_assign/services/database_services_teacher.dart';
+import 'package:teacher_assign/services/database_services_users.dart';
 import 'package:teacher_assign/shared/custom_user.dart';
 
 class AuthServices {
@@ -42,8 +44,8 @@ class AuthServices {
     try{
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
-      DatabaseServices().updateUserData(user!.uid, true,name);
-      DatabaseServices().newTeacher(user!.uid, name);
+      DatabaseServicesUsers().updateUserData(user!.uid, true,name);
+      DatabaseServicesTeacher().newTeacher(user!.uid, name);
       return user;
     }catch(e){
       print(e.toString());
@@ -56,8 +58,8 @@ class AuthServices {
     try{
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
-      DatabaseServices().updateUserData(user!.uid, false,name);
-      DatabaseServices().newStudent(user!.uid, name);
+      DatabaseServicesUsers().updateUserData(user!.uid, false,name);
+      DatabaseServicesStudent().newStudent(user!.uid, name);
       return user;
     }catch(e){
       print(e.toString());

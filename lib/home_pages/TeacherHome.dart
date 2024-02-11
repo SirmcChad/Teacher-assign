@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:teacher_assign/models/CourseModel.dart';
 import 'package:teacher_assign/services/auth_services.dart';
-import 'package:teacher_assign/services/database_services.dart';
 import 'package:teacher_assign/cards/course_card.dart';
+import 'package:teacher_assign/services/database_services_courses.dart';
+import 'package:teacher_assign/services/database_services_teacher.dart';
 import 'package:teacher_assign/shared/custom_loading.dart';
 
 import '../models/TeacherModel.dart';
@@ -23,7 +24,6 @@ class Teacher extends StatefulWidget {
 
 class _TeacherState extends State<Teacher> {
 
-  DatabaseServices services = DatabaseServices();
 
 
 
@@ -47,10 +47,10 @@ class _TeacherState extends State<Teacher> {
             SizedBox(height: 25,),
             ElevatedButton(
               onPressed: () async{
-                String courseuid = await DatabaseServices().newCourse(courseName,teacherName);
+                String courseuid = await DatabaseServicesCourses().newCourse(courseName,teacherName);
 
                 setState(() {
-                  DatabaseServices().addCourseToTeacher(user!.uid, courseuid);
+                  DatabaseServicesTeacher().addCourseToTeacher(user!.uid, courseuid);
                   Navigator.pop(context);
                 });
               },
@@ -90,7 +90,7 @@ class _TeacherState extends State<Teacher> {
 
 
     return StreamBuilder<TeacherModel?>(
-      stream:  DatabaseServices().getTeacherData(user!.uid),
+      stream:  DatabaseServicesTeacher().getTeacherData(user!.uid),
       initialData: null,
       builder: (context, snapshot) {
         if (snapshot.hasData){

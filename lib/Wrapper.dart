@@ -8,7 +8,7 @@ import 'package:teacher_assign/authentication/signInStudent.dart';
 import 'package:teacher_assign/home_pages/StudentHome.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:teacher_assign/home_pages/TeacherHome.dart';
-import 'package:teacher_assign/services/database_services.dart';
+import 'package:teacher_assign/services/database_services_users.dart';
 import 'package:teacher_assign/shared/custom_loading.dart';
 
 
@@ -24,7 +24,7 @@ class _WrapperState extends State<Wrapper> {
   Widget build(BuildContext context) {
 
     final user = Provider.of<User?>(context);
-    DatabaseServices services = DatabaseServices();
+    DatabaseServicesUsers userServices = DatabaseServicesUsers();
 
 
 
@@ -33,7 +33,7 @@ class _WrapperState extends State<Wrapper> {
       return Choose();
     }
     else {
-      DocumentReference docRef = services.userCollection.doc(user.uid);
+      DocumentReference docRef = userServices.userCollection.doc(user.uid);
       
       // here i want to get the weather the user is a teacher or not, in the meantime of waiting the Loading widget is shown
       return FutureBuilder<DocumentSnapshot>(

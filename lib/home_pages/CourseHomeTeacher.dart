@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:teacher_assign/models/CourseModel.dart';
-import 'package:teacher_assign/services/database_services.dart';
+import 'package:teacher_assign/services/database_services_courses.dart';
 import 'package:teacher_assign/shared/custom_loading.dart';
 
 class CourseTeacher extends StatefulWidget {
@@ -16,7 +16,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
   @override
   Widget build(BuildContext context) {
       return StreamBuilder<CourseModel?>(
-        stream: DatabaseServices().getCourseData(widget.courseUid),
+        stream: DatabaseServicesCourses().getCourseData(widget.courseUid),
         builder: (context, snapshot) {
           print(snapshot);
           if (snapshot.hasData) {
