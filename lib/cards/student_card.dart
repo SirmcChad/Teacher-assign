@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:teacher_assign/home_pages/CourseHomeTeacher.dart';
-import 'package:teacher_assign/services/database_services.dart';
+import 'package:teacher_assign/services/database_services_student.dart';
 
 class StudentCard extends StatelessWidget {
   final String studentUid;
@@ -25,7 +25,7 @@ class StudentCard extends StatelessWidget {
           // Add some padding to the text
           padding: const EdgeInsets.all(15),
           child: FutureBuilder<DocumentSnapshot>(
-            future: DatabaseServices().studentCollection.doc(studentUid).get(),
+            future: DatabaseServicesStudent().studentCollection.doc(studentUid).get(),
             builder: (context, snapshot){
               if (snapshot.connectionState == ConnectionState.waiting){
                 return ListTile(title: Text('waiting...'),);

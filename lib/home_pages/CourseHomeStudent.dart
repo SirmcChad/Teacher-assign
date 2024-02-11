@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:teacher_assign/models/CourseModel.dart';
-import 'package:teacher_assign/services/database_services.dart';
+import 'package:teacher_assign/services/database_services_courses.dart';
 import 'package:teacher_assign/shared/custom_loading.dart';
 import 'package:teacher_assign/cards/student_card.dart';
 
@@ -17,7 +17,7 @@ class _CourseStudentState extends State<CourseStudent> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<CourseModel?>(
-      stream: DatabaseServices().getCourseData(widget.courseUid),
+      stream: DatabaseServicesCourses().getCourseData(widget.courseUid),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           List<String> studentUids = snapshot.data!.students;
