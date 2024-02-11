@@ -19,10 +19,6 @@ void main() async {
     initialData: null,
     child: MaterialApp(
       home: Wrapper(),
-      routes: {
-        '/courseStudent': (context) => CourseStudent(),
-        // '/courseTeacher': (context) => SecondScreen(),
-      },
     ),
   ));
 }

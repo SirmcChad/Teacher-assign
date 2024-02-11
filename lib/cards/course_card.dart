@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:teacher_assign/home_pages/CourseHomeTeacher.dart';
 import 'package:teacher_assign/services/database_services.dart';
+import 'package:teacher_assign/home_pages/CourseHomeStudent.dart';
 
 class CourseCard extends StatelessWidget {
   String courseUid;
@@ -9,10 +10,19 @@ class CourseCard extends StatelessWidget {
   CourseCard({Key? key,required this.courseUid, required this.isTeacher}) : super(key: key);
 
   void navigate(BuildContext context){
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context)=> CourseTeacher(courseUid: courseUid))
-    );
+    if (isTeacher){
+      Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context)=> CourseTeacher(courseUid: courseUid))
+      );
+    }
+
+    else{
+      Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context)=> CourseStudent(courseUid: courseUid))
+      );
+    }
   }
 
   @override
