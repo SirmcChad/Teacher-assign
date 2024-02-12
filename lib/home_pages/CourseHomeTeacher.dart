@@ -12,6 +12,11 @@ class CourseTeacher extends StatefulWidget {
 }
 
 class _CourseTeacherState extends State<CourseTeacher> {
+  List<String> studentNames = [];
+
+  void addStudentName(String name){
+    studentNames.add(name);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +56,14 @@ class _CourseTeacherState extends State<CourseTeacher> {
                   },
                   itemCount: studentUids.length,
                   itemBuilder: (context, index) {
+                    String? studentName;
+                    if (index < studentNames.length){
+                      studentName = studentNames[index];
+                    }
+
                     return Container(
                         key: GlobalKey(),
-                        child: StudentCard(studentUid: studentUids[index])
+                        child: StudentCard(studentUid: studentUids[index], studentName: studentName,)
                     );
                   }
               ),
