@@ -12,17 +12,32 @@ class CourseTeacher extends StatefulWidget {
 }
 
 class _CourseTeacherState extends State<CourseTeacher> {
+  List<String?> names = [];
+
+  void changeName(String name,int index){
+    names[index] = name;
+  }
+
 
   @override
   Widget build(BuildContext context) {
       return StreamBuilder<CourseModel?>(
         stream: DatabaseServicesCourses().getCourseData(widget.courseUid),
         builder: (context, snapshot) {
+
           if (snapshot.hasData) {
             List<String> studentUids = snapshot.data!.students;
             String subject = snapshot.data!.courseSubject;
             String teacherName = snapshot.data!.teacherName;
             int numberOfTasks = snapshot.data!.numberOfTasks;
+
+            for (int i=0;i<studentUids.length;i++){
+              if(i >= names.length){
+                names.add(null);
+              }
+
+            }
+
             return Scaffold(
               appBar: AppBar(
                 title: Text(subject),
@@ -42,20 +57,25 @@ class _CourseTeacherState extends State<CourseTeacher> {
                   ),
                 ],
               ),
-              body: ReorderableListView.builder(
+              body: ReorderableListView(
                   onReorder: (oldIndex, newIndex){
-                    if (oldIndex < newIndex){
-                      newIndex = newIndex -1;
-                    }
-                    studentUids.insert(newIndex, studentUids.removeAt(oldIndex));
+                    setState(() {
+                      if (oldIndex < newIndex){
+                        newIndex = newIndex -1;
+                      }
+                      studentUids.insert(newIndex, studentUids.removeAt(oldIndex));
+                      names.insert(newIndex, names.removeAt(oldIndex));
+                    });
+
                   },
-                  itemCount: studentUids.length,
-                  itemBuilder: (context, index) {
+
+
+                  children: studentUids.map((e) {
                     return Container(
                         key: GlobalKey(),
-                        child: StudentCard(studentUid: studentUids[index])
+                        child: StudentCard(studentUid: e, pastName: names[studentUids.indexOf(e)], changeName: changeName, index: studentUids.indexOf(e),)
                     );
-                  }
+                  } ).toList()
               ),
               drawer: Drawer(
                 child: ListView(

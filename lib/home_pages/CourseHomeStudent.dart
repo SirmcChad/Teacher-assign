@@ -39,7 +39,8 @@ class _CourseStudentState extends State<CourseStudent> {
             body: ListView.builder(
               itemCount: studentUids.length,
               itemBuilder: (context, index) {
-                return StudentCard(studentUid: studentUids[index]);
+                return Container();
+                // return StudentCard(studentUid: studentUids[index]);
                 //ListTile(
                 //   leading: CircleAvatar(
                 //     backgroundImage: NetworkImage(
