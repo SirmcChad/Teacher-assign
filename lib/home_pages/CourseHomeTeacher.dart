@@ -18,11 +18,11 @@ class _CourseTeacherState extends State<CourseTeacher> {
       return StreamBuilder<CourseModel?>(
         stream: DatabaseServicesCourses().getCourseData(widget.courseUid),
         builder: (context, snapshot) {
-          print(snapshot);
           if (snapshot.hasData) {
             List<String> studentUids = snapshot.data!.students;
             String subject = snapshot.data!.courseSubject;
             String teacherName = snapshot.data!.teacherName;
+            int numberOfTasks = snapshot.data!.numberOfTasks;
             return Scaffold(
               appBar: AppBar(
                 title: Text(subject),
