@@ -3,7 +3,6 @@ import 'package:teacher_assign/models/CourseModel.dart';
 import 'package:teacher_assign/services/database_services_courses.dart';
 import 'package:teacher_assign/shared/custom_loading.dart';
 import 'package:teacher_assign/cards/student_card.dart';
-
 class CourseTeacher extends StatefulWidget {
   String courseUid;
   CourseTeacher({Key? key, required this.courseUid}) : super(key: key);
@@ -13,22 +12,33 @@ class CourseTeacher extends StatefulWidget {
 }
 
 class _CourseTeacherState extends State<CourseTeacher> {
-  List<String> studentNames = [];
+  List<String?> names = [];
+  DatabaseServicesCourses services = DatabaseServicesCourses();
 
-  void addStudentName(String name){
-    studentNames.add(name);
+  void changeName(String name,int index){
+    names[index] = name;
   }
+
 
   @override
   Widget build(BuildContext context) {
       return StreamBuilder<CourseModel?>(
-        stream: DatabaseServicesCourses().getCourseData(widget.courseUid),
+        stream: services.getCourseData(widget.courseUid),
         builder: (context, snapshot) {
-          print(snapshot);
+
           if (snapshot.hasData) {
             List<String> studentUids = snapshot.data!.students;
             String subject = snapshot.data!.courseSubject;
             String teacherName = snapshot.data!.teacherName;
+            int numberOfTasks = snapshot.data!.numberOfTasks;
+
+            for (int i=0;i<studentUids.length;i++){
+              if(i >= names.length){
+                names.add(null);
+              }
+
+            }
+
             return Scaffold(
               appBar: AppBar(
                 title: Text(subject),
@@ -55,14 +65,19 @@ class _CourseTeacherState extends State<CourseTeacher> {
                         newIndex = newIndex -1;
                       }
                       studentUids.insert(newIndex, studentUids.removeAt(oldIndex));
-                      DatabaseServicesCourses().changeStudents(widget.courseUid, studentUids);
+                      services.changeStudents(widget.courseUid, studentUids);
+                      names.insert(newIndex, names.removeAt(oldIndex));
                     });
+
                   },
 
-                  children: studentUids.map((e) => Container(
-                      key: GlobalKey(),
-                      child: StudentCard(studentUid: e)
-                  )).toList(),
+
+                  children: studentUids.map((e) {
+                    return Container(
+                        key: GlobalKey(),
+                        child: StudentCard(studentUid: e, pastName: names[studentUids.indexOf(e)], changeName: changeName, index: studentUids.indexOf(e),)
+                    );
+                  } ).toList()
               ),
               drawer: Drawer(
                 child: ListView(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:teacher_assign/cards/basic_student_card.dart';
 import 'package:teacher_assign/models/CourseModel.dart';
 import 'package:teacher_assign/services/database_services_courses.dart';
 import 'package:teacher_assign/shared/custom_loading.dart';
@@ -39,23 +40,7 @@ class _CourseStudentState extends State<CourseStudent> {
             body: ListView.builder(
               itemCount: studentUids.length,
               itemBuilder: (context, index) {
-                return StudentCard(studentUid: studentUids[index]);
-                //ListTile(
-                //   leading: CircleAvatar(
-                //     backgroundImage: NetworkImage(
-                //         'https://picsum.photos/200'), // TODO: replace with student profile image
-                //   ),
-                //   title: Text(studentUids[index]),
-                //   // TODO: replace with student name
-                //   subtitle: Text('Enrolled on ${DateTime.now()}'),
-                //   // TODO: replace with enrollment date
-                //   trailing: IconButton(
-                //     icon: Icon(Icons.message),
-                //     onPressed: () {
-                //       // TODO: implement message functionality
-                //     },
-                //   ),
-                // );
+                return BasicStudentCard(studentUid: studentUids[index]);
               },
             ),
             drawer: Drawer(
