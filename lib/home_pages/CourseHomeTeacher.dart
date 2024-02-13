@@ -3,6 +3,7 @@ import 'package:teacher_assign/models/CourseModel.dart';
 import 'package:teacher_assign/services/database_services_courses.dart';
 import 'package:teacher_assign/shared/custom_loading.dart';
 import 'package:teacher_assign/cards/student_card.dart';
+
 class CourseTeacher extends StatefulWidget {
   String courseUid;
   CourseTeacher({Key? key, required this.courseUid}) : super(key: key);
@@ -47,25 +48,21 @@ class _CourseTeacherState extends State<CourseTeacher> {
                   ),
                 ],
               ),
-              body: ReorderableListView.builder(
+              body: ReorderableListView(
                   onReorder: (oldIndex, newIndex){
-                    if (oldIndex < newIndex){
-                      newIndex = newIndex -1;
-                    }
-                    studentUids.insert(newIndex, studentUids.removeAt(oldIndex));
+                    setState(() {
+                      if (oldIndex < newIndex){
+                        newIndex = newIndex -1;
+                      }
+                      studentUids.insert(newIndex, studentUids.removeAt(oldIndex));
+                      DatabaseServicesCourses().changeStudents(widget.courseUid, studentUids);
+                    });
                   },
-                  itemCount: studentUids.length,
-                  itemBuilder: (context, index) {
-                    String? studentName;
-                    if (index < studentNames.length){
-                      studentName = studentNames[index];
-                    }
 
-                    return Container(
-                        key: GlobalKey(),
-                        child: StudentCard(studentUid: studentUids[index], studentName: studentName,)
-                    );
-                  }
+                  children: studentUids.map((e) => Container(
+                      key: GlobalKey(),
+                      child: StudentCard(studentUid: e)
+                  )).toList(),
               ),
               drawer: Drawer(
                 child: ListView(

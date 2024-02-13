@@ -4,8 +4,7 @@ import 'package:teacher_assign/services/database_services_student.dart';
 
 class StudentCard extends StatelessWidget {
   final String studentUid;
-  final String studentName;
-  const StudentCard({super.key, required this.studentUid, required this.studentName});
+  const StudentCard({super.key, required this.studentUid});
 
   @override
   Widget build(BuildContext context) {
