@@ -40,7 +40,7 @@ class _CourseStudentState extends State<CourseStudent> {
             body: ListView.builder(
               itemCount: studentUids.length,
               itemBuilder: (context, index) {
-                return BasicStudentCard(studentUid: studentUids[index]);
+                return BasicStudentCard(color: Colors.blue, studentUid: studentUids[index]);
               },
             ),
             drawer: Drawer(
