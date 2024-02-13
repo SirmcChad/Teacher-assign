@@ -3,6 +3,7 @@ import 'package:teacher_assign/models/CourseModel.dart';
 import 'package:teacher_assign/services/database_services_courses.dart';
 import 'package:teacher_assign/shared/custom_loading.dart';
 import 'package:teacher_assign/cards/student_card.dart';
+
 class CourseTeacher extends StatefulWidget {
   String courseUid;
   CourseTeacher({Key? key, required this.courseUid}) : super(key: key);
@@ -19,6 +20,35 @@ class _CourseTeacherState extends State<CourseTeacher> {
     names[index] = name;
   }
 
+  Color colouring(int numberOfTasks, int index){
+    if (numberOfTasks == 1) {
+      return Colors.blue.shade100 ;
+    }
+    else {
+      return randomColor(index~/numberOfTasks);
+    }
+
+  }
+
+  Color randomColor(int index){
+    List<Color> colors = [
+      Color(0xFF3F51B5), // indigo
+      Color(0xFF4CAF50), // green
+      Color(0xFF2196F3), // blue
+      Color(0xFFE91E63), // pink
+      Color(0xFFFFC107), // amber
+      Color(0xFFFF5722), // deep orange
+      Color(0xFF795548), // brown
+      Color(0xFF9C27B0), // purple
+    ];
+
+    return colors[index % colors.length];
+  }
+  void showTasksDialogue(){
+
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +61,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
             String subject = snapshot.data!.courseSubject;
             String teacherName = snapshot.data!.teacherName;
             int numberOfTasks = snapshot.data!.numberOfTasks;
+            print(numberOfTasks);
 
             for (int i=0;i<studentUids.length;i++){
               if(i >= names.length){
@@ -70,12 +101,12 @@ class _CourseTeacherState extends State<CourseTeacher> {
                     });
 
                   },
-
-
                   children: studentUids.map((e) {
+                    print(studentUids.indexOf(e));
+                    print(colouring(numberOfTasks, studentUids.indexOf(e)));
                     return Container(
                         key: GlobalKey(),
-                        child: StudentCard(studentUid: e, pastName: names[studentUids.indexOf(e)], changeName: changeName, index: studentUids.indexOf(e),)
+                        child: StudentCard(studentUid: e, pastName: names[studentUids.indexOf(e)], changeName: changeName, index: studentUids.indexOf(e),color: colouring(numberOfTasks, studentUids.indexOf(e)),)
                     );
                   } ).toList()
               ),
@@ -114,6 +145,30 @@ class _CourseTeacherState extends State<CourseTeacher> {
                     ),
                   ],
                 ),
+              ),
+              floatingActionButton: FloatingActionButton(
+                onPressed: () {
+                  setState(() {
+                    numberOfTasks = 2;
+                    services.changeTask(widget.courseUid, numberOfTasks);
+
+                  });
+
+                },
+                child: Icon(Icons.assignment),
+                backgroundColor: Colors.blue,
+                // Custom shape for the FAB
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  side: BorderSide(
+                    color: Colors.white,
+                    width: 4,
+                  ),
+                ),
+                // Custom elevation for the FAB
+                elevation: 10,
+                // Custom rotation for the FAB
+                clipBehavior: Clip.antiAlias,
               ),
             );
           } else {

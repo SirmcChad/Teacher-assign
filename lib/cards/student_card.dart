@@ -7,8 +7,9 @@ class StudentCard extends StatelessWidget {
   final String studentUid;
   final String? pastName;
   Function changeName;
+  Color color;
   int index;
-  StudentCard({super.key, required this.studentUid, required this.pastName, required this.changeName, required this.index});
+  StudentCard({super.key, required this.studentUid, required this.pastName, required this.changeName, required this.index, required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class StudentCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(15), // The rounded corners
         ),
         // Add some color to the card
-        color: Colors.blue[100],
+        color: color,
         child: Center(
           child: Padding(
             // Add some padding to the text
@@ -58,7 +59,7 @@ class StudentCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(15), // The rounded corners
       ),
       // Add some color to the card
-      color: Colors.blue[100],
+      color: color,
       child: Center(
         child: Padding(
           // Add some padding to the text
