@@ -13,6 +13,11 @@ class DatabaseServicesCourses{
     // final json = student.toJSON();
     await courseCollection.doc(uid).update({'students': FieldValue.arrayUnion([studentUid]) });
   }
+
+  Future changeStudents(String uid,List<String> studentUids) async {
+    await courseCollection.doc(uid).update({'students': studentUids});
+  }
+
   Future newCourse(String name, String teacherName)async{
 
     final docRef = courseCollection.doc();

@@ -13,6 +13,7 @@ class CourseTeacher extends StatefulWidget {
 
 class _CourseTeacherState extends State<CourseTeacher> {
   List<String?> names = [];
+  DatabaseServicesCourses services = DatabaseServicesCourses();
 
   void changeName(String name,int index){
     names[index] = name;
@@ -22,7 +23,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
   @override
   Widget build(BuildContext context) {
       return StreamBuilder<CourseModel?>(
-        stream: DatabaseServicesCourses().getCourseData(widget.courseUid),
+        stream: services.getCourseData(widget.courseUid),
         builder: (context, snapshot) {
 
           if (snapshot.hasData) {
@@ -64,6 +65,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
                         newIndex = newIndex -1;
                       }
                       studentUids.insert(newIndex, studentUids.removeAt(oldIndex));
+                      services.changeStudents(widget.courseUid, studentUids);
                       names.insert(newIndex, names.removeAt(oldIndex));
                     });
 
