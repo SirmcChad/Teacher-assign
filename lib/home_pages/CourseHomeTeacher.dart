@@ -3,6 +3,7 @@ import 'package:teacher_assign/models/CourseModel.dart';
 import 'package:teacher_assign/services/database_services_courses.dart';
 import 'package:teacher_assign/shared/custom_loading.dart';
 import 'package:teacher_assign/cards/student_card.dart';
+import 'package:teacher_assign/shared/utils.dart';
 
 class CourseTeacher extends StatefulWidget {
   String courseUid;
@@ -44,8 +45,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
 
     return colors[index % colors.length];
   }
-  void showTasksDialogue(BuildContext context){
-    int numberOfTasks = 1;
+  void showTasksDialogue(){
     showDialog(context: context, builder: (BuildContext context){
       return AlertDialog(
         title: Text("Assign Tasks"),
@@ -87,8 +87,8 @@ class _CourseTeacherState extends State<CourseTeacher> {
         ],
       );
     });
-  }
 
+  }
 
 
 
@@ -103,7 +103,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
             String subject = snapshot.data!.courseSubject;
             String teacherName = snapshot.data!.teacherName;
             int numberOfTasks = snapshot.data!.numberOfTasks;
-            int numberOfStudentsPerGroup = snapshot.data!.numberOfStudents;
+            print(numberOfTasks);
 
             for (int i=0;i<studentUids.length;i++){
               if(i >= names.length){
@@ -191,7 +191,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
               floatingActionButton: FloatingActionButton(
                 onPressed: () {
                   setState(() {
-                    showTasksDialogue(context);
+                    numberOfTasks = 2;
                     services.changeTask(widget.courseUid, numberOfTasks);
 
                   });

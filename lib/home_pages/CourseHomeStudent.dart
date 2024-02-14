@@ -4,6 +4,7 @@ import 'package:teacher_assign/models/CourseModel.dart';
 import 'package:teacher_assign/services/database_services_courses.dart';
 import 'package:teacher_assign/shared/custom_loading.dart';
 import 'package:teacher_assign/cards/student_card.dart';
+import 'package:teacher_assign/shared/utils.dart';
 
 class CourseStudent extends StatefulWidget {
   String courseUid;
@@ -24,6 +25,7 @@ class _CourseStudentState extends State<CourseStudent> {
           List<String> studentUids = snapshot.data!.students;
           String subject = snapshot.data!.courseSubject;
           String teacherName = snapshot.data!.teacherName;
+          int numberOfTasks = snapshot.data!.numberOfTasks;
           return Scaffold(
             appBar: AppBar(
               title: Text(subject),
@@ -40,7 +42,7 @@ class _CourseStudentState extends State<CourseStudent> {
             body: ListView.builder(
               itemCount: studentUids.length,
               itemBuilder: (context, index) {
-                return BasicStudentCard(color: Colors.blue, studentUid: studentUids[index]);
+                return BasicStudentCard(color: colouring(numberOfTasks, index), studentUid: studentUids[index]);
               },
             ),
             drawer: Drawer(
