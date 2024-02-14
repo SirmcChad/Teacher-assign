@@ -5,9 +5,10 @@ class CourseModel {
   List<String> students;
   String courseSubject;
   int numberOfTasks;
+  int numberOfStudents;
   String teacherName;
 
-  CourseModel({required this.uid, required this.students, required this.courseSubject, required this.numberOfTasks, required this.teacherName});
+  CourseModel({required this.uid, required this.students, required this.courseSubject, required this.numberOfTasks, required this.numberOfStudents, required this.teacherName});
 
   // Map<String,dynamic> toJSON(){
   //   return {

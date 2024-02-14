@@ -119,6 +119,7 @@ class DatabaseServices{
         students: snapshot.get('students').cast<String>(),
         courseSubject: snapshot.get('name'),
         numberOfTasks: snapshot.get('tasks'),
+        numberOfStudents: snapshot.get('studentsPerGroup'),
         teacherName: snapshot.get('teacherName'),
     );
   }
