@@ -45,6 +45,9 @@ class _CourseTeacherState extends State<CourseTeacher> {
     return colors[index % colors.length];
   }
   void showTasksDialogue(){
+    showDialog(context: context, builder: (BuildContext context){
+      return AlertDialog();
+    });
 
   }
 
