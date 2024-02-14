@@ -17,6 +17,9 @@ class DatabaseServicesCourses{
   Future changeStudents(String uid,List<String> studentUids) async {
     await courseCollection.doc(uid).update({'students': studentUids});
   }
+  Future changeTask(String uid, int numberOfTasks)async{
+    await courseCollection.doc(uid).update({'tasks': numberOfTasks});
+  }
 
   Future newCourse(String name, String teacherName)async{
 
