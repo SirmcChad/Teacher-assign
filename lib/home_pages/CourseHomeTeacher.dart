@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:teacher_assign/models/CourseModel.dart';
 import 'package:teacher_assign/services/database_services_courses.dart';
 import 'package:teacher_assign/shared/custom_loading.dart';
@@ -36,6 +37,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
             SizedBox(height: 10),
             // A text field to enter the number of tasks
             TextField(
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -170,8 +172,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
               floatingActionButton: FloatingActionButton(
                 onPressed: () {
                   setState(() {
-                    numberOfTasks = 2;
-                    services.changeTask(widget.courseUid, numberOfTasks);
+                    showTasksDialogue(context);
 
                   });
 
