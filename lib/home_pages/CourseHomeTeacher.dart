@@ -44,12 +44,51 @@ class _CourseTeacherState extends State<CourseTeacher> {
 
     return colors[index % colors.length];
   }
-  void showTasksDialogue(){
+  void showTasksDialogue(BuildContext context){
+    int numberOfTasks = 1;
     showDialog(context: context, builder: (BuildContext context){
-      return AlertDialog();
+      return AlertDialog(
+        title: Text("Assign Tasks"),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text("How many tasks do you want to assign for your class?"),
+            SizedBox(height: 10),
+            // A text field to enter the number of tasks
+            TextField(
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: "Number of tasks",
+              ),
+              onChanged: (value) {
+                // Update the number of tasks variable
+                numberOfTasks = int.parse(value);
+              },
+            ),
+          ],
+        ),
+        actions: [
+          // A cancel button to dismiss the dialog
+          TextButton(
+            child: Text("Cancel"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          // A confirm button to assign the tasks and return the number
+          TextButton(
+            child: Text("Confirm"),
+            onPressed: () {
+              Navigator.pop(context);
+              services.changeTask(widget.courseUid, numberOfTasks);
+            },
+          ),
+        ],
+      );
     });
-
   }
+
 
 
 
@@ -64,7 +103,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
             String subject = snapshot.data!.courseSubject;
             String teacherName = snapshot.data!.teacherName;
             int numberOfTasks = snapshot.data!.numberOfTasks;
-            print(numberOfTasks);
+            int numberOfStudentsPerGroup = snapshot.data!.numberOfStudents;
 
             for (int i=0;i<studentUids.length;i++){
               if(i >= names.length){
@@ -152,7 +191,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
               floatingActionButton: FloatingActionButton(
                 onPressed: () {
                   setState(() {
-                    numberOfTasks = 2;
+                    showTasksDialogue(context);
                     services.changeTask(widget.courseUid, numberOfTasks);
 
                   });

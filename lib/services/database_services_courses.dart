@@ -18,7 +18,12 @@ class DatabaseServicesCourses{
     await courseCollection.doc(uid).update({'students': studentUids});
   }
   Future changeTask(String uid, int numberOfTasks)async{
+    await courseCollection.doc(uid).update({'studentsPerGroup': 1});
     await courseCollection.doc(uid).update({'tasks': numberOfTasks});
+  }
+  Future changeStudentsPerGroup(String uid, int studentsPerGroup)async{
+    await courseCollection.doc(uid).update({'tasks': 1});
+    await courseCollection.doc(uid).update({'studentsPerGroup': studentsPerGroup});
   }
 
   Future newCourse(String name, String teacherName)async{
