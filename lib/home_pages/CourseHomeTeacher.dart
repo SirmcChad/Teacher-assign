@@ -72,7 +72,52 @@ class _CourseTeacherState extends State<CourseTeacher> {
       );
     });
   }
-
+  void showStudentPerGroupDialogue(BuildContext context){
+    int numberOfTasks = 1;
+    showDialog(context: context, builder: (BuildContext context){
+      return AlertDialog(
+        title: Text("Assign Tasks"),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text("How many students in a single group?"),
+            SizedBox(height: 10),
+            // A text field to enter the number of tasks
+            TextField(
+              keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter> [
+                FilteringTextInputFormatter.digitsOnly
+              ],
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: "Number of Students in a Group",
+              ),
+              onChanged: (value) {
+                // Update the number of tasks variable
+                numberOfTasks = int.parse(value);
+              },
+            ),
+          ],
+        ),
+        actions: [
+          // A cancel button to dismiss the dialog
+          TextButton(
+            child: Text("Cancel"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          // A confirm button to assign the tasks and return the number
+          TextButton(
+            child: Text("Confirm"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      );
+    });
+  }
 
 
   @override
