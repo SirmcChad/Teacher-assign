@@ -53,7 +53,7 @@ class _WrapperState extends State<Wrapper> {
             }
           }
           else{
-            return Text('something gone wrong!');
+            return Text('something gone wrong! database could not read');
           }
 
         },

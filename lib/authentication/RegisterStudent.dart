@@ -42,7 +42,6 @@ class _RegisterStudentState extends State<RegisterStudent> {
           )
         ],
         title: Text('Sign Up Student'),
-        //TODO alternate between register/sign in button top right of the screen
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

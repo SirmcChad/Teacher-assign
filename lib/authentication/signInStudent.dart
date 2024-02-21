@@ -44,7 +44,6 @@ class _SignInStudentState extends State<SignInStudent> {
             ],
           )
         ],
-        //TODO alternate between register/sign in button top right of the screen
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

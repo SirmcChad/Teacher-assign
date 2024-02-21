@@ -59,16 +59,13 @@ class BasicStudentCard extends StatelessWidget {
     //             return ListTile(
     //               leading: CircleAvatar(
     //                 backgroundImage: NetworkImage(
-    //                     'https://picsum.photos/200'), // TODO: replace with student profile image
+    //                     'https://picsum.photos/200'),
     //               ),
     //               title: Text(studentName),
-    //               // TODO: replace with student name
     //               subtitle: Text('Enrolled on ${DateTime.now()}'),
-    //               // TODO: replace with enrollment date
     //               trailing: IconButton(
     //                 icon: Icon(Icons.message),
     //                 onPressed: () {
-    //                   // TODO: implement message functionality
     //                 },
     //               ),
     //             );
