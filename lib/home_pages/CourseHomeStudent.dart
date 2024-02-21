@@ -26,6 +26,9 @@ class _CourseStudentState extends State<CourseStudent> {
           String subject = snapshot.data!.courseSubject;
           String teacherName = snapshot.data!.teacherName;
           int numberOfTasks = snapshot.data!.numberOfTasks;
+          int numberOfStudentsPerGroup = snapshot.data!.numberOfStudents;
+          Utility utils = Utility(numberOfTasks, numberOfStudentsPerGroup, studentUids.length);
+
           return Scaffold(
             appBar: AppBar(
               title: Text(subject),
@@ -42,7 +45,7 @@ class _CourseStudentState extends State<CourseStudent> {
             body: ListView.builder(
               itemCount: studentUids.length,
               itemBuilder: (context, index) {
-                return BasicStudentCard(color: colouring(numberOfTasks, index), studentUid: studentUids[index]);
+                return BasicStudentCard(color: utils.colouring(index), studentUid: studentUids[index]);
               },
             ),
             drawer: Drawer(

@@ -131,7 +131,8 @@ class _CourseTeacherState extends State<CourseTeacher> {
             String subject = snapshot.data!.courseSubject;
             String teacherName = snapshot.data!.teacherName;
             int numberOfTasks = snapshot.data!.numberOfTasks;
-            print(numberOfTasks);
+            int numberOfStudentsPerGroup = snapshot.data!.numberOfStudents;
+            Utility utils = Utility(numberOfTasks, numberOfStudentsPerGroup, studentUids.length);
 
             for (int i=0;i<studentUids.length;i++){
               if(i >= names.length){
@@ -173,10 +174,9 @@ class _CourseTeacherState extends State<CourseTeacher> {
                   },
                   children: studentUids.map((e) {
                     print(studentUids.indexOf(e));
-                    print(colouring(numberOfTasks, studentUids.indexOf(e)));
                     return Container(
                         key: GlobalKey(),
-                        child: StudentCard(studentUid: e, pastName: names[studentUids.indexOf(e)], changeName: changeName, index: studentUids.indexOf(e),color: colouring(numberOfTasks, studentUids.indexOf(e)),)
+                        child: StudentCard(studentUid: e, pastName: names[studentUids.indexOf(e)], changeName: changeName, index: studentUids.indexOf(e),color: utils.colouring(studentUids.indexOf(e)),)
                     );
                   } ).toList()
               ),
