@@ -25,7 +25,11 @@ class _CourseStudentState extends State<CourseStudent> {
           List<String> studentUids = snapshot.data!.students;
           String subject = snapshot.data!.courseSubject;
           String teacherName = snapshot.data!.teacherName;
+          int studentsPerGroup = snapshot.data!.numberOfStudents;
           int numberOfTasks = snapshot.data!.numberOfTasks;
+          int totalStudents = studentUids.length;
+          Utility colouringUtility = Utility(numberOfStudentsPerGroup: studentsPerGroup, numberOfTasks: numberOfTasks, totalStudents: totalStudents);
+
           return Scaffold(
             appBar: AppBar(
               title: Text(subject),
@@ -34,7 +38,7 @@ class _CourseStudentState extends State<CourseStudent> {
                 IconButton(
                   icon: Icon(Icons.search),
                   onPressed: () {
-                    // TODO: implement search functionality
+
                   },
                 ),
               ],
@@ -42,7 +46,7 @@ class _CourseStudentState extends State<CourseStudent> {
             body: ListView.builder(
               itemCount: studentUids.length,
               itemBuilder: (context, index) {
-                return BasicStudentCard(color: colouring(numberOfTasks, index), studentUid: studentUids[index]);
+                return BasicStudentCard(color: colouringUtility.colouring(index), studentUid: studentUids[index]);
               },
             ),
             drawer: Drawer(
@@ -51,31 +55,30 @@ class _CourseStudentState extends State<CourseStudent> {
                   UserAccountsDrawerHeader(
                     accountName: Text(teacherName),
                     accountEmail: Text('teacher@example.com'),
-                    // TODO: replace with teacher email
                     currentAccountPicture: CircleAvatar(
                       backgroundImage: NetworkImage(
-                          'https://picsum.photos/200'), // TODO: replace with teacher profile image
+                          'https://picsum.photos/200'),
                     ),
                   ),
                   ListTile(
                     leading: Icon(Icons.home),
                     title: Text('Home'),
                     onTap: () {
-                      // TODO: implement home navigation
+
                     },
                   ),
                   ListTile(
                     leading: Icon(Icons.settings),
                     title: Text('Settings'),
                     onTap: () {
-                      // TODO: implement settings navigation
+
                     },
                   ),
                   ListTile(
                     leading: Icon(Icons.logout),
                     title: Text('Logout'),
                     onTap: () {
-                      // TODO: implement logout functionality
+
                     },
                   ),
                 ],

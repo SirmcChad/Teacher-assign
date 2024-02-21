@@ -6,6 +6,7 @@ import 'package:teacher_assign/shared/custom_loading.dart';
 import 'package:teacher_assign/cards/student_card.dart';
 import 'package:teacher_assign/shared/utils.dart';
 
+
 class CourseTeacher extends StatefulWidget {
   String courseUid;
   CourseTeacher({Key? key, required this.courseUid}) : super(key: key);
@@ -130,8 +131,11 @@ class _CourseTeacherState extends State<CourseTeacher> {
             List<String> studentUids = snapshot.data!.students;
             String subject = snapshot.data!.courseSubject;
             String teacherName = snapshot.data!.teacherName;
+            int studentsPerGroup = snapshot.data!.numberOfStudents;
             int numberOfTasks = snapshot.data!.numberOfTasks;
-            print(numberOfTasks);
+            int totalStudents = studentUids.length;
+            Utility colouringUtility = Utility(numberOfStudentsPerGroup: studentsPerGroup, numberOfTasks: numberOfTasks, totalStudents: totalStudents);
+
 
             for (int i=0;i<studentUids.length;i++){
               if(i >= names.length){
@@ -148,13 +152,13 @@ class _CourseTeacherState extends State<CourseTeacher> {
                   IconButton(
                     icon: Icon(Icons.search),
                     onPressed: () {
-                      // TODO: implement search functionality
+
                     },
                   ),
                   IconButton(
                     icon: Icon(Icons.more_vert),
                     onPressed: () {
-                      // TODO: implement more options
+
                     },
                   ),
                 ],
@@ -172,51 +176,83 @@ class _CourseTeacherState extends State<CourseTeacher> {
 
                   },
                   children: studentUids.map((e) {
-                    print(studentUids.indexOf(e));
-                    print(colouring(numberOfTasks, studentUids.indexOf(e)));
+                    int index = studentUids.indexOf(e);
                     return Container(
                         key: GlobalKey(),
-                        child: StudentCard(studentUid: e, pastName: names[studentUids.indexOf(e)], changeName: changeName, index: studentUids.indexOf(e),color: colouring(numberOfTasks, studentUids.indexOf(e)),)
+                        child: StudentCard(studentUid: e, pastName: names[studentUids.indexOf(e)], changeName: changeName, index: studentUids.indexOf(e),color: colouringUtility.colouring(index))
                     );
                   } ).toList()
               ),
-              drawer: Drawer(
-                child: ListView(
-                  children: [
-                    UserAccountsDrawerHeader(
-                      accountName: Text(teacherName),
-                      accountEmail: Text('teacher@example.com'),
-                      // TODO: replace with teacher email
-                      currentAccountPicture: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            'https://picsum.photos/200'), // TODO: replace with teacher profile image
+                drawer: Drawer(
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    children: [
+                      // A drawer header with a circle avatar and the teacher name
+                      UserAccountsDrawerHeader(
+                        accountName: Text(
+                          'John Smith',
+                          style: TextStyle(fontSize: 24.0),
+                        ),
+                        accountEmail: Text('john.smith@example.com'),
+                        currentAccountPicture: CircleAvatar(
+                          backgroundColor: Colors.white,
+                          child: Text(
+                            'J',
+                            style: TextStyle(fontSize: 40.0, color: Colors.blue),
+                          ),
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                'https://picsum.photos/300'), // TODO: replace with a background image
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.home),
-                      title: Text('Home'),
-                      onTap: () {
-                        // TODO: implement home navigation
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.settings),
-                      title: Text('Settings'),
-                      onTap: () {
-                        // TODO: implement settings navigation
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.logout),
-                      title: Text('Logout'),
-                      onTap: () {
-                        // TODO: implement logout functionality
-                      },
-                    ),
-                  ],
+                      // A list tile with an icon and a text for assigning tasks per number of groups
+                      ListTile(
+                        leading: Icon(Icons.group),
+                        title: Text(
+                          'Assign Tasks per Number of Groups',
+                          style: TextStyle(fontSize: 18.0),
+                        ),
+                        onTap: () {
+                          // TODO: implement assign tasks per number of groups functionality
+                        },
+                      ),
+                      // A list tile with an icon and a text for assigning tasks per number of students
+                      ListTile(
+                        leading: Icon(Icons.person),
+                        title: Text(
+                          'Assign Tasks per Number of Students',
+                          style: TextStyle(fontSize: 18.0),
+                        ),
+                        onTap: () {
+                          // TODO: implement assign tasks per number of students functionality
+                        },
+                      ),
+                      // A divider to separate the list tiles
+                      Divider(
+                        color: Colors.grey,
+                        height: 10,
+                        thickness: 1,
+                      ),
+                      // A list tile with an icon and a text for logout
+                      ListTile(
+                        leading: Icon(Icons.logout),
+                        title: Text(
+                          'Logout',
+                          style: TextStyle(fontSize: 18.0),
+                        ),
+                        onTap: () {
+                          // TODO: implement logout functionality
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              floatingActionButton: FloatingActionButton(
+                floatingActionButton: FloatingActionButton(
                 onPressed: () {
                   setState(() {
                     showTasksDialogue(context);

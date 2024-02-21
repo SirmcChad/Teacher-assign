@@ -50,7 +50,6 @@ class _SignInTeacherState extends State<SignInTeacher> {
         //     onPressed: () {widget.toggleView();}
         //   )
         // ]
-        //TODO alternate between register/sign in button top right of the screen
 
       body: Padding(
         padding: const EdgeInsets.all(16.0),
