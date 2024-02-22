@@ -112,6 +112,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
           TextButton(
             child: Text("Confirm"),
             onPressed: () {
+              services.changeStudentsPerGroup(widget.courseUid, numberOfTasks);
               Navigator.pop(context);
             },
           ),
@@ -218,7 +219,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
                           style: TextStyle(fontSize: 18.0),
                         ),
                         onTap: () {
-                          // TODO: implement assign tasks per number of groups functionality
+                          showTasksDialogue(context);
                         },
                       ),
                       // A list tile with an icon and a text for assigning tasks per number of students
@@ -229,7 +230,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
                           style: TextStyle(fontSize: 18.0),
                         ),
                         onTap: () {
-                          // TODO: implement assign tasks per number of students functionality
+                          showStudentPerGroupDialogue(context);
                         },
                       ),
                       // A divider to separate the list tiles
