@@ -5,6 +5,7 @@ import 'package:teacher_assign/services/database_services_courses.dart';
 import 'package:teacher_assign/shared/custom_loading.dart';
 import 'package:teacher_assign/cards/student_card.dart';
 import 'package:teacher_assign/shared/utils.dart';
+import 'package:teacher_assign/cards/group_card.dart';
 
 class CourseStudent extends StatefulWidget {
   String courseUid;
@@ -29,6 +30,8 @@ class _CourseStudentState extends State<CourseStudent> {
           int numberOfTasks = snapshot.data!.numberOfTasks;
           int totalStudents = studentUids.length;
           Utility colouringUtility = Utility(numberOfStudentsPerGroup: studentsPerGroup, numberOfTasks: numberOfTasks, totalStudents: totalStudents);
+          List<int> ranges = colouringUtility.getRanges();
+          print(ranges);
 
           return Scaffold(
             appBar: AppBar(
@@ -43,11 +46,13 @@ class _CourseStudentState extends State<CourseStudent> {
                 ),
               ],
             ),
-            body: ListView.builder(
-              itemCount: studentUids.length,
-              itemBuilder: (context, index) {
-                return BasicStudentCard(color: colouringUtility.colouring(index), studentUid: studentUids[index]);
-              },
+            body: GridView.count(
+              crossAxisCount: 2,
+              shrinkWrap: true,
+              children: List.generate(
+                  ranges.length-1,
+                      (index) => GroupCard(studentUids: studentUids, begin: ranges[index], end: ranges[index+1], groupNumber: index+1)
+              ),
             ),
             drawer: Drawer(
               child: ListView(

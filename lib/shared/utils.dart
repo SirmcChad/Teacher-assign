@@ -58,5 +58,76 @@ class Utility {
     return colors[index % colors.length];
   }
 
+  int getGroupNumber(int index){
+    if (numberOfTasks == 1 && numberOfStudentsPerGroup == 1) {
+      return 1;
+    }
+
+    else if (numberOfTasks == 1) {
+      return index~/numberOfStudentsPerGroup;
+    }
+
+    else{
+      int base = totalStudents ~/ numberOfTasks;
+      int remainder = totalStudents % numberOfTasks;
+      if (index < (base + 1) * remainder){
+        return index ~/ (base + 1);
+      }
+      else {
+        return (index - (base + 1) * remainder) ~/ base + remainder;
+      }
+    }
+  }
+
+
+  // int getNumberOfDivisions(){
+  //   if (numberOfTasks == 1 && numberOfStudentsPerGroup == 1) {
+  //     return totalStudents;
+  //   }
+  //   else if (numberOfTasks == 1) {
+  //     return totalStudents~/numberOfStudentsPerGroup;
+  //   }
+  //   else{
+  //     return numberOfTasks;
+  //   }
+  // }
+
+  List<int> getRanges(){
+    List<int> result = [0];
+
+    if (numberOfTasks == 1) {
+      int studentsLeft = totalStudents;
+
+      for(int i = 1; i <= (totalStudents/numberOfStudentsPerGroup).ceil(); i++){
+        if(studentsLeft >= numberOfStudentsPerGroup){
+          result.add(result[i-1] + numberOfStudentsPerGroup);
+          studentsLeft-=numberOfStudentsPerGroup;
+        }
+
+        else{
+          result.add(result[i-1] + studentsLeft);
+        }
+      }
+    }
+
+    else{
+      int confirmedStudents = totalStudents~/numberOfTasks;
+      int remainder = totalStudents%numberOfTasks;
+
+      for(int i = 1; i <= numberOfTasks; i++){
+        if(remainder > 0){
+          result.add(result[i-1] + confirmedStudents + 1);
+          remainder--;
+        }
+
+        else{
+          result.add(result[i-1] + confirmedStudents);
+        }
+      }
+    }
+
+    return result;
+  }
+
 
 }
