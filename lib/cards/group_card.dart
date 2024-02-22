@@ -5,7 +5,8 @@
 //   List<String> studentUids;
 //   int begin;
 //   int end;
-//   GroupCard({Key? key, required this.studentUids, required this.begin, required this.end}) : super(key: key);
+//   int groupNumber;
+//   GroupCard({Key? key, required this.studentUids, required this.begin, required this.end, required this.groupNumber}) : super(key: key);
 //
 //   @override
 //   Widget build(BuildContext context) {
@@ -49,15 +50,24 @@ class GroupCard extends StatelessWidget {
             leading: Icon(Icons.group, color: Colors.white),
             title: Text('Group ${groupNumber}', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
           ),
-          // add some padding to the column
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Column(
-              children: List.generate(
-                  end - begin, // this is length mein friend
-                      (index) => BasicStudentCard(studentUid: studentUids[index + begin], color: Colors.blue.shade100)),
-            ),
+
+          Expanded(
+            child: ListView.builder(
+                itemCount: end - begin, // this is length mein friend
+                itemBuilder: (context, index){
+                  return BasicStudentCard(studentUid: studentUids[index + begin], color: Colors.blue.shade100);
+                },
+            )
           ),
+          // add some padding to the column
+          // Padding(
+          //   padding: EdgeInsets.all(8.0),
+          //   child: Column(
+          //     children: List.generate(
+          //         end - begin, // this is length mein friend
+          //             (index) => BasicStudentCard(studentUid: studentUids[index + begin], color: Colors.blue.shade100)),
+          //   ),
+          // ),
         ],
       ),
     );
