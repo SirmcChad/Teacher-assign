@@ -50,12 +50,11 @@ class GroupCard extends StatelessWidget {
             title: Text('Group ${groupNumber}', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
           ),
           // add some padding to the column
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Column(
-              children: List.generate(
-                  end - begin, // this is length mein friend
-                      (index) => BasicStudentCard(studentUid: studentUids[index + begin], color: Colors.blue.shade100)),
+          Expanded(
+            child: ListView(
+                children: List.generate(
+                    end - begin, // this is length mein friend
+                        (index) => BasicStudentCard(studentUid: studentUids[index + begin], color: Colors.blue.shade100)),
             ),
           ),
         ],
