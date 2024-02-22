@@ -1,3 +1,22 @@
+// import 'package:flutter/material.dart';
+// import 'package:teacher_assign/cards/basic_student_card.dart';
+//
+// class GroupCard extends StatelessWidget {
+//   List<String> studentUids;
+//   int begin;
+//   int end;
+//   GroupCard({Key? key, required this.studentUids, required this.begin, required this.end}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       child: Column(
+//         children: List.generate(end - begin, (index) => BasicStudentCard(studentUid: studentUids[index + begin], color: Colors.blue.shade100)),
+//       ),
+//     );
+//   }
+// }
+
 import 'package:flutter/material.dart';
 import 'package:teacher_assign/cards/basic_student_card.dart';
 
@@ -44,3 +63,6 @@ class GroupCard extends StatelessWidget {
     );
   }
 }
+
+
+
