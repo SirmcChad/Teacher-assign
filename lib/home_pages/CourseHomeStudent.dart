@@ -105,7 +105,8 @@ class _CourseStudentState extends State<CourseStudent> {
                 ],
               ),
               body: GridView.count(
-                crossAxisCount: 3,
+                scrollDirection: Axis.horizontal,
+                crossAxisCount: 2,
                 shrinkWrap: true,
                 children: List.generate(
                     ranges.length - 1,

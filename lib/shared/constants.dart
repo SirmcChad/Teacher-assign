@@ -15,7 +15,7 @@ Card cardCopyWith(Color color, Widget child){
       child: Center(
         child: Padding(
           // Add some padding to the text
-          padding: const EdgeInsets.all(15),
+          padding: const EdgeInsets.all(1),
           child: child
         ),
       ),
@@ -30,7 +30,7 @@ ListTile listTileCopyWith(String name){
     ),
     title: Text(name),
     // TODO: replace with student name
-    subtitle: Text('Enrolled on ${DateTime.now()}'),
+    // subtitle: Text('Enrolled on ${DateTime.now()}'),
     // TODO: replace with enrollment date
     trailing: IconButton(
       icon: Icon(Icons.message),
