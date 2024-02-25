@@ -96,17 +96,11 @@ class Utility {
     List<int> result = [0];
 
     if (numberOfTasks == 1) {
-      int studentsLeft = totalStudents;
-
-      for(int i = 1; i <= (totalStudents/numberOfStudentsPerGroup).ceil(); i++){
-        if(studentsLeft >= numberOfStudentsPerGroup){
-          result.add(result[i-1] + numberOfStudentsPerGroup);
-          studentsLeft-=numberOfStudentsPerGroup;
-        }
-
-        else{
-          result.add(result[i-1] + studentsLeft);
-        }
+      for (int i=numberOfStudentsPerGroup; i<=totalStudents; i+=numberOfStudentsPerGroup){
+        result.add(i);
+      }
+      if (totalStudents % numberOfStudentsPerGroup !=0){
+        result.add(totalStudents% numberOfStudentsPerGroup + result[result.length -1]);
       }
 
       /*
