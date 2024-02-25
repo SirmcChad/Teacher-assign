@@ -108,6 +108,21 @@ class Utility {
           result.add(result[i-1] + studentsLeft);
         }
       }
+
+      /*
+      TODO consider my implementation of the getRanges method
+      List<int> result = [];
+
+  for (int i=0;i<=totalStudents; i+=numberOfStudentsPerGroup){
+    result.add(i);
+  }
+  if (totalStudents % numberOfStudentsPerGroup !=0){
+    result.add(totalStudents% numberOfStudentsPerGroup + result[result.length -1]);
+  }
+
+
+  return result;
+       */
     }
 
     else{
