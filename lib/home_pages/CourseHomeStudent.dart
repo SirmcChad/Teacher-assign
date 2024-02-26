@@ -33,63 +33,127 @@ class _CourseStudentState extends State<CourseStudent> {
           List<int> ranges = colouringUtility.getRanges();
           print(ranges);
 
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(subject),
-              backgroundColor: Colors.blue,
-              actions: [
-                IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () {
-
-                  },
-                ),
-              ],
-            ),
-            body: GridView.count(
-              crossAxisCount: 2,
-              shrinkWrap: true,
-              children: List.generate(
-                  ranges.length-1,
-                      (index) => GroupCard(studentUids: studentUids, begin: ranges[index], end: ranges[index+1], groupNumber: index+1)
-              ),
-            ),
-            drawer: Drawer(
-              child: ListView(
-                children: [
-                  UserAccountsDrawerHeader(
-                    accountName: Text(teacherName),
-                    accountEmail: Text('teacher@example.com'),
-                    currentAccountPicture: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          'https://picsum.photos/200'),
-                    ),
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.home),
-                    title: Text('Home'),
-                    onTap: () {
-
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.settings),
-                    title: Text('Settings'),
-                    onTap: () {
-
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.logout),
-                    title: Text('Logout'),
-                    onTap: () {
+          if(numberOfTasks == 1 && studentsPerGroup == 1){
+            return Scaffold(
+              appBar: AppBar(
+                title: Text(subject),
+                backgroundColor: Colors.blue,
+                actions: [
+                  IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () {
 
                     },
                   ),
                 ],
               ),
-            ),
-          );
+              body: ListView.builder(
+                itemCount: studentUids.length,
+                itemBuilder: (context, index) {
+                  return BasicStudentCard(color: colouringUtility.colouring(index), studentUid: studentUids[index]);
+                },
+              ),
+              drawer: Drawer(
+                child: ListView(
+                  children: [
+                    UserAccountsDrawerHeader(
+                      accountName: Text(teacherName),
+                      accountEmail: Text('teacher@example.com'),
+                      currentAccountPicture: CircleAvatar(
+                        backgroundImage: NetworkImage(
+                            'https://picsum.photos/200'),
+                      ),
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.home),
+                      title: Text('Home'),
+                      onTap: () {
+
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.settings),
+                      title: Text('Settings'),
+                      onTap: () {
+
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.logout),
+                      title: Text('Logout'),
+                      onTap: () {
+
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+          else {
+            return Scaffold(
+              appBar: AppBar(
+                title: Text(subject),
+                backgroundColor: Colors.blue,
+                actions: [
+                  IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () {
+
+                    },
+                  ),
+                ],
+              ),
+              body: GridView.count(
+                scrollDirection: Axis.horizontal,
+                crossAxisCount: 2,
+                shrinkWrap: true,
+                children: List.generate(
+                    ranges.length - 1,
+                        (index) =>
+                        GroupCard(studentUids: studentUids,
+                            begin: ranges[index],
+                            end: ranges[index + 1],
+                            groupNumber: index + 1)
+                ),
+              ),
+              drawer: Drawer(
+                child: ListView(
+                  children: [
+                    UserAccountsDrawerHeader(
+                      accountName: Text(teacherName),
+                      accountEmail: Text('teacher@example.com'),
+                      currentAccountPicture: CircleAvatar(
+                        backgroundImage: NetworkImage(
+                            'https://picsum.photos/200'),
+                      ),
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.home),
+                      title: Text('Home'),
+                      onTap: () {
+
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.settings),
+                      title: Text('Settings'),
+                      onTap: () {
+
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.logout),
+                      title: Text('Logout'),
+                      onTap: () {
+
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
         } else {
           return Loading();
         }
