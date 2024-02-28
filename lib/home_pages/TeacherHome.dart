@@ -98,6 +98,35 @@ class _TeacherState extends State<Teacher> {
           //coursesList = snapshot.data!.courses.cast<CourseModel>();
           coursesList = snapshot.data!.courses;
         return Scaffold(
+          drawer: Drawer(
+
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(name),
+                      Text('Number of Courses: ${coursesList!.length}'),
+                    ],
+                  ),
+                ),
+                // Add a ListTile widget that logs out of the account when tapped.
+                ListTile(
+                  title: const Text('Log Out'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    AuthServices().signOutUser();
+                  },
+                ),
+                // Add more ListTile widgets for other actions or options here.
+              ],
+            ),
+          ),
           appBar:AppBar(
             title: Text('Welcome ${snapshot.data!.name}!'),
             titleTextStyle: TextStyle(
@@ -125,9 +154,11 @@ class _TeacherState extends State<Teacher> {
               child: Row(
                 children: [
                   Text('here are your courses:'),
-                  Column(
+                  Expanded(
+                    child: Column(
 
-                    children: coursesList!.map((e) => CourseCard(courseUid: e,isTeacher: true,)).toList(),
+                      children: coursesList!.map((e) => CourseCard(courseUid: e,isTeacher: true,)).toList(),
+                    ),
                   ),
                 ],
               ),

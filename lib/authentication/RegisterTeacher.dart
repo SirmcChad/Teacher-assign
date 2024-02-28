@@ -33,15 +33,13 @@ class _RegisterTeacherState extends State<RegisterTeacher> {
       appBar: AppBar(
         title: Text('Sign Up Teacher'),
         actions: [
-          Row(
-            children: [
-              IconButton(
-                  icon: Icon(Icons.person),
-                  onPressed: () {widget.toggleView();}
-              ),
-              Text("Sign In")
-            ],
-          )
+          TextButton.icon(
+            onPressed: () {
+              widget.toggleView();
+            },
+            icon: Icon(Icons.person,color: Colors.white,),
+            label: Text('Sign In',style: TextStyle(color: Colors.white),),
+          ),
         ],
 
       ),

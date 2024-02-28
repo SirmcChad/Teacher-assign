@@ -10,6 +10,8 @@ import 'package:teacher_assign/models/StudentModel.dart';
 import 'package:teacher_assign/cards/course_card.dart';
 import 'package:teacher_assign/models/CourseModel.dart';
 
+import '../services/auth_services.dart';
+
 class Student extends StatefulWidget {
   const Student({Key? key}) : super(key: key);
 
@@ -175,6 +177,35 @@ class _StudentState extends State<Student> {
         if (snapshot.hasData){
           coursesList = snapshot.data!.courses;
           return Scaffold(
+            drawer: Drawer(
+
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  DrawerHeader(
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(snapshot.data!.name),
+                        Text('Number of Courses: ${coursesList!.length}'),
+                      ],
+                    ),
+                  ),
+                  // Add a ListTile widget that logs out of the account when tapped.
+                  ListTile(
+                    title: const Text('Log Out'),
+                    onTap: () {
+                      Navigator.pop(context);
+                      AuthServices().signOutUser();
+                    },
+                  ),
+                  // Add more ListTile widgets for other actions or options here.
+                ],
+              ),
+            ),
             appBar: AppBar(
               title: Text('Welcome ${snapshot.data!.name}!'),
               titleTextStyle: TextStyle(
@@ -205,7 +236,6 @@ class _StudentState extends State<Student> {
                       Text('here are your courses:'),
                       Expanded(
                         child: Column(
-                          //TODO, change the course card so that it takes a course uid
                           children: coursesList.map((e) => CourseCard(courseUid: e,isTeacher: false,)).toList(),
                         ),
                       ),
