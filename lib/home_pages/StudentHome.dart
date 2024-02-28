@@ -104,55 +104,55 @@ class _StudentState extends State<Student> {
     );
   }
 
-  void addCourse(BuildContext context){
-    String courseName = 'default name';
-    final TextEditingController _textFieldController = TextEditingController();
-
-
-    showDialog(context: context, builder: (BuildContext context){
-      final user = Provider.of<User?>(context);
-      return AlertDialog(
-        title: Text('create a course'),
-        content: Column(
-          children: [
-            TextField(
-              controller: _textFieldController,
-              decoration: InputDecoration(
-                hintText: 'Enter course name',
-                suffixIcon: ElevatedButton(
-                  onPressed: ()async{
-                    try{
-                      String courseUid = _textFieldController.text;
-                      bool exists = await courseServices.courseExists(courseUid);
-                      if(exists){
-                        setState(() {
-                          studentServices.addCourseToStudent(user!.uid,courseUid);
-                          courseServices.addStudentToCourse(courseUid, user!.uid);
-                          Navigator.pop(context);
-                        });
-                      }
-
-                      else{
-                        print("Does not exist");
-                      }
-                    } catch(e){
-                      print("Error");
-                    }
-                  },
-                  child: Text("Add course")
-                )
-              ),
-              onChanged: (value){
-                courseName = value;
-              },
-            )
-          ],
-        ),
-
-      );
-    });
-
-  }
+  // void addCourse(BuildContext context){
+  //   String courseName = 'default name';
+  //   final TextEditingController _textFieldController = TextEditingController();
+  //
+  //
+  //   showDialog(context: context, builder: (BuildContext context){
+  //     final user = Provider.of<User?>(context);
+  //     return AlertDialog(
+  //       title: Text('create a course'),
+  //       content: Column(
+  //         children: [
+  //           TextField(
+  //             controller: _textFieldController,
+  //             decoration: InputDecoration(
+  //               hintText: 'Enter course name',
+  //               suffixIcon: ElevatedButton(
+  //                 onPressed: ()async{
+  //                   try{
+  //                     String courseUid = _textFieldController.text;
+  //                     bool exists = await courseServices.courseExists(courseUid);
+  //                     if(exists){
+  //                       setState(() {
+  //                         studentServices.addCourseToStudent(user!.uid,courseUid);
+  //                         courseServices.addStudentToCourse(courseUid, user!.uid);
+  //                         Navigator.pop(context);
+  //                       });
+  //                     }
+  //
+  //                     else{
+  //                       print("Does not exist");
+  //                     }
+  //                   } catch(e){
+  //                     print("Error");
+  //                   }
+  //                 },
+  //                 child: Text("Add course")
+  //               )
+  //             ),
+  //             onChanged: (value){
+  //               courseName = value;
+  //             },
+  //           )
+  //         ],
+  //       ),
+  //
+  //     );
+  //   });
+  //
+  // }
   // List<CourseModel> fromListOfJSON( List<Map<String,dynamic>> mapList){
   //   List<CourseModel> result = [];
   //   for (int i =0; i< mapList.length;i++){
@@ -203,9 +203,11 @@ class _StudentState extends State<Student> {
                   child: Row(
                     children: [
                       Text('here are your courses:'),
-                      Column(
-                        //TODO, change the course card so that it takes a course uid
-                        children: coursesList.map((e) => CourseCard(courseUid: e,isTeacher: false,)).toList(),
+                      Expanded(
+                        child: Column(
+                          //TODO, change the course card so that it takes a course uid
+                          children: coursesList.map((e) => CourseCard(courseUid: e,isTeacher: false,)).toList(),
+                        ),
                       ),
                     ],
                   ),
