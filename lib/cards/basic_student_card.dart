@@ -5,7 +5,8 @@ import 'package:teacher_assign/shared/constants.dart';
 class BasicStudentCard extends StatelessWidget {
   final String studentUid;
   final Color color;
-  const BasicStudentCard({super.key, required this.studentUid, required this.color});
+  final bool isMe;
+  const BasicStudentCard({super.key, required this.studentUid, required this.color, required this.isMe});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class BasicStudentCard extends StatelessWidget {
             Map<String, dynamic>? studentData = snapshot.data!.data()! as Map<String, dynamic>?;
 
             String studentName = studentData?['name'];
-            return listTileCopyWith(studentName);
+            return listTileCopyWith(studentName, isMe);
           }
           else{
             return ListTile(title: Text('some error occured'));

@@ -15,7 +15,7 @@ class StudentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if(pastName != null){
-      return cardCopyWith(color, listTileCopyWith(pastName!));
+      return cardCopyWith(color, listTileCopyWith(pastName!, false));
     }
     return cardCopyWith(color,  FutureBuilder<DocumentSnapshot>(
       future: DatabaseServicesStudent().studentCollection.doc(studentUid).get(),
@@ -29,7 +29,7 @@ class StudentCard extends StatelessWidget {
           String studentName = studentData?['name'];
           changeName(studentName,index);
 
-          return listTileCopyWith(studentName);
+          return listTileCopyWith(studentName, false);
         }
         else{
           return ListTile(title: Text('some error occured'));
