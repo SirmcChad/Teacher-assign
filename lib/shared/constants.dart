@@ -22,21 +22,36 @@ Card cardCopyWith(Color color, Widget child){
   );
 }
 
-ListTile listTileCopyWith(String name){
-  return ListTile(
-    leading: CircleAvatar(
-      backgroundImage: NetworkImage(
-          'https://picsum.photos/200'), // TODO: replace with student profile image
-    ),
-    title: Text(name),
-    // TODO: replace with student name
-    // subtitle: Text('Enrolled on ${DateTime.now()}'),
-    // TODO: replace with enrollment date
-    trailing: IconButton(
-      icon: Icon(Icons.message),
-      onPressed: () {
-        // TODO: implement message functionality
-      },
-    ),
-  );
+ListTile listTileCopyWith(String name, bool isMe){
+  if(isMe){
+    return ListTile(
+      leading: CircleAvatar(
+        backgroundImage: NetworkImage(
+            'https://picsum.photos/200'), // TODO: replace with student profile image
+      ),
+      title: Text(name),
+      // TODO: replace with student name
+      // subtitle: Text('Enrolled on ${DateTime.now()}'),
+      // TODO: replace with enrollment date
+      trailing:IconButton(
+        icon:Icon(Icons.star),
+        onPressed: () {
+          // TODO: implement message functionality
+        },
+      ),
+    );
+  }
+  else{
+    return ListTile(
+      leading: CircleAvatar(
+        backgroundImage: NetworkImage(
+            'https://picsum.photos/200'), // TODO: replace with student profile image
+      ),
+      title: Text(name),
+      // TODO: replace with student name
+      // subtitle: Text('Enrolled on ${DateTime.now()}'),
+      // TODO: replace with enrollment date
+
+    );
+  }
 }

@@ -6,6 +6,8 @@ import 'package:teacher_assign/shared/custom_loading.dart';
 import 'package:teacher_assign/cards/student_card.dart';
 import 'package:teacher_assign/shared/utils.dart';
 import 'package:teacher_assign/cards/group_card.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class CourseStudent extends StatefulWidget {
   String courseUid;
@@ -17,8 +19,23 @@ class CourseStudent extends StatefulWidget {
 
 class _CourseStudentState extends State<CourseStudent> {
 
+  bool isMyGroup(List<String> studentUids, String uid, int groupIndex, Utility utils){
+    List<int> ranges = utils.getRanges();
+    bool isMine = false;
+
+    for(int i = ranges[groupIndex]; i < ranges[groupIndex+1]; i++){
+      if(studentUids[i] == uid){
+        isMine = true;
+        break;
+      }
+    }
+
+    return isMine;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User?>(context);
     return StreamBuilder<CourseModel?>(
       stream: DatabaseServicesCourses().getCourseData(widget.courseUid),
       builder: (context, snapshot) {
@@ -50,7 +67,7 @@ class _CourseStudentState extends State<CourseStudent> {
               body: ListView.builder(
                 itemCount: studentUids.length,
                 itemBuilder: (context, index) {
-                  return BasicStudentCard(color: colouringUtility.colouring(index), studentUid: studentUids[index]);
+                  return BasicStudentCard(color: colouringUtility.colouring(index), studentUid: studentUids[index], isMe: false,);
                 },
               ),
               drawer: Drawer(
@@ -114,7 +131,10 @@ class _CourseStudentState extends State<CourseStudent> {
                         GroupCard(studentUids: studentUids,
                             begin: ranges[index],
                             end: ranges[index + 1],
-                            groupNumber: index + 1)
+                            groupNumber: index + 1,
+                            isMyGroup: isMyGroup(studentUids, user!.uid, index, colouringUtility),
+                            myUid: user!.uid,
+                        )
                 ),
               ),
               drawer: Drawer(

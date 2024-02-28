@@ -25,7 +25,9 @@ class GroupCard extends StatelessWidget {
   int begin;
   int end;
   int groupNumber;
-  GroupCard({Key? key, required this.studentUids, required this.begin, required this.end, required this.groupNumber}) : super(key: key);
+  bool isMyGroup;
+  String myUid;
+  GroupCard({Key? key, required this.studentUids, required this.begin, required this.end, required this.groupNumber, required this.isMyGroup, required this.myUid}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class GroupCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         gradient: LinearGradient(
-          colors: [Colors.blue.shade100, Colors.blue.shade300],
+          colors: isMyGroup ? [Colors.green.shade100, Colors.green.shade300] : [Colors.blue.shade100, Colors.blue.shade300],
           stops: [0.5, 1.0],
         ),
       ),
@@ -54,7 +56,7 @@ class GroupCard extends StatelessWidget {
             child: ListView(
                 children: List.generate(
                     end - begin, // this is length mein friend
-                        (index) => BasicStudentCard(studentUid: studentUids[index + begin], color: Colors.blue.shade100)),
+                        (index) => BasicStudentCard(studentUid: studentUids[index + begin], color: studentUids[index + begin] == myUid ? Colors.green.shade100 : Colors.blue.shade100, isMe: studentUids[index + begin] == myUid,)),
             ),
           ),
         ],
