@@ -142,7 +142,6 @@ class _CourseTeacherState extends State<CourseTeacher> {
               if(i >= names.length){
                 names.add(null);
               }
-
             }
 
             return Scaffold(
@@ -150,18 +149,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
                 title: Text(subject),
                 backgroundColor: Colors.blue,
                 actions: [
-                  IconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: () {
 
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.more_vert),
-                    onPressed: () {
-
-                    },
-                  ),
                 ],
               ),
               body: ReorderableListView(
@@ -191,14 +179,14 @@ class _CourseTeacherState extends State<CourseTeacher> {
                       // A drawer header with a circle avatar and the teacher name
                       UserAccountsDrawerHeader(
                         accountName: Text(
-                          'John Smith',
+                          teacherName,
                           style: TextStyle(fontSize: 24.0),
                         ),
                         accountEmail: Text('john.smith@example.com'),
                         currentAccountPicture: CircleAvatar(
                           backgroundColor: Colors.white,
                           child: Text(
-                            'J',
+                            '${teacherName[0]}',
                             style: TextStyle(fontSize: 40.0, color: Colors.blue),
                           ),
                         ),
@@ -247,7 +235,8 @@ class _CourseTeacherState extends State<CourseTeacher> {
                           style: TextStyle(fontSize: 18.0),
                         ),
                         onTap: () {
-                          // TODO: implement logout functionality
+                          Navigator.pop(context);
+                          Navigator.pop(context);
                         },
                       ),
                     ],

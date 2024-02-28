@@ -99,31 +99,55 @@ class _TeacherState extends State<Teacher> {
           coursesList = snapshot.data!.courses;
         return Scaffold(
           drawer: Drawer(
-
             child: ListView(
               padding: EdgeInsets.zero,
               children: [
-                DrawerHeader(
+                // use the UserAccountsDrawerHeader widget
+                UserAccountsDrawerHeader(
+                  accountName: Text(snapshot.data!.name),
+                  accountEmail: Text('Number of Courses: ${coursesList!.length}'),
+                  // add an account picture
+                  currentAccountPicture: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        'https://picsum.photos/200'),
+                  ),
+                  // add a background image
                   decoration: BoxDecoration(
-                    color: Colors.blue,
+                    image: DecorationImage(
+                      image: NetworkImage(
+                          'https://picsum.photos/800/400'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  // add other icons
+
+                ),
+                // use the ListTileTheme widget
+                ListTileTheme(
+                  // change the text color and style
+                  textColor: Colors.blue,
+                  style: ListTileStyle.drawer,
+                  // change the icon color and shape
+                  iconColor: Colors.blue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(name),
-                      Text('Number of Courses: ${coursesList!.length}'),
+
+                      // use the Divider widget
+                      Divider(),
+                      ListTile(
+                        leading: Icon(Icons.logout),
+                        title: Text('Log Out'),
+                        onTap: () {
+                          Navigator.pop(context);
+                          AuthServices().signOutUser();
+                        },
+                      ),
                     ],
                   ),
                 ),
-                // Add a ListTile widget that logs out of the account when tapped.
-                ListTile(
-                  title: const Text('Log Out'),
-                  onTap: () {
-                    Navigator.pop(context);
-                    AuthServices().signOutUser();
-                  },
-                ),
-                // Add more ListTile widgets for other actions or options here.
               ],
             ),
           ),
