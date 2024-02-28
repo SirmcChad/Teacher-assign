@@ -10,6 +10,8 @@ import 'package:teacher_assign/models/StudentModel.dart';
 import 'package:teacher_assign/cards/course_card.dart';
 import 'package:teacher_assign/models/CourseModel.dart';
 
+import '../services/auth_services.dart';
+
 class Student extends StatefulWidget {
   const Student({Key? key}) : super(key: key);
 
@@ -175,6 +177,60 @@ class _StudentState extends State<Student> {
         if (snapshot.hasData){
           coursesList = snapshot.data!.courses;
           return Scaffold(
+            drawer: Drawer(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  // use the UserAccountsDrawerHeader widget
+                  UserAccountsDrawerHeader(
+                    accountName: Text(snapshot.data!.name),
+                    accountEmail: Text('Number of Courses: ${coursesList!.length}'),
+                    // add an account picture
+                    currentAccountPicture: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                          'https://picsum.photos/200'),
+                    ),
+                    // add a background image
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(
+                            'https://picsum.photos/800/400'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    // add other icons
+
+                  ),
+                  // use the ListTileTheme widget
+                  ListTileTheme(
+                    // change the text color and style
+                    textColor: Colors.blue,
+                    style: ListTileStyle.drawer,
+                    // change the icon color and shape
+                    iconColor: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      children: [
+
+                        // use the Divider widget
+                        Divider(),
+                        ListTile(
+                          leading: Icon(Icons.logout),
+                          title: Text('Log Out'),
+                          onTap: () {
+                            Navigator.pop(context);
+                            AuthServices().signOutUser();
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
             appBar: AppBar(
               title: Text('Welcome ${snapshot.data!.name}!'),
               titleTextStyle: TextStyle(
@@ -205,7 +261,6 @@ class _StudentState extends State<Student> {
                       Text('here are your courses:'),
                       Expanded(
                         child: Column(
-                          //TODO, change the course card so that it takes a course uid
                           children: coursesList.map((e) => CourseCard(courseUid: e,isTeacher: false,)).toList(),
                         ),
                       ),
