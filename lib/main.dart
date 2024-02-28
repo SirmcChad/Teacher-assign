@@ -22,3 +22,11 @@ void main() async {
     ),
   ));
 }
+
+/*
+TODO 1- courses joined by name instead of being joined by UID
+TODO 2- singing out users
+TODO 3- crown of users
+TODO 4- UI improvements including maybe animations.
+TODO 5- modifying firebase firestore rules.
+ */
