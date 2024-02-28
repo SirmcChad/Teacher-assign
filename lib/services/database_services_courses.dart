@@ -71,4 +71,12 @@ class DatabaseServicesCourses{
   Stream<CourseModel> getCourseData (String uid) {
     return courseCollection.doc(uid).snapshots().map(_courseModelFromSnapshot);
   }
+
+  Future<List<CourseModel>> getAllData() async {
+    QuerySnapshot querySnapshot = await courseCollection.get();
+
+    return querySnapshot.docs.map((doc) {
+      return _courseModelFromSnapshot(doc);
+    }).toList();
+  }
 }

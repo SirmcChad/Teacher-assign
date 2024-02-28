@@ -15,7 +15,7 @@ Card cardCopyWith(Color color, Widget child){
       child: Center(
         child: Padding(
           // Add some padding to the text
-          padding: const EdgeInsets.all(1),
+          padding: const EdgeInsets.all(5),
           child: child
         ),
       ),
