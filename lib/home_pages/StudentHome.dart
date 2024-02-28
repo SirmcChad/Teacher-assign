@@ -20,6 +20,89 @@ class Student extends StatefulWidget {
 class _StudentState extends State<Student> {
   DatabaseServicesCourses courseServices = DatabaseServicesCourses();
   DatabaseServicesStudent studentServices = DatabaseServicesStudent();
+  String searchText = '';
+
+  List<CourseModel> filteredCourses(List<CourseModel> allCourses, String searchText) {
+
+    return allCourses.where((course) {
+      String courseNameLower = course.courseSubject.toLowerCase();
+      String searchTextLower = searchText.toLowerCase();
+      return courseNameLower.contains(searchTextLower);
+    }).toList();
+  }
+
+  void _showCourseSearchDialog(BuildContext context) async{
+    List<CourseModel> allCourses = await courseServices.getAllData();
+
+
+    showDialog(
+      context: context,
+      builder: (context){
+        final user = Provider.of<User?>(context);
+        return AlertDialog(
+          title: Text('Search Courses'),
+          content: StatefulBuilder(builder: (BuildContext context, StateSetter setState){
+            return Container(
+              height: 300,
+              width: 300,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextFormField(
+                    initialValue: searchText,
+                    onChanged: (value) {
+                      setState(() {
+                        searchText = value;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'Enter course name',
+                      prefixIcon: Icon(Icons.search),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: filteredCourses(allCourses, searchText).length,
+                      itemBuilder: (context, index) {
+                        print(searchText);
+                        CourseModel course = filteredCourses(allCourses, searchText)[index];
+                        print(course.numberOfStudents);
+                        print(course.teacherName);
+                        print(course.students);
+                        return ListTile(
+                          title: Text(course.courseSubject),
+                          subtitle: Text('Teacher: ${course.teacherName}'),
+                          onTap: () {
+                            // Navigate to course details screen (implement this).
+                            // Todo Provide an option for the user to join the course.
+                            setState(() {
+                              studentServices.addCourseToStudent(user!.uid,course.uid);
+                              courseServices.addStudentToCourse(course.uid, user.uid);
+                              Navigator.pop(context);
+                            });
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   void addCourse(BuildContext context){
     String courseName = 'default name';
@@ -107,7 +190,7 @@ class _StudentState extends State<Student> {
                   color: Colors.red[300],
                   onPressed: () {
                     setState(() {
-                      addCourse(context);
+                      _showCourseSearchDialog(context);
                     });
                   },
                 ),
