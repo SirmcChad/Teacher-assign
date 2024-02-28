@@ -182,7 +182,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
                           teacherName,
                           style: TextStyle(fontSize: 24.0),
                         ),
-                        accountEmail: Text('john.smith@example.com'),
+                        accountEmail: Text(''),
                         currentAccountPicture: CircleAvatar(
                           backgroundColor: Colors.white,
                           child: Text(

@@ -72,35 +72,53 @@ class _CourseStudentState extends State<CourseStudent> {
               ),
               drawer: Drawer(
                 child: ListView(
+                  padding: EdgeInsets.zero,
                   children: [
+                    // use the UserAccountsDrawerHeader widget
                     UserAccountsDrawerHeader(
-                      accountName: Text(teacherName),
-                      accountEmail: Text('teacher@example.com'),
+                      accountName: Text('Teacher Name: ${teacherName}'),
+                      accountEmail: Text('Number of students: ${studentUids!.length}'),
+                      // add an account picture
                       currentAccountPicture: CircleAvatar(
                         backgroundImage: NetworkImage(
                             'https://picsum.photos/200'),
                       ),
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.home),
-                      title: Text('Home'),
-                      onTap: () {
+                      // add a background image
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              'https://picsum.photos/800/400'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      // add other icons
 
-                      },
                     ),
-                    ListTile(
-                      leading: Icon(Icons.settings),
-                      title: Text('Settings'),
-                      onTap: () {
+                    // use the ListTileTheme widget
+                    ListTileTheme(
+                      // change the text color and style
+                      textColor: Colors.blue,
+                      style: ListTileStyle.drawer,
+                      // change the icon color and shape
+                      iconColor: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Column(
+                        children: [
 
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.logout),
-                      title: Text('Logout'),
-                      onTap: () {
-
-                      },
+                          // use the Divider widget
+                          Divider(),
+                          ListTile(
+                            leading: Icon(Icons.logout),
+                            title: Text('Log Out'),
+                            onTap: () {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -139,35 +157,53 @@ class _CourseStudentState extends State<CourseStudent> {
               ),
               drawer: Drawer(
                 child: ListView(
+                  padding: EdgeInsets.zero,
                   children: [
+                    // use the UserAccountsDrawerHeader widget
                     UserAccountsDrawerHeader(
-                      accountName: Text(teacherName),
-                      accountEmail: Text('teacher@example.com'),
+                      accountName: Text('Teacher Name: ${teacherName}'),
+                      accountEmail: Text('Number of students: ${studentUids!.length}'),
+                      // add an account picture
                       currentAccountPicture: CircleAvatar(
                         backgroundImage: NetworkImage(
                             'https://picsum.photos/200'),
                       ),
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.home),
-                      title: Text('Home'),
-                      onTap: () {
+                      // add a background image
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              'https://picsum.photos/800/400'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      // add other icons
 
-                      },
                     ),
-                    ListTile(
-                      leading: Icon(Icons.settings),
-                      title: Text('Settings'),
-                      onTap: () {
+                    // use the ListTileTheme widget
+                    ListTileTheme(
+                      // change the text color and style
+                      textColor: Colors.blue,
+                      style: ListTileStyle.drawer,
+                      // change the icon color and shape
+                      iconColor: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Column(
+                        children: [
 
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.logout),
-                      title: Text('Logout'),
-                      onTap: () {
-
-                      },
+                          // use the Divider widget
+                          Divider(),
+                          ListTile(
+                            leading: Icon(Icons.logout),
+                            title: Text('Log Out'),
+                            onTap: () {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
