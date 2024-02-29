@@ -42,6 +42,7 @@ class _StudentState extends State<Student> {
       builder: (context){
         final user = Provider.of<User?>(context);
         return AlertDialog(
+          shadowColor: Colors.white30,
           title: Text('Search Courses'),
           content: StatefulBuilder(builder: (BuildContext context, StateSetter setState){
             return Container(
@@ -64,28 +65,31 @@ class _StudentState extends State<Student> {
                   ),
                   SizedBox(height: 16),
                   Expanded(
-                    child: ListView.builder(
-                      itemCount: filteredCourses(allCourses, searchText).length,
-                      itemBuilder: (context, index) {
-                        print(searchText);
-                        CourseModel course = filteredCourses(allCourses, searchText)[index];
-                        print(course.numberOfStudents);
-                        print(course.teacherName);
-                        print(course.students);
-                        return ListTile(
-                          title: Text(course.courseSubject),
-                          subtitle: Text('Teacher: ${course.teacherName}'),
-                          onTap: () {
-                            // Navigate to course details screen (implement this).
-                            // Todo Provide an option for the user to join the course.
-                            setState(() {
-                              studentServices.addCourseToStudent(user!.uid,course.uid);
-                              courseServices.addStudentToCourse(course.uid, user.uid);
-                              Navigator.pop(context);
-                            });
-                          },
-                        );
-                      },
+                    child: Container(
+                      color: Colors.white.withRed(245),
+                      child: ListView.builder(
+                        itemCount: filteredCourses(allCourses, searchText).length,
+                        itemBuilder: (context, index) {
+                          print(searchText);
+                          CourseModel course = filteredCourses(allCourses, searchText)[index];
+                          print(course.numberOfStudents);
+                          print(course.teacherName);
+                          print(course.students);
+                          return ListTile(
+                            title: Text(course.courseSubject),
+                            subtitle: Text('Teacher: ${course.teacherName}'),
+                            onTap: () {
+                              // Navigate to course details screen (implement this).
+                              // Todo Provide an option for the user to join the course.
+                              setState(() {
+                                studentServices.addCourseToStudent(user!.uid,course.uid);
+                                courseServices.addStudentToCourse(course.uid, user.uid);
+                                Navigator.pop(context);
+                              });
+                            },
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ],
