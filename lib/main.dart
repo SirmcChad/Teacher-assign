@@ -30,7 +30,7 @@ TODO 3- crown of users DONE!
 TODO 4- UI improvements including maybe animations.
 TODO 5- modifying firebase firestore rules.
 TODO 6- sign out user hitbox DONE!
-TODO 7- get away from the course home.
-TODO 8- removing a subscriber from a course
-TODO 9- removing a course from the course home page.
+TODO 7- un enroll in a course DONE!
+TODO 8- banning a student from a course
+TODO 9- removing a course from the course home page. DONE!
  */
