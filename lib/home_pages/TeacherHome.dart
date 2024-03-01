@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:teacher_assign/cards/course_card_teacher.dart';
 import 'package:teacher_assign/models/CourseModel.dart';
 import 'package:teacher_assign/services/auth_services.dart';
 import 'package:teacher_assign/cards/course_card.dart';
@@ -104,7 +105,7 @@ class _TeacherState extends State<Teacher> {
               children: [
                 // use the UserAccountsDrawerHeader widget
                 UserAccountsDrawerHeader(
-                  accountName: Text(snapshot.data!.name),
+                  accountName: Text(name),
                   accountEmail: Text('Number of Courses: ${coursesList!.length}'),
                   // add an account picture
                   currentAccountPicture: CircleAvatar(
@@ -177,11 +178,33 @@ class _TeacherState extends State<Teacher> {
             child: Center(
               child: Row(
                 children: [
-                  Text('here are your courses:'),
+                  Text('Here are your courses:'),
                   Expanded(
-                    child: Column(
-
-                      children: coursesList!.map((e) => CourseCard(courseUid: e,isTeacher: true,)).toList(),
+                    // use a GridView widget instead of a Column widget
+                    child: GridView.builder(
+                      // set the scroll direction to horizontal
+                      scrollDirection: Axis.horizontal,
+                      // set the cross axis count to 2
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        // set the aspect ratio of each item to 1.5
+                        childAspectRatio: 1.5,
+                      ),
+                      // set the item count to the length of the courses list
+                      itemCount: coursesList!.length,
+                      // return a Card widget for each item
+                      itemBuilder: (context, index) {
+                        return Card(
+                          // set the shape property to customize the border radius
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          // wrap the CourseCardTeacher widget with the Card widget
+                          child: CourseCardTeacher(
+                              courseUid: coursesList![index],
+                              teacherUid: user.uid),
+                        );
+                      },
                     ),
                   ),
                 ],
