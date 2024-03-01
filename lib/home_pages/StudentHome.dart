@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:teacher_assign/cards/course_card_student.dart';
 import 'package:teacher_assign/services/database_services_courses.dart';
 import 'package:teacher_assign/services/database_services_student.dart';
 import 'package:teacher_assign/shared/custom_loading.dart';
@@ -261,7 +262,7 @@ class _StudentState extends State<Student> {
                       Text('here are your courses:'),
                       Expanded(
                         child: Column(
-                          children: coursesList.map((e) => CourseCard(courseUid: e,isTeacher: false,)).toList(),
+                          children: coursesList.map((e) => CourseCardStudent(courseUid: e,studentUid: user.uid,)).toList(),
                         ),
                       ),
                     ],

@@ -14,6 +14,10 @@ class DatabaseServicesStudent{
     await studentCollection.doc(uid).update({'courses': FieldValue.arrayUnion([courseUid]) });
   }
 
+  Future removeCourseFromStudent(String studentUid, String courseUid) async{
+    await studentCollection.doc(studentUid).update({'courses': FieldValue.arrayRemove([courseUid]) });
+  }
+
   Future newStudent(String uid, String name)async{
     List<String> empty = [];
     return await studentCollection.doc(uid).set(

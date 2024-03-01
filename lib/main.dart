@@ -26,9 +26,11 @@ void main() async {
 /*
 TODO 1- courses joined by name instead of being joined by UID DONE!
 TODO 2- singing out users DONE!
-TODO 3- crown of users
+TODO 3- crown of users DONE!
 TODO 4- UI improvements including maybe animations.
 TODO 5- modifying firebase firestore rules.
-TODO 6- sign out user hitbox
+TODO 6- sign out user hitbox DONE!
 TODO 7- get away from the course home.
+TODO 8- removing a subscriber from a course
+TODO 9- removing a course from the course home page.
  */

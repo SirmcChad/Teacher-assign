@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:teacher_assign/cards/course_card_teacher.dart';
 import 'package:teacher_assign/models/CourseModel.dart';
 import 'package:teacher_assign/services/auth_services.dart';
 import 'package:teacher_assign/cards/course_card.dart';
@@ -181,7 +182,7 @@ class _TeacherState extends State<Teacher> {
                   Expanded(
                     child: Column(
 
-                      children: coursesList!.map((e) => CourseCard(courseUid: e,isTeacher: true,)).toList(),
+                      children: coursesList!.map((e) => CourseCardTeacher(courseUid: e,teacherUid: user.uid,)).toList(),
                     ),
                   ),
                 ],

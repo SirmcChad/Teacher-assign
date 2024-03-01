@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:teacher_assign/models/CourseModel.dart';
 import 'package:teacher_assign/models/StudentModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,6 +13,19 @@ class DatabaseServicesCourses{
     // StudentModel student = _studentModelFromSnapshot(studentSnapshot);
     // final json = student.toJSON();
     await courseCollection.doc(uid).update({'students': FieldValue.arrayUnion([studentUid]) });
+  }
+
+  Future removeStudentFromCourse(String courseUid, String studentUid) async{
+    await courseCollection.doc(courseUid).update({'students': FieldValue.arrayRemove([studentUid])});
+  }
+
+  Future removeCourse(String courseUid)async{
+    await courseCollection.doc(courseUid).delete();
+  }
+
+  Future<List<String>> getStudentUids(String courseUid)async{
+    DocumentSnapshot snapshot =  await courseCollection.doc(courseUid).get();
+    return snapshot.get('students').cast<String>();
   }
 
   Future changeStudents(String uid,List<String> studentUids) async {
