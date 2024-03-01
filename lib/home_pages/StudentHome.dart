@@ -34,6 +34,52 @@ class _StudentState extends State<Student> {
     }).toList();
   }
 
+  void _showEnterPasswordDialog(BuildContext context, String courseUid){
+    String password = '';
+
+    showDialog(
+        context: context,
+        builder: (context){
+          final user = Provider.of<User?>(context);
+
+          return AlertDialog(
+            title: Text('Password Required'),
+            content: Column(
+              children: [
+                TextField(
+                  onChanged: (value){
+                    password = value;
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'Enter Password'
+                  ),
+                ),
+                const SizedBox(height: 25,),
+                ElevatedButton(
+                    onPressed: ()async{
+                      try{
+                        if(await courseServices.checkPassword(courseUid, password)){
+                          studentServices.addCourseToStudent(user!.uid,courseUid);
+                          courseServices.addStudentToCourse(courseUid, user.uid);
+                          Navigator.pop(context);
+                        }
+                        else{
+                          print('Wrong Password');
+                          //Todo: Implement wrong password message
+                        }
+                      }catch(e){
+                        print('error');
+                        //Todo: Implement error message
+                      }
+                    },
+                    child: Text('Join Course'))
+              ],
+            ),
+          );
+        }
+    );
+  }
+
   void _showCourseSearchDialog(BuildContext context) async{
     List<CourseModel> allCourses = await courseServices.getAllData();
 
@@ -83,9 +129,15 @@ class _StudentState extends State<Student> {
                               // Navigate to course details screen (implement this).
                               // Todo Provide an option for the user to join the course.
                               setState(() {
-                                studentServices.addCourseToStudent(user!.uid,course.uid);
-                                courseServices.addStudentToCourse(course.uid, user.uid);
-                                Navigator.pop(context);
+                                if(course.password == ''){
+                                  studentServices.addCourseToStudent(user!.uid,course.uid);
+                                  courseServices.addStudentToCourse(course.uid, user.uid);
+                                  Navigator.pop(context);
+                                }
+
+                                else{
+                                  _showEnterPasswordDialog(context, course.uid);
+                                }
                               });
                             },
                           );

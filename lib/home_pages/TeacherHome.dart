@@ -30,6 +30,7 @@ class _TeacherState extends State<Teacher> {
 
   void addCourse(BuildContext context,String teacherName){
     String courseName = 'default name';
+    String password = '';
 
 
     showDialog(context: context, builder: (BuildContext context){
@@ -40,15 +41,22 @@ class _TeacherState extends State<Teacher> {
         content: Column(
           children: [
             TextField(
-              decoration: InputDecoration(labelText: 'course name'),
+              decoration: InputDecoration(labelText: 'Course name'),
               onChanged: (value){
                 courseName = value;
+              },
+            ),
+            SizedBox(height: 15,),
+            TextField(
+              decoration: InputDecoration(labelText: 'Password', hintText: 'Leave Blank For no Password'),
+              onChanged: (value){
+                password = value;
               },
             ),
             SizedBox(height: 25,),
             ElevatedButton(
               onPressed: () async{
-                String courseuid = await DatabaseServicesCourses().newCourse(courseName,teacherName);
+                String courseuid = await DatabaseServicesCourses().newCourse(courseName,teacherName, password);
 
                 setState(() {
                   DatabaseServicesTeacher().addCourseToTeacher(user!.uid, courseuid);

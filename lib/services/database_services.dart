@@ -65,7 +65,7 @@ class DatabaseServices{
     }
     );
   }
-  Future newCourse(String name, String teacherName)async{
+  Future newCourse(String name, String teacherName, String password)async{
 
     final docRef = courseCollection.doc();
     List<String> empty = [];
@@ -75,6 +75,7 @@ class DatabaseServices{
           'students': empty,
           'tasks': 1,
           'teacherName' : teacherName,
+          'password' : password
         }
     );
       return  docRef.id;
@@ -121,6 +122,7 @@ class DatabaseServices{
         numberOfTasks: snapshot.get('tasks'),
         numberOfStudents: snapshot.get('studentsPerGroup'),
         teacherName: snapshot.get('teacherName'),
+        password: snapshot.get('password')
     );
   }
   TeacherModel _teacherModelFromSnapshot(DocumentSnapshot snapshot){

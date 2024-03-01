@@ -40,7 +40,7 @@ class DatabaseServicesCourses{
     await courseCollection.doc(uid).update({'studentsPerGroup': studentsPerGroup});
   }
 
-  Future newCourse(String name, String teacherName)async{
+  Future newCourse(String name, String teacherName, String password)async{
 
     final docRef = courseCollection.doc();
     List<String> empty = [];
@@ -51,6 +51,7 @@ class DatabaseServicesCourses{
           'tasks': 1,
           'studentsPerGroup': 1,
           'teacherName' : teacherName,
+          'password' : password
         }
     );
     return  docRef.id;
@@ -79,7 +80,15 @@ class DatabaseServicesCourses{
       numberOfTasks: snapshot.get('tasks'),
       numberOfStudents: snapshot.get('studentsPerGroup'),
       teacherName: snapshot.get('teacherName'),
+      password: snapshot.get('password')
     );
+  }
+
+  Future checkPassword(String courseUid, String password) async{
+    DocumentSnapshot snapshot = await courseCollection.doc(courseUid).get();
+    String actualPassword = snapshot.get('password');
+
+    return actualPassword == password;
   }
 
   Stream<CourseModel> getCourseData (String uid) {
