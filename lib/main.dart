@@ -31,6 +31,6 @@ TODO 4- UI improvements including maybe animations.
 TODO 5- modifying firebase firestore rules.
 TODO 6- sign out user hitbox DONE!
 TODO 7- un enroll in a course DONE!
-TODO 8- banning a student from a course
+TODO 8- course joined via password DONE!
 TODO 9- removing a course from the course home page. DONE!
  */

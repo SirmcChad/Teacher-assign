@@ -59,7 +59,7 @@ class _StudentState extends State<Student> {
                     onPressed: ()async{
                       try{
                         if(await courseServices.checkPassword(courseUid, password)){
-                          studentServices.addCourseToStudent(user!.uid,courseUid);
+                         await studentServices.addCourseToStudent(user!.uid,courseUid);
                           courseServices.addStudentToCourse(courseUid, user.uid);
                           Navigator.pop(context);
                         }
@@ -128,9 +128,9 @@ class _StudentState extends State<Student> {
                             onTap: () {
                               // Navigate to course details screen (implement this).
                               // Todo Provide an option for the user to join the course.
-                              setState(() {
+                              setState(() async{
                                 if(course.password == ''){
-                                  studentServices.addCourseToStudent(user!.uid,course.uid);
+                                  await studentServices.addCourseToStudent(user!.uid,course.uid);
                                   courseServices.addStudentToCourse(course.uid, user.uid);
                                   Navigator.pop(context);
                                 }
