@@ -31,18 +31,18 @@ class _RegisterStudentState extends State<RegisterStudent> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
+      appBar:  AppBar(
+        backgroundColor: Colors.grey.shade100,
+        title: Text('Sign Up Student', style: TextStyle(color: Colors.black),),
         actions: [
           TextButton.icon(
             onPressed: () {
               widget.toggleView();
             },
-            icon: Icon(Icons.person,color: Colors.white,),
-            label: Text('Sign In',style: TextStyle(color: Colors.white),),
+            icon: Icon(Icons.person,color: Colors.black,),
+            label: Text('Sign In',style: TextStyle(color: Colors.black),),
           ),
-
         ],
-        title: Text('Sign Up Student'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

@@ -34,14 +34,15 @@ class _SignInStudentState extends State<SignInStudent> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('Sign In Student'),
+        backgroundColor: Colors.grey.shade100,
+        title: Text('Sign In Student', style: TextStyle(color: Colors.black),),
         actions: [
           TextButton.icon(
             onPressed: () {
               widget.toggleView();
             },
-            icon: Icon(Icons.person,color: Colors.white,),
-            label: Text('Sign Up',style: TextStyle(color: Colors.white),),
+            icon: Icon(Icons.person,color: Colors.black,),
+            label: Text('Sign Up',style: TextStyle(color: Colors.black),),
           ),
         ],
       ),
@@ -76,6 +77,9 @@ class _SignInStudentState extends State<SignInStudent> {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blueAccent[100],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20), // Adjust the value as needed
+                  ),
                 ),
                 child: Text('Sign In',
                   style: TextStyle(
