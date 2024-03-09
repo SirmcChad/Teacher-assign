@@ -30,6 +30,7 @@ class _RegisterStudentState extends State<RegisterStudent> {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         actions: [
           TextButton.icon(
