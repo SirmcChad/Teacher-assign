@@ -33,17 +33,17 @@ class _RegisterTeacherState extends State<RegisterTeacher> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('Sign Up Teacher'),
+        backgroundColor: Colors.grey.shade100,
+        title: Text('Sign Up Teacher', style: TextStyle(color: Colors.black),),
         actions: [
           TextButton.icon(
             onPressed: () {
               widget.toggleView();
             },
-            icon: Icon(Icons.person,color: Colors.white,),
-            label: Text('Sign In',style: TextStyle(color: Colors.white),),
+            icon: Icon(Icons.person,color: Colors.black,),
+            label: Text('Sign In',style: TextStyle(color: Colors.black),),
           ),
         ],
-
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

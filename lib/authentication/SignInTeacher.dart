@@ -32,14 +32,15 @@ class _SignInTeacherState extends State<SignInTeacher> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('Sign In Teacher'),
+        backgroundColor: Colors.grey.shade100,
+        title: Text('Sign In Teacher', style: TextStyle(color: Colors.black),),
         actions: [
           TextButton.icon(
             onPressed: () {
               widget.toggleView();
             },
-            icon: Icon(Icons.person,color: Colors.white,),
-            label: Text('Sign Up',style: TextStyle(color: Colors.white),),
+            icon: Icon(Icons.person,color: Colors.black,),
+            label: Text('Sign Up',style: TextStyle(color: Colors.black),),
           ),
         ],
       ),
