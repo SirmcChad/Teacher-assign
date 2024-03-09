@@ -32,6 +32,7 @@ class _RegisterStudentState extends State<RegisterStudent> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar:  AppBar(
+        elevation: 0,
         iconTheme: IconThemeData(
           color: Colors.black
         ),
