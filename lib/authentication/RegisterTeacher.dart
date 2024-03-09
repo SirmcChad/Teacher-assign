@@ -31,6 +31,7 @@ class _RegisterTeacherState extends State<RegisterTeacher> {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text('Sign Up Teacher'),
         actions: [

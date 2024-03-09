@@ -30,6 +30,7 @@ class _SignInTeacherState extends State<SignInTeacher> {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text('Sign In Teacher'),
         actions: [
