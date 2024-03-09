@@ -39,8 +39,8 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
           border: OutlineInputBorder()
       ),
       validator: (value) {
-        if (value!.isEmpty) {
-          return 'Please enter your password';
+        if (value!.length < 6) {
+          return 'Password must be more than 6 characters';
         }
         return null;
       },
