@@ -25,8 +25,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
           border: OutlineInputBorder()
       ),
       validator: (value) {
-        if (value!.isEmpty) {
-          return 'Please enter ${widget.title}';
+        if (value!.length < 6) {
+          return '${widget.title} must be more than 6 characters';
         }
         return null;
       },
