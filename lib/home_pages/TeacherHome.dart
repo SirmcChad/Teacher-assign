@@ -184,14 +184,15 @@ class _TeacherState extends State<Teacher> {
           body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Center(
-              child: Row(
+              child: Column(
                 children: [
-                  Text('Here are your courses:'),
+                  Text('Here Are Your Courses:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                  const SizedBox(height:8),
                   Expanded(
                     // use a GridView widget instead of a Column widget
                     child: GridView.builder(
                       // set the scroll direction to horizontal
-                      scrollDirection: Axis.horizontal,
+                      scrollDirection: Axis.vertical,
                       // set the cross axis count to 2
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,

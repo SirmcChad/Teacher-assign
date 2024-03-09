@@ -26,12 +26,20 @@ class _StudentState extends State<Student> {
   String searchText = '';
 
   List<CourseModel> filteredCourses(List<CourseModel> allCourses, String searchText) {
-
-    return allCourses.where((course) {
+    List<CourseModel> filteredCourse = allCourses.where((course) {
       String courseNameLower = course.courseSubject.toLowerCase();
       String searchTextLower = searchText.toLowerCase();
       return courseNameLower.contains(searchTextLower);
     }).toList();
+
+    filteredCourse.shuffle();
+
+    if(filteredCourse.length < 15){
+      return filteredCourse;
+    }
+    else{
+      return filteredCourse.sublist(0,15);
+    }
   }
 
   void _showEnterPasswordDialog(BuildContext context, String courseUid){
@@ -61,6 +69,7 @@ class _StudentState extends State<Student> {
                         if(await courseServices.checkPassword(courseUid, password)){
                          await studentServices.addCourseToStudent(user!.uid,courseUid);
                           courseServices.addStudentToCourse(courseUid, user.uid);
+                          Navigator.pop(context);
                           Navigator.pop(context);
                         }
                         else{
@@ -92,6 +101,7 @@ class _StudentState extends State<Student> {
           shadowColor: Colors.white30,
           title: Text('Search Courses'),
           content: StatefulBuilder(builder: (BuildContext context, StateSetter setState){
+            List<CourseModel> filtCourses = filteredCourses(allCourses, searchText);
             return Container(
               height: 300,
               width: 300,
@@ -115,10 +125,10 @@ class _StudentState extends State<Student> {
                     child: Container(
                       color: Colors.white.withRed(245),
                       child: ListView.builder(
-                        itemCount: filteredCourses(allCourses, searchText).length,
+                        itemCount: filtCourses.length,
                         itemBuilder: (context, index) {
                           print(searchText);
-                          CourseModel course = filteredCourses(allCourses, searchText)[index];
+                          CourseModel course = filtCourses[index];
                           print(course.numberOfStudents);
                           print(course.teacherName);
                           print(course.students);
@@ -313,14 +323,43 @@ class _StudentState extends State<Student> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Center(
-                  child: Row(
+                  child: Column(
                     children: [
-                      Text('here are your courses:'),
+                      Text('Here Are Your Courses:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                      const SizedBox(height:8),
                       Expanded(
-                        child: Column(
-                          children: coursesList.map((e) => CourseCardStudent(courseUid: e,studentUid: user.uid,)).toList(),
+                        // use a GridView widget instead of a Column widget
+                        child: GridView.builder(
+                          // set the scroll direction to horizontal
+                          scrollDirection: Axis.vertical,
+                          // set the cross axis count to 2
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            // set the aspect ratio of each item to 1.5
+                            childAspectRatio: 1.5,
+                          ),
+                          // set the item count to the length of the courses list
+                          itemCount: coursesList!.length,
+                          // return a Card widget for each item
+                          itemBuilder: (context, index) {
+                            return Card(
+                              // set the shape property to customize the border radius
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              // wrap the CourseCardTeacher widget with the Card widget
+                              child: CourseCardStudent(
+                                  courseUid: coursesList![index],
+                                  studentUid: user.uid),
+                            );
+                          },
                         ),
                       ),
+                      // Expanded(
+                      //   child: Column(
+                      //     children: coursesList.map((e) => CourseCardStudent(courseUid: e,studentUid: user.uid,)).toList(),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
