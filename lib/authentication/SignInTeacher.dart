@@ -32,6 +32,9 @@ class _SignInTeacherState extends State<SignInTeacher> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        iconTheme: IconThemeData(
+            color: Colors.black
+        ),
         backgroundColor: Colors.grey.shade100,
         title: Text('Sign In Teacher', style: TextStyle(color: Colors.black),),
         actions: [
