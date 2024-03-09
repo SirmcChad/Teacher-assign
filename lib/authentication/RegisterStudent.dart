@@ -19,6 +19,7 @@ class _RegisterStudentState extends State<RegisterStudent> {
   String email = "";
   String password = "";
   String name = '';
+  String error = '';
 
   bool isLoading = false;
 
@@ -65,7 +66,9 @@ class _RegisterStudentState extends State<RegisterStudent> {
                       Navigator.pop(context);
                     }
                     else{
-                      //TODO handle displaying the error message
+                      setState(() {
+                        error = 'some error occured, check your credintials';
+                      });
                     }
 
                     setState(() {isLoading = false;});
@@ -81,6 +84,8 @@ class _RegisterStudentState extends State<RegisterStudent> {
                   ),
                 ),
               ),
+              Text(error, style: TextStyle(fontSize: 18,color: Colors.red, fontWeight: FontWeight.bold),)
+
             ],
           ),
         ),

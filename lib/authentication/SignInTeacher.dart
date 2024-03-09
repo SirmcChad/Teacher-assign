@@ -18,6 +18,7 @@ class _SignInTeacherState extends State<SignInTeacher> {
   final _auth = AuthServices();
   String email = "";
   String password = "";
+  String error = '';
 
   bool isLoading = false;
 
@@ -71,7 +72,9 @@ class _SignInTeacherState extends State<SignInTeacher> {
                       Navigator.pop(context);
                     }
                     else{
-                      //TODO handle displaying the error message
+                      setState(() {
+                        error = 'some error occured, check your credintials';
+                      });
                     }
                     setState(() {isLoading = false;});
                   }
@@ -86,6 +89,7 @@ class _SignInTeacherState extends State<SignInTeacher> {
                   ),
                 ),
               ),
+              Text(error, style: TextStyle(fontSize: 18,color: Colors.red, fontWeight: FontWeight.bold),)
             ],
           ),
         ),

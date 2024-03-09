@@ -21,6 +21,7 @@ class _SignInStudentState extends State<SignInStudent> {
   final _formKey = GlobalKey<FormState>();
   String email = "";
   String password = "";
+  String error = '';
 
   bool isLoading = false;
 
@@ -65,7 +66,9 @@ class _SignInStudentState extends State<SignInStudent> {
                       Navigator.pop(context);
                     }
                     else{
-                      //TODO handle displaying the error message
+                      setState(() {
+                        error = 'some error occured, check your credintials';
+                      });
                     }
                     setState(() {isLoading = false;});
                   }
@@ -80,6 +83,7 @@ class _SignInStudentState extends State<SignInStudent> {
                   ),
                 ),
               ),
+              Text(error, style: TextStyle(fontSize: 18,color: Colors.red, fontWeight: FontWeight.bold),)
             ],
           ),
         ),
