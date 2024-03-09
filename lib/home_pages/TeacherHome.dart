@@ -97,6 +97,15 @@ class _TeacherState extends State<Teacher> {
     List<String>? coursesList = [];
     final user = Provider.of<User?>(context);
 
+    String hereAreCourses(int numberOfCourses){
+      if (numberOfCourses ==0){
+        return 'Start adding cources by clicking the + Icon';
+      }
+      else{
+        return 'Here Are Your Courses:';
+      }
+    }
+
 
     return StreamBuilder<TeacherModel?>(
       stream:  DatabaseServicesTeacher().getTeacherData(user!.uid),
@@ -186,7 +195,7 @@ class _TeacherState extends State<Teacher> {
             child: Center(
               child: Column(
                 children: [
-                  Text('Here Are Your Courses:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                  Text(hereAreCourses(coursesList!.length), style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                   const SizedBox(height:8),
                   Expanded(
                     // use a GridView widget instead of a Column widget
