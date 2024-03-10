@@ -30,11 +30,11 @@ class _CourseTeacherState extends State<CourseTeacher> {
     int numberOfTasks = 1;
     showDialog(context: context, builder: (BuildContext context){
       return AlertDialog(
-        title: Text("Assign Tasks"),
+        title: Text("Assign Groups"),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text("How many tasks do you want to assign for your class?"),
+            Text("How many Groups/tasks do you want to assign for your class?"),
             SizedBox(height: 10),
             // A text field to enter the number of tasks
             TextField(
@@ -146,9 +146,28 @@ class _CourseTeacherState extends State<CourseTeacher> {
 
             return Scaffold(
               appBar: AppBar(
-                title: Text(subject),
-                backgroundColor: Colors.blue,
+                title: Text(subject, style: TextStyle(fontSize: 16),),
+                backgroundColor: Colors.indigo.shade400,
+                iconTheme: IconThemeData(
+                    color: Colors.black
+                ),
                 actions: [
+                  TextButton.icon(
+                    onPressed: () {
+                      showTasksDialogue(context);
+                    },
+                    icon: Icon(Icons.person,color: Colors.grey.shade200,),
+                    label: Text('groups',style: TextStyle(color: Colors.grey.shade200),),
+                  ),
+                  SizedBox(width: 10,),
+                  TextButton.icon(
+                    onPressed: () {
+                      showStudentPerGroupDialogue(context);
+                    },
+                    icon: Icon(Icons.groups,color:Colors.grey.shade200,),
+                    label: Text('students',style: TextStyle(color: Colors.grey.shade200),),
+                  ),
+
 
                 ],
               ),
@@ -242,30 +261,6 @@ class _CourseTeacherState extends State<CourseTeacher> {
                     ],
                   ),
                 ),
-                floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  setState(() {
-                    showTasksDialogue(context);
-
-
-                  });
-
-                },
-                child: Icon(Icons.assignment),
-                backgroundColor: Colors.blue,
-                // Custom shape for the FAB
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  side: BorderSide(
-                    color: Colors.white,
-                    width: 4,
-                  ),
-                ),
-                // Custom elevation for the FAB
-                elevation: 10,
-                // Custom rotation for the FAB
-                clipBehavior: Clip.antiAlias,
-              ),
             );
           } else {
             return Loading();

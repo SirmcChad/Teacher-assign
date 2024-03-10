@@ -55,14 +55,6 @@ class _CourseStudentState extends State<CourseStudent> {
               appBar: AppBar(
                 title: Text(subject),
                 backgroundColor: Colors.blue,
-                actions: [
-                  IconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: () {
-
-                    },
-                  ),
-                ],
               ),
               body: ListView.builder(
                 itemCount: studentUids.length,
