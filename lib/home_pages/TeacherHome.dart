@@ -41,6 +41,7 @@ class _TeacherState extends State<Teacher> {
         content: Column(
           children: [
             TextField(
+              autofocus: true,
               decoration: InputDecoration(labelText: 'Course name'),
               onChanged: (value){
                 courseName = value;
