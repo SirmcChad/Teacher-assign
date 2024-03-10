@@ -100,7 +100,7 @@ class _TeacherState extends State<Teacher> {
 
     String hereAreCourses(int numberOfCourses){
       if (numberOfCourses ==0){
-        return 'Start adding cources by clicking the + Icon';
+        return 'Start adding courses by clicking the + Icon';
       }
       else{
         return 'Here Are Your Courses:';

@@ -42,6 +42,15 @@ class _StudentState extends State<Student> {
     }
   }
 
+  String hereAreCourses(int numberOfCourses){
+    if (numberOfCourses ==0){
+      return 'Start adding courses by clicking the + Icon';
+    }
+    else{
+      return 'Here Are Your Courses:';
+    }
+  }
+
   void _showEnterPasswordDialog(BuildContext context, String courseUid){
     String password = '';
 
@@ -330,7 +339,7 @@ class _StudentState extends State<Student> {
                 child: Center(
                   child: Column(
                     children: [
-                      Text('Here Are Your Courses:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                      Text(hereAreCourses(snapshot.data!.courses.length), style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                       const SizedBox(height:8),
                       Expanded(
                         // use a GridView widget instead of a Column widget

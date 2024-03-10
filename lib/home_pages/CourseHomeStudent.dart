@@ -48,7 +48,6 @@ class _CourseStudentState extends State<CourseStudent> {
           int totalStudents = studentUids.length;
           Utility colouringUtility = Utility(numberOfStudentsPerGroup: studentsPerGroup, numberOfTasks: numberOfTasks, totalStudents: totalStudents);
           List<int> ranges = colouringUtility.getRanges();
-          print(ranges);
 
           if(numberOfTasks == 1 && studentsPerGroup == 1){
             return Scaffold(
@@ -122,14 +121,7 @@ class _CourseStudentState extends State<CourseStudent> {
               appBar: AppBar(
                 title: Text(subject),
                 backgroundColor: Colors.blue,
-                actions: [
-                  IconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: () {
 
-                    },
-                  ),
-                ],
               ),
               body: GridView.count(
                 scrollDirection: Axis.horizontal,
