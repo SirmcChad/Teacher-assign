@@ -25,11 +25,11 @@ class _StudentState extends State<Student> {
   DatabaseServicesStudent studentServices = DatabaseServicesStudent();
   String searchText = '';
 
-  List<CourseModel> filteredCourses(List<CourseModel> allCourses, String searchText) {
+  List<CourseModel> filteredCourses(List<CourseModel> allCourses, String searchText, List<String> myCourses) {
     List<CourseModel> filteredCourse = allCourses.where((course) {
       String courseNameLower = course.courseSubject.toLowerCase();
       String searchTextLower = searchText.toLowerCase();
-      return courseNameLower.contains(searchTextLower);
+      return courseNameLower.contains(searchTextLower) && !myCourses.contains(course.uid);
     }).toList();
 
     filteredCourse.shuffle();
@@ -89,9 +89,8 @@ class _StudentState extends State<Student> {
     );
   }
 
-  void _showCourseSearchDialog(BuildContext context) async{
+  void _showCourseSearchDialog(BuildContext context, List<String> coursesList) async{
     List<CourseModel> allCourses = await courseServices.getAllData();
-
 
     showDialog(
       context: context,
@@ -101,7 +100,7 @@ class _StudentState extends State<Student> {
           shadowColor: Colors.white30,
           title: Text('Search Courses'),
           content: StatefulBuilder(builder: (BuildContext context, StateSetter setState){
-            List<CourseModel> filtCourses = filteredCourses(allCourses, searchText);
+            List<CourseModel> filtCourses = filteredCourses(allCourses, searchText, coursesList);
             return Container(
               height: 300,
               width: 300,
@@ -109,6 +108,7 @@ class _StudentState extends State<Student> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   TextFormField(
+                    autofocus: true,
                     initialValue: searchText,
                     onChanged: (value) {
                       setState(() {
@@ -125,8 +125,13 @@ class _StudentState extends State<Student> {
                     child: Container(
                       color: Colors.white.withRed(245),
                       child: ListView.builder(
-                        itemCount: filtCourses.length,
+                        itemCount: filtCourses.length == 0 ? 1: filtCourses.length,
                         itemBuilder: (context, index) {
+                          if (filtCourses.length == 0){
+                            return ListTile(
+                              title: Text("No Course Matches Your Description", style: TextStyle(fontSize: 14),)
+                            );
+                          }
                           print(searchText);
                           CourseModel course = filtCourses[index];
                           print(course.numberOfStudents);
@@ -313,7 +318,7 @@ class _StudentState extends State<Student> {
                   color: Colors.red[300],
                   onPressed: () {
                     setState(() {
-                      _showCourseSearchDialog(context);
+                      _showCourseSearchDialog(context, coursesList);
                     });
                   },
                 ),
