@@ -55,20 +55,25 @@ class _CourseTeacherState extends State<CourseTeacher> {
         ),
         actions: [
           // A cancel button to dismiss the dialog
-          TextButton(
-            child: Text("Cancel"),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          // A confirm button to assign the tasks and return the number
-          TextButton(
-            child: Text("Confirm"),
-            onPressed: () {
-              Navigator.pop(context);
-              services.changeTask(widget.courseUid, numberOfTasks);
-            },
-          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+            TextButton(
+              child: Text("Cancel"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            // A confirm button to assign the tasks and return the number
+            TextButton(
+              child: Text("Confirm", style: TextStyle(fontWeight: FontWeight.bold),),
+              onPressed: () {
+                Navigator.pop(context);
+                services.changeTask(widget.courseUid, numberOfTasks);
+              },
+            ),
+          ],),
+
         ],
       );
     });
@@ -149,7 +154,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
                 title: Text(subject, style: TextStyle(fontSize: 16),),
                 backgroundColor: Colors.indigo.shade400,
                 iconTheme: IconThemeData(
-                    color: Colors.black
+                    color: Colors.white
                 ),
                 actions: [
                   TextButton.icon(
@@ -157,7 +162,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
                       showTasksDialogue(context);
                     },
                     icon: Icon(Icons.person,color: Colors.grey.shade200,),
-                    label: Text('groups',style: TextStyle(color: Colors.grey.shade200),),
+                    label: Text('by groups',style: TextStyle(color: Colors.grey.shade200),),
                   ),
                   SizedBox(width: 10,),
                   TextButton.icon(
@@ -165,7 +170,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
                       showStudentPerGroupDialogue(context);
                     },
                     icon: Icon(Icons.groups,color:Colors.grey.shade200,),
-                    label: Text('students',style: TextStyle(color: Colors.grey.shade200),),
+                    label: Text('by size',style: TextStyle(color: Colors.grey.shade200),),
                   ),
 
 
@@ -258,6 +263,11 @@ class _CourseTeacherState extends State<CourseTeacher> {
                           Navigator.pop(context);
                         },
                       ),
+                      SizedBox(height: 15,),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("\"Hold and drag students to rearrange their order\"",style: TextStyle(fontSize: 15),),
+                      )
                     ],
                   ),
                 ),
