@@ -127,14 +127,17 @@ class _TeacherState extends State<Teacher> {
                   accountEmail: Text('Number of Courses: ${coursesList!.length}'),
                   // add an account picture
                   currentAccountPicture: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        'https://picsum.photos/200'),
+                    backgroundColor: Colors.white,
+                    child: Text(
+                      '${name[0]}',
+                      style: TextStyle(fontSize: 40.0, color: Colors.blue),
+                    ),
                   ),
                   // add a background image
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: NetworkImage(
-                          'https://picsum.photos/800/400'),
+                          'https://picsum.photos/id/122/800/400'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -171,7 +174,7 @@ class _TeacherState extends State<Teacher> {
             ),
           ),
           appBar:AppBar(
-            title: Text('Welcome ${snapshot.data!.name}!'),
+            title: Text('Welcome ${name}!'),
             titleTextStyle: TextStyle(
               color: Colors.white,
               fontSize: 24,

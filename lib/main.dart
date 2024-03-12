@@ -28,7 +28,7 @@ TODO 1- courses joined by name instead of being joined by UID DONE!
 TODO 2- singing out users DONE!
 TODO 3- crown of users DONE!
 TODO 4- UI improvements including maybe animations.
-TODO 5- modifying firebase firestore rules.
+TODO 5- modifying firebase firestore rules DONE!
 TODO 6- sign out user hitbox DONE!
 TODO 7- un enroll in a course DONE!
 TODO 8- course joined via password DONE!

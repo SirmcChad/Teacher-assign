@@ -29,9 +29,6 @@ class DatabaseServicesStudent{
   }
 
   StudentModel _studentModelFromSnapshot(DocumentSnapshot snapshot){
-    print(snapshot);
-    print(snapshot.get('name'));
-    print(snapshot.get('courses'));
     return StudentModel(
         uid: snapshot.id,
         name: snapshot.get('name'),
