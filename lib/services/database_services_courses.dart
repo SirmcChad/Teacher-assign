@@ -57,6 +57,12 @@ class DatabaseServicesCourses{
     return  docRef.id;
   }
 
+  Future shuffleStudentList(String uid) async{
+    List<String> studentUids = await getStudentUids(uid);
+    studentUids.shuffle();
+    changeStudents(uid, studentUids);
+  }
+
   Future courseExists(String uid) async{
     try{
       DocumentSnapshot snapshot = await courseCollection.doc(uid).get();

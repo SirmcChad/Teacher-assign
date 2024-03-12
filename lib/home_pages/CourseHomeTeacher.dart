@@ -18,6 +18,7 @@ class CourseTeacher extends StatefulWidget {
 class _CourseTeacherState extends State<CourseTeacher> {
   List<String?> names = [];
   DatabaseServicesCourses services = DatabaseServicesCourses();
+  bool shuffled = false;
 
   void changeName(String name,int index){
     names[index] = name;
@@ -179,6 +180,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
               body: ReorderableListView(
                   onReorder: (oldIndex, newIndex){
                     setState(() {
+                      shuffled = false;
                       if (oldIndex < newIndex){
                         newIndex = newIndex -1;
                       }
@@ -192,7 +194,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
                     int index = studentUids.indexOf(e);
                     return Container(
                         key: GlobalKey(),
-                        child: StudentCard(studentUid: e, pastName: names[studentUids.indexOf(e)], changeName: changeName, index: studentUids.indexOf(e),color: colouringUtility.colouring(index))
+                        child: StudentCard(studentUid: e, pastName: names[studentUids.indexOf(e)], changeName: changeName, index: studentUids.indexOf(e),color: colouringUtility.colouring(index,), shuffled: shuffled,)
                     );
                   } ).toList()
               ),
@@ -243,6 +245,20 @@ class _CourseTeacherState extends State<CourseTeacher> {
                         ),
                         onTap: () {
                           showStudentPerGroupDialogue(context);
+                        },
+                      ),
+
+                      ListTile(
+                        leading: Icon(Icons.person),
+                        title: Text(
+                          'Shuffle',
+                          style: TextStyle(fontSize: 18.0),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            services.shuffleStudentList(widget.courseUid);
+                            shuffled = true;
+                          });
                         },
                       ),
                       // A divider to separate the list tiles
