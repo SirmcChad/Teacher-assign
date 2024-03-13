@@ -28,7 +28,7 @@ class _TeacherState extends State<Teacher> {
 
 
 
-  void addCourse(BuildContext context,String teacherName){
+  void addCourse(BuildContext context,String teacherName, List<String> courses){
     String courseName = 'default name';
     String password = '';
 
@@ -57,12 +57,20 @@ class _TeacherState extends State<Teacher> {
             SizedBox(height: 25,),
             ElevatedButton(
               onPressed: () async{
-                String courseuid = await DatabaseServicesCourses().newCourse(courseName,teacherName, password);
+                if(courses.length >= 20){
+                  //Todo, display error message saying that you can not make more courses
+                }
 
-                setState(() {
-                  DatabaseServicesTeacher().addCourseToTeacher(user!.uid, courseuid);
-                  Navigator.pop(context);
-                });
+                else {
+                  String courseuid = await DatabaseServicesCourses().newCourse(
+                      courseName, teacherName, password);
+
+                  setState(() {
+                    DatabaseServicesTeacher().addCourseToTeacher(
+                        user!.uid, courseuid);
+                    Navigator.pop(context);
+                  });
+                }
               },
               child: const Text('Create'),
               style: ElevatedButton.styleFrom(
@@ -185,7 +193,7 @@ class _TeacherState extends State<Teacher> {
                 color: Colors.red[300],
                 onPressed: () {
                   setState(() {
-                    addCourse(context,name);
+                    addCourse(context,name, coursesList!);
                   });
                 },
               ),
