@@ -10,11 +10,12 @@ class StudentCard extends StatelessWidget {
   Function changeName;
   Color color;
   int index;
-  StudentCard({super.key, required this.studentUid, required this.pastName, required this.changeName, required this.index, required this.color});
+  bool shuffled;
+  StudentCard({super.key, required this.studentUid, required this.pastName, required this.changeName, required this.index, required this.color, required this.shuffled});
 
   @override
   Widget build(BuildContext context) {
-    if(pastName != null){
+    if(pastName != null && !shuffled){
       return cardCopyWith(color, listTileCopyWith(pastName!, false));
     }
     return cardCopyWith(color,  FutureBuilder<DocumentSnapshot>(

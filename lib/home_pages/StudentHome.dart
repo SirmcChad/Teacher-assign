@@ -153,7 +153,15 @@ class _StudentState extends State<Student> {
                               // Navigate to course details screen (implement this).
                               // Todo Provide an option for the user to join the course.
                               setState(() async{
-                                if(course.password == ''){
+                                if(course.students.length >= 20){
+                                  //Todo, display message saying the course is full
+                                }
+
+                                else if(coursesList.length >= 20){
+                                  //Todo, display message saying that you have reached the maximum number of courses
+                                }
+
+                                else if(course.password == ''){
                                   await studentServices.addCourseToStudent(user!.uid,course.uid);
                                   courseServices.addStudentToCourse(course.uid, user.uid);
                                   Navigator.pop(context);
