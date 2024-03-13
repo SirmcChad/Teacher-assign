@@ -73,7 +73,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
                 services.changeTask(widget.courseUid, numberOfTasks);
               },
             ),
-          ],),
+          ],)
 
         ],
       );
@@ -107,20 +107,24 @@ class _CourseTeacherState extends State<CourseTeacher> {
           ],
         ),
         actions: [
-          // A cancel button to dismiss the dialog
-          TextButton(
-            child: Text("Cancel"),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          // A confirm button to assign the tasks and return the number
-          TextButton(
-            child: Text("Confirm"),
-            onPressed: () {
-              services.changeStudentsPerGroup(widget.courseUid, numberOfTasks);
-              Navigator.pop(context);
-            },
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              TextButton(
+                child: Text("Cancel"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              // A confirm button to assign the tasks and return the number
+              TextButton(
+                child: Text("Confirm"),
+                onPressed: () {
+                  services.changeStudentsPerGroup(widget.courseUid, numberOfTasks);
+                  Navigator.pop(context);
+                },
+              ),
+            ],
           ),
         ],
       );

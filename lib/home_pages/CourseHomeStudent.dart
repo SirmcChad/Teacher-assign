@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:teacher_assign/cards/basic_student_card.dart';
 import 'package:teacher_assign/models/CourseModel.dart';
 import 'package:teacher_assign/services/database_services_courses.dart';
+import 'package:teacher_assign/services/database_services_student.dart';
 import 'package:teacher_assign/shared/custom_loading.dart';
 import 'package:teacher_assign/cards/student_card.dart';
 import 'package:teacher_assign/shared/utils.dart';
@@ -29,13 +31,25 @@ class _CourseStudentState extends State<CourseStudent> {
         break;
       }
     }
-
     return isMine;
+  }
+
+  Future<String> getMyName(List<String> studentUids, String myUid) async{
+    String name = 'd';
+    for (int i=0; i<studentUids.length;i++){
+      DocumentSnapshot snapshot = await DatabaseServicesStudent().studentCollection.doc(studentUids[i]).get();
+      if (studentUids[i] == myUid){
+        name = snapshot.get('name');
+        break;
+      }
+    }
+    return name;
   }
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User?>(context);
+
     return StreamBuilder<CourseModel?>(
       stream: DatabaseServicesCourses().getCourseData(widget.courseUid),
       builder: (context, snapshot) {
@@ -48,6 +62,7 @@ class _CourseStudentState extends State<CourseStudent> {
           int totalStudents = studentUids.length;
           Utility colouringUtility = Utility(numberOfStudentsPerGroup: studentsPerGroup, numberOfTasks: numberOfTasks, totalStudents: totalStudents);
           List<int> ranges = colouringUtility.getRanges();
+
 
           if(numberOfTasks == 1 && studentsPerGroup == 1){
             return Scaffold(
@@ -71,8 +86,27 @@ class _CourseStudentState extends State<CourseStudent> {
                       accountEmail: Text('Number of students: ${studentUids!.length}'),
                       // add an account picture
                       currentAccountPicture: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            'https://picsum.photos/200'),
+                        backgroundColor: Colors.white,
+                        child: FutureBuilder<String>(
+                          future: getMyName(studentUids, user!.uid),
+                          builder: (context, snapshot){
+                            if (snapshot.connectionState == ConnectionState.done){
+                              String? name = snapshot.data;
+                              print(name);
+                              return Text(
+                                '${name.toString()[0]}',
+                                style: TextStyle(fontSize: 40.0, color: Colors.blue),
+                              );
+                            }
+                            else{
+                              return Text(
+                                'L',
+                                style: TextStyle(fontSize: 40.0, color: Colors.blue),
+                              );
+                            }
+
+                          },
+                        ),
                       ),
                       // add a background image
                       decoration: BoxDecoration(
@@ -149,8 +183,11 @@ class _CourseStudentState extends State<CourseStudent> {
                       accountEmail: Text('Number of students: ${studentUids!.length}'),
                       // add an account picture
                       currentAccountPicture: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            'https://picsum.photos/200'),
+                        backgroundColor: Colors.white,
+                        child: Text(
+                          'b',
+                          style: TextStyle(fontSize: 40.0, color: Colors.blue),
+                        ),
                       ),
                       // add a background image
                       decoration: BoxDecoration(

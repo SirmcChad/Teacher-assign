@@ -262,9 +262,9 @@ class _StudentState extends State<Student> {
     return StreamBuilder<StudentModel>(
       stream: studentServices.getStudentData(user!.uid),
       builder: (context, snapshot) {
-        print(snapshot);
         if (snapshot.hasData){
           coursesList = snapshot.data!.courses;
+          String name = snapshot.data!.name;
           return Scaffold(
             drawer: Drawer(
               child: ListView(
@@ -272,18 +272,21 @@ class _StudentState extends State<Student> {
                 children: [
                   // use the UserAccountsDrawerHeader widget
                   UserAccountsDrawerHeader(
-                    accountName: Text(snapshot.data!.name),
+                    accountName: Text(name),
                     accountEmail: Text('Number of Courses: ${coursesList!.length}'),
                     // add an account picture
                     currentAccountPicture: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          'https://picsum.photos/200'),
+                      backgroundColor: Colors.white,
+                      child: Text(
+                        '${name[0]}',
+                        style: TextStyle(fontSize: 40.0, color: Colors.blue),
+                      ),
                     ),
                     // add a background image
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: NetworkImage(
-                            'https://picsum.photos/800/400'),
+                            'https://picsum.photos/id/84/800/400'),
                         fit: BoxFit.cover,
                       ),
                     ),
