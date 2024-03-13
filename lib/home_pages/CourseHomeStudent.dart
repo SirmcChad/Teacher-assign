@@ -112,7 +112,7 @@ class _CourseStudentState extends State<CourseStudent> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: NetworkImage(
-                              'https://picsum.photos/800/400'),
+                              'https://picsum.photos/id/84/800/400'),
                           fit: BoxFit.cover,
                         ),
                       ),

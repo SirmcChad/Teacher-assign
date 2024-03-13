@@ -34,10 +34,10 @@ TODO 7- un enroll in a course DONE!
 TODO 8- course joined via password DONE!
 TODO 9- removing a course from the course home page. DONE!
 
-Todo 10 remove hand fucking pictures
-todo 11 what if no courses student?
-todo 12- size limitations on all kinds of lists
-todo 13- random shuffling
-todo 14- improved space evening with by size
+Todo 10 remove hand fucking pictures DONE!
+todo 11 what if no courses student? DONE!
+todo 12- size limitations on all kinds of lists DONE!
+todo 13- random shuffling DONE!
+todo 14- improved space evening with by size DONE!F
 todo 15 remove the search icon
  */
