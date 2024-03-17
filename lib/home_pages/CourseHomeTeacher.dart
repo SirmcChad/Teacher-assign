@@ -117,6 +117,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
                 },
               ),
               // A confirm button to assign the tasks and return the number
+
               TextButton(
                 child: Text("Confirm"),
                 onPressed: () {
@@ -126,6 +127,58 @@ class _CourseTeacherState extends State<CourseTeacher> {
               ),
             ],
           ),
+        ],
+      );
+    });
+  }
+
+  void sureShuffle(BuildContext context){
+    showDialog(context: context, builder: (BuildContext context){
+      return AlertDialog(
+        title: Text("Shuffle Studnets"),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text("Are you sure you want to shuffle the order of the students?"),
+            SizedBox(height: 10),
+          ],
+        ),
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              TextButton(
+                child: Text("Cancel"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              // A confirm button to assign the tasks and return the number
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  services.shuffleStudentList(widget.courseUid);
+                  shuffled = true;
+                  Navigator.pop(context);
+                },
+                child: const Text('Shuffle'),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.purple,
+                  onPrimary: Colors.white,
+                  shape: RoundedRectangleBorder( // The shape of the button
+                    borderRadius: BorderRadius.circular(20),
+                    side: const BorderSide(color: Colors.black,
+                        width: 2), // The border
+                  ),
+                  elevation: 10,
+                  // The elevation of the button
+                  padding: const EdgeInsets.all(
+                      15), // The padding of the button
+                ),
+              ),
+
+            ],)
+
         ],
       );
     });
@@ -146,6 +199,8 @@ class _CourseTeacherState extends State<CourseTeacher> {
             int numberOfTasks = snapshot.data!.numberOfTasks;
             int totalStudents = studentUids.length;
             Utility colouringUtility = Utility(numberOfStudentsPerGroup: studentsPerGroup, numberOfTasks: numberOfTasks, totalStudents: totalStudents);
+
+            bool showFloating = !(numberOfTasks == 1 && studentsPerGroup ==1);
 
 
             for (int i=0;i<studentUids.length;i++){
@@ -202,6 +257,17 @@ class _CourseTeacherState extends State<CourseTeacher> {
                     );
                   } ).toList()
               ),
+                floatingActionButton: Visibility(
+                  visible: showFloating,
+                  child: FloatingActionButton(
+                    onPressed: (){
+                      setState(() {
+                        services.changeTask(widget.courseUid, 1);
+                      });
+                    },
+                    child: Icon(Icons.cancel),
+                  ),
+                ),
                 drawer: Drawer(
                   child: ListView(
                     padding: EdgeInsets.zero,
@@ -253,16 +319,14 @@ class _CourseTeacherState extends State<CourseTeacher> {
                       ),
 
                       ListTile(
-                        leading: Icon(Icons.person),
+                        leading: Icon(Icons.restart_alt),
                         title: Text(
                           'Shuffle',
                           style: TextStyle(fontSize: 18.0),
                         ),
                         onTap: () {
                           setState(() {
-                            services.shuffleStudentList(widget.courseUid);
-                            shuffled = true;
-                            Navigator.pop(context);
+                            sureShuffle(context);
                           });
                         },
                       ),
