@@ -53,6 +53,7 @@ class _StudentState extends State<Student> {
 
   void _showEnterPasswordDialog(BuildContext context, String courseUid){
     String password = '';
+    String error = '';
 
     showDialog(
         context: context,
@@ -61,38 +62,49 @@ class _StudentState extends State<Student> {
 
           return AlertDialog(
             title: Text('Password Required'),
-            content: Column(
-              children: [
-                TextField(
-                  onChanged: (value){
-                    password = value;
-                  },
-                  decoration: InputDecoration(
-                    labelText: 'Enter Password'
-                  ),
-                ),
-                const SizedBox(height: 25,),
-                ElevatedButton(
-                    onPressed: ()async{
-                      try{
-                        if(await courseServices.checkPassword(courseUid, password)){
-                         await studentServices.addCourseToStudent(user!.uid,courseUid);
-                          courseServices.addStudentToCourse(courseUid, user.uid);
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                        }
-                        else{
-                          print('Wrong Password');
-                          //Todo: Implement wrong password message
-                        }
-                      }catch(e){
-                        print('error');
-                        //Todo: Implement error message
-                      }
+            content: StatefulBuilder(builder: (BuildContext context, StateSetter setState){
+              return Column(
+                children: [
+                  TextField(
+                    onChanged: (value){
+                      password = value;
                     },
-                    child: Text('Join Course'))
-              ],
-            ),
+                    decoration: InputDecoration(
+                      labelText: 'Enter Password'
+                    ),
+                  ),
+                  const SizedBox(height: 25,),
+                  ElevatedButton(
+                      onPressed: ()async{
+                        try{
+                          if(await courseServices.checkPassword(courseUid, password)){
+                           await studentServices.addCourseToStudent(user!.uid,courseUid);
+                            courseServices.addStudentToCourse(courseUid, user.uid);
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                          }
+                          else{
+                            print('Wrong Password');
+                            setState((){
+                              error = 'Wrong Password';
+                            });
+                            //Todo: Implement wrong password message
+                          }
+                        }catch(e){
+                          print('error');
+                          setState((){
+                            error = 'An Error Occured While Checking Password';
+                          });
+                          //Todo: Implement error message
+                        }
+                      },
+                      child: Text('Join Course')),
+                  const SizedBox(height: 25,),
+
+                  Text(error, style: TextStyle(color: Colors.red))
+                ],
+              );
+            })
           );
         }
     );
@@ -100,6 +112,7 @@ class _StudentState extends State<Student> {
 
   void _showCourseSearchDialog(BuildContext context, List<String> coursesList) async{
     List<CourseModel> allCourses = await courseServices.getAllData();
+    String error = '';
 
     showDialog(
       context: context,
@@ -152,37 +165,63 @@ class _StudentState extends State<Student> {
                             onTap: () {
                               // Navigate to course details screen (implement this).
                               // Todo Provide an option for the user to join the course.
-                              setState(() async{
-                                if(course.students.length >= 20){
-                                  //Todo, display message saying the course is full
-                                }
+                              if(course.students.length >= 50){
+                                setState((){
+                                  error = 'The Course is Full';
+                                });
+                              }
 
-                                else if(coursesList.length >= 20){
-                                  //Todo, display message saying that you have reached the maximum number of courses
-                                }
+                              else if(coursesList.length >= 20){
+                                print('Hello');
+                                setState((){
+                                  error = 'Maximum Number of Courses Reached';
+                                });
+                                //Todo, display message saying that you have reached the maximum number of courses
+                              }
 
-                                else if(course.password == ''){
+                              else if(course.password == ''){
+                                setState(() async{
                                   await studentServices.addCourseToStudent(user!.uid,course.uid);
                                   courseServices.addStudentToCourse(course.uid, user.uid);
                                   Navigator.pop(context);
-                                }
-
-                                else{
-                                  _showEnterPasswordDialog(context, course.uid);
-                                }
+                                });
+                              }
+                              else{
+                                _showEnterPasswordDialog(context, course.uid);
+                              }
+                              // setState(() async{
+                              //   if(course.students.length >= 20){
+                              //     error = 'The Course is Full';
+                              //     //Todo, display message saying the course is full
+                              //   }
+                              //
+                              //   else if(coursesList.length >= 5){
+                              //     print('Hello');
+                              //     error = 'Maximum Number of Courses Reached';
+                              //     //Todo, display message saying that you have reached the maximum number of courses
+                              //   }
+                              //
+                              //   else if(course.password == ''){
+                              //     await studentServices.addCourseToStudent(user!.uid,course.uid);
+                              //     courseServices.addStudentToCourse(course.uid, user.uid);
+                              //     Navigator.pop(context);
+                              //   }
+                              //
+                              //   else{
+                              //     _showEnterPasswordDialog(context, course.uid);
+                              //   }
                               });
                             },
-                          );
-                        },
+                          )
+                        ),
                       ),
+                  Text(error, style: TextStyle(color: Colors.red, fontSize: 18),),
+                    ],
                     ),
-                  ),
-                ],
-              ),
-            );
-          }
-          ),
+                  );
+              }),
           actions: [
+            // Text(error, style: TextStyle(color: Colors.red),),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
