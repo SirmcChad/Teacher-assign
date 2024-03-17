@@ -211,7 +211,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
 
             return Scaffold(
               appBar: AppBar(
-                title: Text(subject, style: TextStyle(fontSize: 16),),
+                title: Text(subject, style: TextStyle(fontSize: 16, color: Colors.white),),
                 backgroundColor: Colors.indigo.shade400,
                 iconTheme: IconThemeData(
                     color: Colors.white
