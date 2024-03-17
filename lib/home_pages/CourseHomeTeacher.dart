@@ -224,7 +224,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
                           color: Colors.blue,
                           image: DecorationImage(
                             image: NetworkImage(
-                                'https://picsum.photos/300'), // TODO: replace with a background image
+                                'https://picsum.photos/id/122/800/400'),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -262,6 +262,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
                           setState(() {
                             services.shuffleStudentList(widget.courseUid);
                             shuffled = true;
+                            Navigator.pop(context);
                           });
                         },
                       ),
