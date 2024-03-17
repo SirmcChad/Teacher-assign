@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:teacher_assign/Wrapper.dart';
 import 'package:teacher_assign/services/auth_services.dart';
-import 'home_pages/CourseHomeStudent.dart';
-import 'home_pages/CourseHomeTeacher.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,5 +44,5 @@ future prospect:
 ads
 premium version more list capacity and no ads
 modifying profile picture
-animaitons and stuff
+animations and stuff
  */

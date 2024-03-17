@@ -1,5 +1,3 @@
-import 'package:teacher_assign/models/CourseModel.dart';
-import 'package:teacher_assign/models/StudentModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:teacher_assign/services/database_services_courses.dart';
 import 'package:teacher_assign/services/database_services_student.dart';

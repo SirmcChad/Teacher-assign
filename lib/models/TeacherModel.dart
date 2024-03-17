@@ -1,5 +1,3 @@
-import 'CourseModel.dart';
-
 class TeacherModel {
   String uid;
   String name;

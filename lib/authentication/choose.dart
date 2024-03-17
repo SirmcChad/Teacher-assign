@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:teacher_assign/authentication/AuthenticateStudent.dart';
 import 'package:teacher_assign/authentication/AuthenticateTeacher.dart';
-import 'package:teacher_assign/authentication/RegisterStudent.dart';
-import 'package:teacher_assign/authentication/RegisterTeacher.dart';
 import 'package:teacher_assign/services/auth_services.dart';
 
 class Choose extends StatefulWidget {

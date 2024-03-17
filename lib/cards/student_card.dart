@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:teacher_assign/services/database_services_student.dart';
 import 'package:teacher_assign/shared/constants.dart';
-import 'basic_student_card.dart';
 
 class StudentCard extends StatelessWidget {
   final String studentUid;

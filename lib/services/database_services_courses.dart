@@ -1,17 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:teacher_assign/models/CourseModel.dart';
-import 'package:teacher_assign/models/StudentModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../models/TeacherModel.dart';
 
 class DatabaseServicesCourses{
   final CollectionReference courseCollection = FirebaseFirestore.instance.collection('courses');
 
   Future addStudentToCourse(String uid, String studentUid) async{
-    // DocumentSnapshot studentSnapshot = await studentCollection.doc(studentUid).get();
-    // StudentModel student = _studentModelFromSnapshot(studentSnapshot);
-    // final json = student.toJSON();
     await courseCollection.doc(uid).update({'students': FieldValue.arrayUnion([studentUid]) });
   }
 

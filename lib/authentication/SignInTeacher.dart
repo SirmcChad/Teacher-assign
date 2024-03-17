@@ -48,13 +48,6 @@ class _SignInTeacherState extends State<SignInTeacher> {
           ),
         ],
       ),
-        //
-        // actions: [
-        //   IconButton(
-        //     icon: Icon(Icons.person),
-        //     onPressed: () {widget.toggleView();}
-        //   )
-        // ]
 
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -100,9 +93,6 @@ class _SignInTeacherState extends State<SignInTeacher> {
           ),
         ),
       ),
-      // floatingActionButton: FloatingActionButton(onPressed: (){
-      //   widget.toggleView();
-      // },),
     );
   }
 }

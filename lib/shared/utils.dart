@@ -79,19 +79,6 @@ class Utility {
     }
   }
 
-
-  // int getNumberOfDivisions(){
-  //   if (numberOfTasks == 1 && numberOfStudentsPerGroup == 1) {
-  //     return totalStudents;
-  //   }
-  //   else if (numberOfTasks == 1) {
-  //     return totalStudents~/numberOfStudentsPerGroup;
-  //   }
-  //   else{
-  //     return numberOfTasks;
-  //   }
-  // }
-
   List<int> getRanges(){
     List<int> result = [0];
 
@@ -102,21 +89,6 @@ class Utility {
       if (totalStudents % numberOfStudentsPerGroup !=0){
         result.add(totalStudents% numberOfStudentsPerGroup + result[result.length -1]);
       }
-
-      /*
-      TODO consider my implementation of the getRanges method
-      List<int> result = [];
-
-  for (int i=0;i<=totalStudents; i+=numberOfStudentsPerGroup){
-    result.add(i);
-  }
-  if (totalStudents % numberOfStudentsPerGroup !=0){
-    result.add(totalStudents% numberOfStudentsPerGroup + result[result.length -1]);
-  }
-
-
-  return result;
-       */
     }
 
     else{
