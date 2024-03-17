@@ -27,12 +27,9 @@ ListTile listTileCopyWith(String name, bool isMe){
     return ListTile(
       leading: CircleAvatar(
         backgroundImage: NetworkImage(
-            'https://picsum.photos/200'), // TODO: replace with student profile image
+            'https://picsum.photos/id/193/200'), // TODO: replace with student profile image
       ),
       title: Text(name),
-      // TODO: replace with student name
-      // subtitle: Text('Enrolled on ${DateTime.now()}'),
-      // TODO: replace with enrollment date
       trailing:IconButton(
         icon:Icon(Icons.star),
         onPressed: () {
@@ -45,12 +42,9 @@ ListTile listTileCopyWith(String name, bool isMe){
     return ListTile(
       leading: CircleAvatar(
         backgroundImage: NetworkImage(
-            'https://picsum.photos/200'), // TODO: replace with student profile image
+            'https://picsum.photos/id/193/200'),
       ),
       title: Text(name),
-      // TODO: replace with student name
-      // subtitle: Text('Enrolled on ${DateTime.now()}'),
-      // TODO: replace with enrollment date
 
     );
   }

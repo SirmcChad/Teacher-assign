@@ -39,5 +39,12 @@ todo 11 what if no courses student? DONE!
 todo 12- size limitations on all kinds of lists DONE!
 todo 13- random shuffling DONE!
 todo 14- improved space evening with by size DONE!F
-todo 15 remove the search icon
+todo 15 remove the search icon DONE!
+
+future prospect:
+
+ads
+premium version more list capacity and no ads
+modifying profile picture
+animaitons and stuff
  */
