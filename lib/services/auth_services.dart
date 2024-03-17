@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:teacher_assign/services/database_services_student.dart';
 import 'package:teacher_assign/services/database_services_teacher.dart';
@@ -9,7 +8,6 @@ class AuthServices {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Stream<User?> get user {
-    print('invoked?');
     return _auth.authStateChanges();
   }
 

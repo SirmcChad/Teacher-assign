@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:teacher_assign/home_pages/CourseHomeTeacher.dart';
-import 'package:teacher_assign/services/database_services_courses.dart';
 import 'package:teacher_assign/services/database_services_teacher.dart';
 import 'course_card.dart';
 

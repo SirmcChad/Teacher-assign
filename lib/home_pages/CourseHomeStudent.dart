@@ -5,7 +5,6 @@ import 'package:teacher_assign/models/CourseModel.dart';
 import 'package:teacher_assign/services/database_services_courses.dart';
 import 'package:teacher_assign/services/database_services_student.dart';
 import 'package:teacher_assign/shared/custom_loading.dart';
-import 'package:teacher_assign/cards/student_card.dart';
 import 'package:teacher_assign/shared/utils.dart';
 import 'package:teacher_assign/cards/group_card.dart';
 import 'package:provider/provider.dart';
@@ -92,7 +91,6 @@ class _CourseStudentState extends State<CourseStudent> {
                           builder: (context, snapshot){
                             if (snapshot.connectionState == ConnectionState.done){
                               String? name = snapshot.data;
-                              print(name);
                               return Text(
                                 '${name.toString()[0]}',
                                 style: TextStyle(fontSize: 40.0, color: Colors.blue),

@@ -1,11 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:teacher_assign/cards/course_card_teacher.dart';
-import 'package:teacher_assign/models/CourseModel.dart';
 import 'package:teacher_assign/services/auth_services.dart';
-import 'package:teacher_assign/cards/course_card.dart';
 import 'package:teacher_assign/services/database_services_courses.dart';
 import 'package:teacher_assign/services/database_services_teacher.dart';
 import 'package:teacher_assign/shared/custom_loading.dart';
@@ -105,13 +102,6 @@ class _TeacherState extends State<Teacher> {
 
 
   }
-  // List<CourseModel> fromListOfJSON( List<Map<String,dynamic>> mapList){
-  //   List<CourseModel> result = [];
-  //   for (int i =0; i< mapList.length;i++){
-  //     result.add(CourseModel.fromJson(mapList[i]));
-  //   }
-  //   return result;
-  // }
 
   @override
   Widget build(BuildContext context) {

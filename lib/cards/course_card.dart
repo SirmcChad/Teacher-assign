@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:teacher_assign/home_pages/CourseHomeStudent.dart';
-import 'package:teacher_assign/home_pages/CourseHomeTeacher.dart';
 import 'package:teacher_assign/services/database_services_courses.dart';
 
 abstract class CourseCard extends StatelessWidget {

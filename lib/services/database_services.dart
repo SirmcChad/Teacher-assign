@@ -24,25 +24,16 @@ class DatabaseServices{
 
 
   Future addCourseToStudent(String uid, String courseUid) async{
-    // DocumentSnapshot courseSnapshot = await courseCollection.doc(courseUid).get();
-    // CourseModel course = _courseModelFromSnapshot(courseSnapshot);
-    // final json = course.toJSON();
     await studentCollection.doc(uid).update({'courses': FieldValue.arrayUnion([courseUid]) });
   }
 
 
   Future addCourseToTeacher(String uid, String courseUid) async{
-    // DocumentSnapshot courseSnapshot = await courseCollection.doc(courseUid).get();
-    // CourseModel course = _courseModelFromSnapshot(courseSnapshot);
-    // final json = course.toJSON();
     await teacherCollection.doc(uid).update({'courses': FieldValue.arrayUnion([courseUid] )});
   }
   // Firestore can't store non-primative lists
 
   Future addStudentToCourse(String uid, String studentUid) async{
-    // DocumentSnapshot studentSnapshot = await studentCollection.doc(studentUid).get();
-    // StudentModel student = _studentModelFromSnapshot(studentSnapshot);
-    // final json = student.toJSON();
     await courseCollection.doc(uid).update({'students': FieldValue.arrayUnion([studentUid]) });
   }
 
@@ -98,9 +89,6 @@ class DatabaseServices{
   }
 
   StudentModel _studentModelFromSnapshot(DocumentSnapshot snapshot){
-    print(snapshot);
-    print(snapshot.get('name'));
-    print(snapshot.get('courses'));
     return StudentModel(
       uid: snapshot.id,
       name: snapshot.get('name'),
