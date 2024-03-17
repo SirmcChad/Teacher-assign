@@ -66,8 +66,11 @@ class _CourseStudentState extends State<CourseStudent> {
           if(numberOfTasks == 1 && studentsPerGroup == 1){
             return Scaffold(
               appBar: AppBar(
-                title: Text(subject),
+                title: Text(subject, style: TextStyle(color: Colors.white),),
                 backgroundColor: Colors.blue,
+                iconTheme: IconThemeData(
+                  color: Colors.white,
+                ),
               ),
               body: ListView.builder(
                 itemCount: studentUids.length,
@@ -151,8 +154,11 @@ class _CourseStudentState extends State<CourseStudent> {
           else {
             return Scaffold(
               appBar: AppBar(
-                title: Text(subject),
+                title: Text(subject, style: TextStyle(color: Colors.white),),
                 backgroundColor: Colors.blue,
+                iconTheme: IconThemeData(
+                  color: Colors.white,
+                ),
 
               ),
               body: GridView.count(
