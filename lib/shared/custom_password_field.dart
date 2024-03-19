@@ -42,6 +42,10 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
         if (value!.length < 6) {
           return 'Password must be more than 6 characters';
         }
+
+        else if(value.length > 35){
+          return 'Password must be less than 35 characters';
+        }
         return null;
       },
       onChanged: (value){

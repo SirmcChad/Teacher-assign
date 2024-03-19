@@ -4,8 +4,9 @@ class CustomTextField extends StatefulWidget {
   String title;
   String initialValue;
   Function onChange;
+  bool moreChars;
 
-  CustomTextField({required this.title, required this.initialValue, required this.onChange});
+  CustomTextField({required this.title, required this.initialValue, required this.onChange, required this.moreChars});
 
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();
@@ -27,6 +28,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
       validator: (value) {
         if (value!.length < 6) {
           return '${widget.title} must be more than 6 characters';
+        }
+        else if(value.length > 254){
+          return '${widget.title} must be less than 255 characters';
+        }
+
+        else if(!widget.moreChars && value.length > 35){
+          return '${widget.title} must be less than 35 characters';
         }
         return null;
       },

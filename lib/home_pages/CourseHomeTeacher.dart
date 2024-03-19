@@ -6,8 +6,6 @@ import 'package:teacher_assign/shared/custom_loading.dart';
 import 'package:teacher_assign/cards/student_card.dart';
 import 'package:teacher_assign/shared/utils.dart';
 
-import '../services/database_services_student.dart';
-
 
 class CourseTeacher extends StatefulWidget {
   String courseUid;
@@ -192,6 +190,105 @@ class _CourseTeacherState extends State<CourseTeacher> {
     DatabaseServicesCourses().removeStudentFromCourse(widget.courseUid, studentUid);
   }
 
+  void updateCourseName(BuildContext context,String courseUid){
+    String courseName = '';
+
+    showDialog(context: context, builder: (BuildContext context){
+      String error = '';
+
+      return AlertDialog(
+        title: Text('Update the Course Name'),
+        content: StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+          return Column(
+            children: [
+              TextField(
+                autofocus: true,
+                decoration: InputDecoration(labelText: 'New Course name', hintText: 'Leave Blank For no Change'),
+                onChanged: (value) {
+                  courseName = value;
+                },
+              ),
+              SizedBox(height: 25,),
+              ElevatedButton(
+                onPressed: () async {
+                  services.updateCourseName(courseUid, courseName);
+                  Navigator.pop(context);
+                },
+                child: const Text('Update'),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.purple,
+                  onPrimary: Colors.white,
+                  shape: RoundedRectangleBorder( // The shape of the button
+                    borderRadius: BorderRadius.circular(20),
+                    side: const BorderSide(color: Colors.black,
+                        width: 2), // The border
+                  ),
+                  elevation: 10,
+                  // The elevation of the button
+                  padding: const EdgeInsets.all(
+                      15), // The padding of the button
+                ),
+              ),
+              Text(error, style: TextStyle(color: Colors.red,fontSize: 18),),
+            ],
+          );
+
+        }
+        ),
+
+      );
+    });
+  }
+
+  void updateCoursePassword(BuildContext context,String courseUid){
+    String password = '';
+
+    showDialog(context: context, builder: (BuildContext context){
+      String error = '';
+
+      return AlertDialog(
+        title: Text('Update the Password'),
+        content: StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+          return Column(
+            children: [
+              TextField(
+                autofocus: true,
+                decoration: InputDecoration(labelText: 'New Password', hintText: 'Leave Blank For no Password'),
+                onChanged: (value) {
+                  password = value;
+                },
+              ),
+              SizedBox(height: 25,),
+              ElevatedButton(
+                onPressed: () async {
+                  services.updateCourseName(courseUid, password);
+                  Navigator.pop(context);
+                },
+                child: const Text('Update'),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.purple,
+                  onPrimary: Colors.white,
+                  shape: RoundedRectangleBorder( // The shape of the button
+                    borderRadius: BorderRadius.circular(20),
+                    side: const BorderSide(color: Colors.black,
+                        width: 2), // The border
+                  ),
+                  elevation: 10,
+                  // The elevation of the button
+                  padding: const EdgeInsets.all(
+                      15), // The padding of the button
+                ),
+              ),
+              Text(error, style: TextStyle(color: Colors.red,fontSize: 18),),
+            ],
+          );
+
+        }
+        ),
+
+      );
+    });
+  }
 
 
   @override
@@ -262,7 +359,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
                     int index = studentUids.indexOf(e);
                     return Container(
                         key: GlobalKey(),
-                        child: StudentCard(studentUid: e,courseUid: widget.courseUid, pastName: names[studentUids.indexOf(e)], changeName: changeName, index: studentUids.indexOf(e),color: colouringUtility.colouring(index,), shuffled: shuffled,delete: delete,)
+                        child: StudentCard(studentUid: e, pastName: names[studentUids.indexOf(e)], changeName: changeName, index: studentUids.indexOf(e),color: colouringUtility.colouring(index,), shuffled: shuffled,delete: delete,)
                     );
                   } ).toList()
               ),

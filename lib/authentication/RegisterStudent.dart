@@ -55,9 +55,9 @@ class _RegisterStudentState extends State<RegisterStudent> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomTextField(title: "Name", initialValue: email, onChange: (value) {name = value;}),
+              CustomTextField(title: "Name", initialValue: email, onChange: (value) {name = value;}, moreChars: false,),
               SizedBox(height: 30,),
-              CustomTextField(title: "Email", initialValue: email, onChange: (value) {email = value;}),
+              CustomTextField(title: "Email", initialValue: email, onChange: (value) {email = value;}, moreChars: true,),
               SizedBox(height: 30,),
               CustomPasswordField(title: "Password", initialPassword: password, visiblePassword: false, onChange: (value) {password = value;},),
               SizedBox(height: 20,),

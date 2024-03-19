@@ -57,7 +57,7 @@ class _SignInStudentState extends State<SignInStudent> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomTextField(title: "Email", initialValue: email, onChange: (value) {email = value;}),
+              CustomTextField(title: "Email", initialValue: email, onChange: (value) {email = value;}, moreChars: true,),
               SizedBox(height: 30,),
               CustomPasswordField(title: "Password", initialPassword: password, visiblePassword: false, onChange: (value) {password = value;},),
               SizedBox(height: 20,),
