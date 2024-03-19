@@ -6,6 +6,8 @@ import 'package:teacher_assign/shared/custom_loading.dart';
 import 'package:teacher_assign/cards/student_card.dart';
 import 'package:teacher_assign/shared/utils.dart';
 
+import '../services/database_services_student.dart';
+
 
 class CourseTeacher extends StatefulWidget {
   String courseUid;
@@ -359,7 +361,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
                     int index = studentUids.indexOf(e);
                     return Container(
                         key: GlobalKey(),
-                        child: StudentCard(studentUid: e, pastName: names[studentUids.indexOf(e)], changeName: changeName, index: studentUids.indexOf(e),color: colouringUtility.colouring(index,), shuffled: shuffled,delete: delete,)
+                        child: StudentCard(studentUid: e, pastName: names[studentUids.indexOf(e)], changeName: changeName, index: studentUids.indexOf(e),color: colouringUtility.colouring(index,), shuffled: shuffled,delete: delete, courseUid: widget.courseUid,)
                     );
                   } ).toList()
               ),
@@ -433,6 +435,31 @@ class _CourseTeacherState extends State<CourseTeacher> {
                         onTap: () {
                           setState(() {
                             sureShuffle(context);
+                          });
+                        },
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.edit),
+                        title: Text(
+                          'Update Course Name',
+                          style: TextStyle(fontSize: 18.0),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            updateCourseName(context, widget.courseUid);
+                          });
+                        },
+                      ),
+
+                      ListTile(
+                        leading: Icon(Icons.password),
+                        title: Text(
+                          'Update Course Password',
+                          style: TextStyle(fontSize: 18.0),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            updateCoursePassword(context, widget.courseUid);
                           });
                         },
                       ),
