@@ -33,6 +33,16 @@ class DatabaseServicesCourses{
     await courseCollection.doc(uid).update({'studentsPerGroup': studentsPerGroup});
   }
 
+  Future updateCourseName(String uid, String newName) async{
+    if(newName.isNotEmpty){
+      await courseCollection.doc(uid).update({'name': newName});
+    }
+  }
+
+  Future updatePassword(String uid, String newPassword) async{
+    await courseCollection.doc(uid).update({'password': newPassword});
+  }
+
   Future newCourse(String name, String teacherName, String password)async{
 
     final docRef = courseCollection.doc();

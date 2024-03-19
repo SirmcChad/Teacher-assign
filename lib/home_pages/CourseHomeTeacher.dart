@@ -135,7 +135,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
   void sureShuffle(BuildContext context){
     showDialog(context: context, builder: (BuildContext context){
       return AlertDialog(
-        title: Text("Shuffle Studnets"),
+        title: Text("Shuffle Students"),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -180,6 +180,106 @@ class _CourseTeacherState extends State<CourseTeacher> {
             ],)
 
         ],
+      );
+    });
+  }
+
+  void updateCourseName(BuildContext context,String courseUid){
+    String courseName = '';
+
+    showDialog(context: context, builder: (BuildContext context){
+      String error = '';
+
+      return AlertDialog(
+        title: Text('Update the Course Name'),
+        content: StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+          return Column(
+            children: [
+              TextField(
+                autofocus: true,
+                decoration: InputDecoration(labelText: 'New Course name', hintText: 'Leave Blank For no Change'),
+                onChanged: (value) {
+                  courseName = value;
+                },
+              ),
+              SizedBox(height: 25,),
+              ElevatedButton(
+                onPressed: () async {
+                  services.updateCourseName(courseUid, courseName);
+                  Navigator.pop(context);
+                },
+                child: const Text('Update'),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.purple,
+                  onPrimary: Colors.white,
+                  shape: RoundedRectangleBorder( // The shape of the button
+                    borderRadius: BorderRadius.circular(20),
+                    side: const BorderSide(color: Colors.black,
+                        width: 2), // The border
+                  ),
+                  elevation: 10,
+                  // The elevation of the button
+                  padding: const EdgeInsets.all(
+                      15), // The padding of the button
+                ),
+              ),
+              Text(error, style: TextStyle(color: Colors.red,fontSize: 18),),
+            ],
+          );
+
+        }
+        ),
+
+      );
+    });
+  }
+
+  void updateCoursePassword(BuildContext context,String courseUid){
+    String password = '';
+
+    showDialog(context: context, builder: (BuildContext context){
+      String error = '';
+
+      return AlertDialog(
+        title: Text('Update the Password'),
+        content: StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+          return Column(
+            children: [
+              TextField(
+                autofocus: true,
+                decoration: InputDecoration(labelText: 'New Password', hintText: 'Leave Blank For no Password'),
+                onChanged: (value) {
+                  password = value;
+                },
+              ),
+              SizedBox(height: 25,),
+              ElevatedButton(
+                onPressed: () async {
+                  services.updateCourseName(courseUid, password);
+                  Navigator.pop(context);
+                },
+                child: const Text('Update'),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.purple,
+                  onPrimary: Colors.white,
+                  shape: RoundedRectangleBorder( // The shape of the button
+                    borderRadius: BorderRadius.circular(20),
+                    side: const BorderSide(color: Colors.black,
+                        width: 2), // The border
+                  ),
+                  elevation: 10,
+                  // The elevation of the button
+                  padding: const EdgeInsets.all(
+                      15), // The padding of the button
+                ),
+              ),
+              Text(error, style: TextStyle(color: Colors.red,fontSize: 18),),
+            ],
+          );
+
+        }
+        ),
+
       );
     });
   }
@@ -327,6 +427,32 @@ class _CourseTeacherState extends State<CourseTeacher> {
                         onTap: () {
                           setState(() {
                             sureShuffle(context);
+                          });
+                        },
+                      ),
+
+                      ListTile(
+                        leading: Icon(Icons.edit),
+                        title: Text(
+                          'Update Course Name',
+                          style: TextStyle(fontSize: 18.0),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            updateCourseName(context, widget.courseUid);
+                          });
+                        },
+                      ),
+
+                      ListTile(
+                        leading: Icon(Icons.password),
+                        title: Text(
+                          'Update Course Password',
+                          style: TextStyle(fontSize: 18.0),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            updateCoursePassword(context, widget.courseUid);
                           });
                         },
                       ),
