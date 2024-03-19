@@ -33,6 +33,8 @@ class DatabaseServicesCourses{
     await courseCollection.doc(uid).update({'studentsPerGroup': studentsPerGroup});
   }
 
+
+
   Future newCourse(String name, String teacherName, String password)async{
 
     final docRef = courseCollection.doc();
