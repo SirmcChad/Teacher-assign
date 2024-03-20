@@ -41,7 +41,7 @@ class _StudentState extends State<Student> {
 
   String hereAreCourses(int numberOfCourses){
     if (numberOfCourses ==0){
-      return 'Start adding courses by clicking the + Icon';
+      return 'Start adding courses by clicking the join + course button top right';
     }
     else{
       return 'Here Are Your Courses:';
@@ -275,24 +275,32 @@ class _StudentState extends State<Student> {
             ),
 
             appBar: AppBar(
-              title: Text('Welcome ${snapshot.data!.name}!'),
+              title: Text('Hi ${snapshot.data!.name}!'),
               titleTextStyle: TextStyle(
                 color: Colors.white,
-                fontSize: 24,
+                fontSize: 17,
                 fontWeight: FontWeight.bold,
               ),
               backgroundColor: Colors.blue,
               elevation: 5,
               actions: [
-                IconButton(
-                  icon: Icon(Icons.add, color: Colors.white),
-                  color: Colors.red[300],
-                  onPressed: () {
-                    setState(() {
-                      _showCourseSearchDialog(context, coursesList);
-                    });
-                  },
-                ),
+                TextButton.icon(
+                    onPressed: (){
+                      setState(() {
+                        _showCourseSearchDialog(context, coursesList);
+                      });
+                    },
+                    icon: Icon(Icons.add,color: Colors.white,),
+                    label: Text('Join Course',style: TextStyle(color: Colors.white),))
+                // IconButton(
+                //   icon: Icon(Icons.add, color: Colors.white),
+                //   color: Colors.red[300],
+                //   onPressed: () {
+                //     setState(() {
+                //       _showCourseSearchDialog(context, coursesList);
+                //     });
+                //   },
+                // ),
               ],
             ),
             body: Center(
