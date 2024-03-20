@@ -33,27 +33,29 @@ class _CourseTeacherState extends State<CourseTeacher> {
     showDialog(context: context, builder: (BuildContext context){
       return AlertDialog(
         title: Text("Assign Groups"),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text("How many Groups/tasks do you want to assign for your class?"),
-            SizedBox(height: 10),
-            // A text field to enter the number of tasks
-            TextField(
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter> [
-                FilteringTextInputFormatter.digitsOnly
-              ],
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "Number of tasks",
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text("How many Groups/tasks do you want to assign for your class?"),
+              SizedBox(height: 10),
+              // A text field to enter the number of tasks
+              TextField(
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter> [
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: "Number of tasks",
+                ),
+                onChanged: (value) {
+                  // Update the number of tasks variable
+                  numberOfTasks = int.parse(value);
+                },
               ),
-              onChanged: (value) {
-                // Update the number of tasks variable
-                numberOfTasks = int.parse(value);
-              },
-            ),
-          ],
+            ],
+          ),
         ),
         actions: [
           // A cancel button to dismiss the dialog
@@ -85,27 +87,29 @@ class _CourseTeacherState extends State<CourseTeacher> {
     showDialog(context: context, builder: (BuildContext context){
       return AlertDialog(
         title: Text("Assign Tasks"),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text("How many students in a single group?"),
-            SizedBox(height: 10),
-            // A text field to enter the number of tasks
-            TextField(
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter> [
-                FilteringTextInputFormatter.digitsOnly
-              ],
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "Number of Students in a Group",
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text("How many students in a single group?"),
+              SizedBox(height: 10),
+              // A text field to enter the number of tasks
+              TextField(
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter> [
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: "Number of Students in a Group",
+                ),
+                onChanged: (value) {
+                  // Update the number of tasks variable
+                  numberOfTasks = int.parse(value);
+                },
               ),
-              onChanged: (value) {
-                // Update the number of tasks variable
-                numberOfTasks = int.parse(value);
-              },
-            ),
-          ],
+            ],
+          ),
         ),
         actions: [
           Row(
@@ -137,12 +141,14 @@ class _CourseTeacherState extends State<CourseTeacher> {
     showDialog(context: context, builder: (BuildContext context){
       return AlertDialog(
         title: Text("Shuffle Students"),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text("Are you sure you want to shuffle the order of the students?"),
-            SizedBox(height: 10),
-          ],
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text("Are you sure you want to shuffle the order of the students?"),
+              SizedBox(height: 10),
+            ],
+          ),
         ),
         actions: [
           Row(
@@ -194,61 +200,63 @@ class _CourseTeacherState extends State<CourseTeacher> {
 
       return AlertDialog(
         title: Text('Update the Course Name'),
-        content: StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-          return Form(
-            key: formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-              TextFormField(
-                autofocus: true,
-              initialValue: courseName,
-              decoration: InputDecoration(
-                  labelText: 'New Course Name',
-                  hintText: 'Enter New Course Name',
-                  border: OutlineInputBorder()
-              ),
-              validator: (value) {
-                if (value!.length < 1) {
-                  return 'Name must be at least 1 character';
-                }
-                else if(value.length > 20){
-                  return 'Name can not be more than 20 characters';
-                }
-                return null;
-              },
-              onChanged: (value){
-                courseName = value;
-              },
-            ),
-                SizedBox(height: 30,),
-                ElevatedButton(
-                  onPressed: () async{
-                    if (formKey.currentState!.validate()) {
-                      services.updateCourseName(courseUid, courseName);
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueAccent[100],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20), // Adjust the value as needed
-                    ),
-                  ),
-                  child: Text('Update',
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white
-                    ),
-                  ),
+        content: SingleChildScrollView(
+          child: StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+            return Form(
+              key: formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                TextFormField(
+                  autofocus: true,
+                initialValue: courseName,
+                decoration: InputDecoration(
+                    labelText: 'New Course Name',
+                    hintText: 'Enter New Course Name',
+                    border: OutlineInputBorder()
                 ),
-                Text(error, style: TextStyle(fontSize: 18,color: Colors.red, fontWeight: FontWeight.bold),)
-              ],
-            ),
-          );
-        }
+                validator: (value) {
+                  if (value!.length < 1) {
+                    return 'Name must be at least 1 character';
+                  }
+                  else if(value.length > 20){
+                    return 'Name can not be more than 20 characters';
+                  }
+                  return null;
+                },
+                onChanged: (value){
+                  courseName = value;
+                },
+              ),
+                  SizedBox(height: 30,),
+                  ElevatedButton(
+                    onPressed: () async{
+                      if (formKey.currentState!.validate()) {
+                        services.updateCourseName(courseUid, courseName);
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blueAccent[100],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20), // Adjust the value as needed
+                      ),
+                    ),
+                    child: Text('Update',
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white
+                      ),
+                    ),
+                  ),
+                  Text(error, style: TextStyle(fontSize: 18,color: Colors.red, fontWeight: FontWeight.bold),)
+                ],
+              ),
+            );
+          }
+          ),
         ),
 
       );
@@ -264,58 +272,60 @@ class _CourseTeacherState extends State<CourseTeacher> {
 
       return AlertDialog(
         title: Text('Update the Password'),
-        content: StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-          return Form(
-            key: formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextFormField(
-                  autofocus: true,
-                  initialValue: password,
-                  decoration: InputDecoration(
-                      labelText: 'New Password',
-                      hintText: 'Leave Blank For no Password',
-                      border: OutlineInputBorder()
+        content: SingleChildScrollView(
+          child: StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+            return Form(
+              key: formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextFormField(
+                    autofocus: true,
+                    initialValue: password,
+                    decoration: InputDecoration(
+                        labelText: 'New Password',
+                        hintText: 'Leave Blank For no Password',
+                        border: OutlineInputBorder()
+                    ),
+                    validator: (value) {
+                      if(value!.length > 35){
+                        return 'Password can not be more than 35 characters';
+                      }
+                      return null;
+                    },
+                    onChanged: (value){
+                      password = value;
+                    },
                   ),
-                  validator: (value) {
-                    if(value!.length > 35){
-                      return 'Password can not be more than 35 characters';
-                    }
-                    return null;
-                  },
-                  onChanged: (value){
-                    password = value;
-                  },
-                ),
-                SizedBox(height: 30,),
-                ElevatedButton(
-                  onPressed: () async{
-                    if (formKey.currentState!.validate()) {
-                      services.updatePassword(courseUid, password);
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueAccent[100],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20), // Adjust the value as needed
+                  SizedBox(height: 30,),
+                  ElevatedButton(
+                    onPressed: () async{
+                      if (formKey.currentState!.validate()) {
+                        services.updatePassword(courseUid, password);
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blueAccent[100],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20), // Adjust the value as needed
+                      ),
+                    ),
+                    child: Text('Update',
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white
+                      ),
                     ),
                   ),
-                  child: Text('Update',
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white
-                    ),
-                  ),
-                ),
-                Text(error, style: TextStyle(fontSize: 18,color: Colors.red, fontWeight: FontWeight.bold),)
-              ],
-            ),
-          );
-        }
+                  Text(error, style: TextStyle(fontSize: 18,color: Colors.red, fontWeight: FontWeight.bold),)
+                ],
+              ),
+            );
+          }
+          ),
         ),
 
       );

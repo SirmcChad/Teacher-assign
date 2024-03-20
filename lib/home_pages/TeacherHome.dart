@@ -39,75 +39,77 @@ class _TeacherState extends State<Teacher> {
 
       return AlertDialog(
         title: Text('create a course'),
-        content: StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                autofocus: true,
-                decoration: InputDecoration(labelText: 'Course name'),
-                onChanged: (value) {
-                  courseName = value;
-                },
-              ),
-              SizedBox(height: 15,),
-              TextField(
-                decoration: InputDecoration(labelText: 'Password',
-                    hintText: 'Leave Blank For no Password'),
-                onChanged: (value) {
-                  password = value;
-                },
-              ),
-              SizedBox(height: 25,),
-              ElevatedButton(
-                onPressed: () async {
-                  if (courses.length >= 20) {
-                    setState(() {
-                      error = "Maximum number of courses exceeded";
-                    });
-                  }
-
-                  else if(courseName.length > 20){
-                    error = 'Course Name can not be more than 20 characters';
-                  }
-
-                  else if(password!.length > 35){
-                    error = 'Password can not be more than 35 characters';
-                  }
-
-                  else {
-                    String courseuid = await DatabaseServicesCourses()
-                        .newCourse(
-                        courseName, teacherName, password);
-
-                    setState(() {
-                      DatabaseServicesTeacher().addCourseToTeacher(
-                          user!.uid, courseuid);
-                      Navigator.pop(context);
-                      message.showCustomLovely('Course Added Successfully', 3);
-                    });
-                  }
-                },
-                child: const Text('Create'),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.purple,
-                  onPrimary: Colors.white,
-                  shape: RoundedRectangleBorder( // The shape of the button
-                    borderRadius: BorderRadius.circular(20),
-                    side: const BorderSide(color: Colors.black,
-                        width: 2), // The border
-                  ),
-                  elevation: 10,
-                  // The elevation of the button
-                  padding: const EdgeInsets.all(
-                      15), // The padding of the button
+        content: SingleChildScrollView(
+          child: StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  autofocus: true,
+                  decoration: InputDecoration(labelText: 'Course name'),
+                  onChanged: (value) {
+                    courseName = value;
+                  },
                 ),
-              ),
-              Text(error, style: TextStyle(color: Colors.red,fontSize: 18),),
-            ],
-          );
-
-        }
+                SizedBox(height: 15,),
+                TextField(
+                  decoration: InputDecoration(labelText: 'Password',
+                      hintText: 'Leave Blank For no Password'),
+                  onChanged: (value) {
+                    password = value;
+                  },
+                ),
+                SizedBox(height: 25,),
+                ElevatedButton(
+                  onPressed: () async {
+                    if (courses.length >= 20) {
+                      setState(() {
+                        error = "Maximum number of courses exceeded";
+                      });
+                    }
+          
+                    else if(courseName.length > 20){
+                      error = 'Course Name can not be more than 20 characters';
+                    }
+          
+                    else if(password!.length > 35){
+                      error = 'Password can not be more than 35 characters';
+                    }
+          
+                    else {
+                      String courseuid = await DatabaseServicesCourses()
+                          .newCourse(
+                          courseName, teacherName, password);
+          
+                      setState(() {
+                        DatabaseServicesTeacher().addCourseToTeacher(
+                            user!.uid, courseuid);
+                        Navigator.pop(context);
+                        message.showCustomLovely('Course Added Successfully', 3);
+                      });
+                    }
+                  },
+                  child: const Text('Create'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.purple,
+                    onPrimary: Colors.white,
+                    shape: RoundedRectangleBorder( // The shape of the button
+                      borderRadius: BorderRadius.circular(20),
+                      side: const BorderSide(color: Colors.black,
+                          width: 2), // The border
+                    ),
+                    elevation: 10,
+                    // The elevation of the button
+                    padding: const EdgeInsets.all(
+                        15), // The padding of the button
+                  ),
+                ),
+                Text(error, style: TextStyle(color: Colors.red,fontSize: 18),),
+              ],
+            );
+          
+          }
+          ),
         ),
 
       );
