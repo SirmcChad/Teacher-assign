@@ -25,6 +25,7 @@ class _SignInTeacherState extends State<SignInTeacher> {
 
   @override
   Widget build(BuildContext context) {
+    Message message = Message(context: context);
     if (isLoading){
       return Loading();
     }
@@ -69,7 +70,7 @@ class _SignInTeacherState extends State<SignInTeacher> {
 
                     if (result !=null){
                       Navigator.pop(context);
-                    //  message.welcoming(context);
+                      message.welcoming();
                     }
                     else{
                       setState(() {

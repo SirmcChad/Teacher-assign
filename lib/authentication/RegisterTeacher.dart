@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:teacher_assign/shared/custom_password_field.dart';
 import 'package:teacher_assign/shared/custom_text_field.dart';
 import 'package:teacher_assign/shared/custom_loading.dart';
+import 'package:teacher_assign/shared/snackbar_messager.dart';
 
 import '../services/auth_services.dart';
 
@@ -26,6 +27,7 @@ class _RegisterTeacherState extends State<RegisterTeacher> {
 
   @override
   Widget build(BuildContext context) {
+    Message message = Message(context: context);
     if (isLoading){
       return Loading();
     }
@@ -72,6 +74,7 @@ class _RegisterTeacherState extends State<RegisterTeacher> {
 
                     if (result !=null){
                       Navigator.pop(context);
+                      message.firstTime();
                     }
                     else{
                       setState(() {

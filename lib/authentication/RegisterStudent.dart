@@ -3,6 +3,7 @@ import 'package:teacher_assign/shared/custom_password_field.dart';
 import 'package:teacher_assign/shared/custom_text_field.dart';
 import 'package:teacher_assign/shared/custom_loading.dart';
 import '../services/auth_services.dart';
+import '../shared/snackbar_messager.dart';
 
 class RegisterStudent extends StatefulWidget {
   Function toggleView;
@@ -25,6 +26,7 @@ class _RegisterStudentState extends State<RegisterStudent> {
 
   @override
   Widget build(BuildContext context) {
+    Message message = Message(context: context);
     if (isLoading){
       return Loading();
     }
@@ -69,6 +71,7 @@ class _RegisterStudentState extends State<RegisterStudent> {
                     dynamic result = await _auth.signUpWithEmailAndPasswordStudent(email, password,name);
                     if (result !=null){
                       Navigator.pop(context);
+                      message.firstTime();
                     }
                     else{
                       setState(() {

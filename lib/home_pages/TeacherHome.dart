@@ -6,6 +6,7 @@ import 'package:teacher_assign/services/auth_services.dart';
 import 'package:teacher_assign/services/database_services_courses.dart';
 import 'package:teacher_assign/services/database_services_teacher.dart';
 import 'package:teacher_assign/shared/custom_loading.dart';
+import 'package:teacher_assign/shared/snackbar_messager.dart';
 
 import '../models/TeacherModel.dart';
 
@@ -26,6 +27,8 @@ class _TeacherState extends State<Teacher> {
 
 
   void addCourse(BuildContext context,String teacherName, List<String> courses){
+    Message message = Message(context: context);
+
     String courseName = 'default name';
     String password = '';
 
@@ -81,6 +84,7 @@ class _TeacherState extends State<Teacher> {
                       DatabaseServicesTeacher().addCourseToTeacher(
                           user!.uid, courseuid);
                       Navigator.pop(context);
+                      message.showCustomLovely('Course Added Successfully', 3);
                     });
                   }
                 },
@@ -120,7 +124,7 @@ class _TeacherState extends State<Teacher> {
 
     String hereAreCourses(int numberOfCourses){
       if (numberOfCourses ==0){
-        return 'Start adding courses by clicking the + Icon';
+        return 'Start adding courses by clicking the + Join Course button top right';
       }
       else{
         return 'Here Are Your Courses:';
@@ -194,24 +198,32 @@ class _TeacherState extends State<Teacher> {
             ),
           ),
           appBar:AppBar(
-            title: Text('Welcome ${name}!'),
+            title: Text('Hi ${name}!'),
             titleTextStyle: TextStyle(
               color: Colors.white,
-              fontSize: 24,
+              fontSize: 17,
               fontWeight: FontWeight.bold,
             ),
             backgroundColor: Colors.brown,
             elevation: 5,
             actions: [
-              IconButton(
-                icon: Icon(Icons.add, color: Colors.white),
-                color: Colors.red[300],
-                onPressed: () {
-                  setState(() {
-                    addCourse(context,name, coursesList!);
-                  });
-                },
-              ),
+              TextButton.icon(
+                  onPressed: (){
+                    setState(() {
+                      addCourse(context,name, coursesList!);
+                    });
+                  },
+                  icon: Icon(Icons.add,color: Colors.white,),
+                  label: Text('Add Course',style: TextStyle(color: Colors.white),))
+              // IconButton(
+              //   icon: Icon(Icons.add, color: Colors.white),
+              //   color: Colors.red[300],
+              //   onPressed: () {
+              //     setState(() {
+              //       addCourse(context,name, coursesList!);
+              //     });
+              //   },
+              // ),
             ],
           ),
           body: Padding(

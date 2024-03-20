@@ -3,6 +3,7 @@ import 'package:teacher_assign/services/auth_services.dart';
 import 'package:teacher_assign/shared/custom_loading.dart';
 import 'package:teacher_assign/shared/custom_password_field.dart';
 import 'package:teacher_assign/shared/custom_text_field.dart';
+import 'package:teacher_assign/shared/snackbar_messager.dart';
 
 
 
@@ -27,6 +28,7 @@ class _SignInStudentState extends State<SignInStudent> {
 
   @override
   Widget build(BuildContext context) {
+    Message message = Message(context: context);
     if (isLoading){
       return Loading();
     }
@@ -70,6 +72,7 @@ class _SignInStudentState extends State<SignInStudent> {
 
                     if (result !=null){
                       Navigator.pop(context);
+                      message.welcoming();
                     }
                     else{
                       setState(() {
