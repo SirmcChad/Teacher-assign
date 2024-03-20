@@ -6,6 +6,7 @@ import 'package:teacher_assign/services/auth_services.dart';
 import 'package:teacher_assign/services/database_services_courses.dart';
 import 'package:teacher_assign/services/database_services_teacher.dart';
 import 'package:teacher_assign/shared/custom_loading.dart';
+import 'package:teacher_assign/shared/snackbar_messager.dart';
 
 import '../models/TeacherModel.dart';
 
@@ -28,6 +29,7 @@ class _TeacherState extends State<Teacher> {
   void addCourse(BuildContext context,String teacherName, List<String> courses){
     String courseName = 'default name';
     String password = '';
+    Message message = Message(context: context);
 
 
     showDialog(context: context, builder: (BuildContext context){
@@ -38,7 +40,6 @@ class _TeacherState extends State<Teacher> {
         title: Text('create a course'),
         content: StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
           return Column(
-            mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 autofocus: true,
@@ -58,18 +59,10 @@ class _TeacherState extends State<Teacher> {
               SizedBox(height: 25,),
               ElevatedButton(
                 onPressed: () async {
-                  if (courses.length >= 20) {
+                  if (courses.length >= 5) { // TODO remove this before publishing
                     setState(() {
                       error = "Maximum number of courses exceeded";
                     });
-                  }
-
-                  else if(courseName.length > 20){
-                    error = 'Course Name can not be more than 20 characters';
-                  }
-
-                  else if(password!.length > 35){
-                    error = 'Password can not be more than 35 characters';
                   }
 
                   else {
@@ -81,6 +74,7 @@ class _TeacherState extends State<Teacher> {
                       DatabaseServicesTeacher().addCourseToTeacher(
                           user!.uid, courseuid);
                       Navigator.pop(context);
+                      message.showCustomLovely('Course Created Successfully', 3);
                     });
                   }
                 },

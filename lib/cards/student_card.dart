@@ -5,19 +5,21 @@ import 'package:teacher_assign/shared/constants.dart';
 
 class StudentCard extends StatelessWidget {
   final String studentUid;
+  String courseUid;
+  Function delete;
   final String? pastName;
   Function changeName;
   Color color;
   int index;
   bool shuffled;
-  StudentCard({super.key, required this.studentUid, required this.pastName, required this.changeName, required this.index, required this.color, required this.shuffled});
+  StudentCard({super.key, required this.studentUid,required this.courseUid, required this.pastName, required this.changeName, required this.index, required this.color, required this.shuffled, required this.delete});
 
   @override
   Widget build(BuildContext context) {
     if(pastName != null && !shuffled){
-      return cardCopyWith(color, listTileCopyWith(pastName!, false));
+      return cardCopyWithDeletion(color, listTileCopyWith(pastName!, false), studentUid,delete);
     }
-    return cardCopyWith(color,  FutureBuilder<DocumentSnapshot>(
+    return cardCopyWithDeletion(color,  FutureBuilder<DocumentSnapshot>(
       future: DatabaseServicesStudent().studentCollection.doc(studentUid).get(),
       builder: (context, snapshot){
         if (snapshot.connectionState == ConnectionState.waiting){
@@ -36,6 +38,6 @@ class StudentCard extends StatelessWidget {
         }
 
       },
-    ),);
+    ),studentUid,delete);
   }
 }
