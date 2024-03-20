@@ -6,9 +6,6 @@ import 'package:teacher_assign/shared/custom_loading.dart';
 import 'package:teacher_assign/cards/student_card.dart';
 import 'package:teacher_assign/shared/utils.dart';
 
-import '../services/database_services_student.dart';
-
-
 class CourseTeacher extends StatefulWidget {
   String courseUid;
   CourseTeacher({Key? key, required this.courseUid}) : super(key: key);
@@ -137,7 +134,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
   void sureShuffle(BuildContext context){
     showDialog(context: context, builder: (BuildContext context){
       return AlertDialog(
-        title: Text("Shuffle Studnets"),
+        title: Text("Shuffle Students"),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -186,14 +183,9 @@ class _CourseTeacherState extends State<CourseTeacher> {
     });
   }
 
-  void delete(String studentUid){
-    shuffled = true;
-    DatabaseServicesStudent().removeCourseFromStudent(studentUid, widget.courseUid);
-    DatabaseServicesCourses().removeStudentFromCourse(widget.courseUid, studentUid);
-  }
-
   void updateCourseName(BuildContext context,String courseUid){
     String courseName = '';
+    final formKey = GlobalKey<FormState>();
 
     showDialog(context: context, builder: (BuildContext context){
       String error = '';
@@ -201,40 +193,59 @@ class _CourseTeacherState extends State<CourseTeacher> {
       return AlertDialog(
         title: Text('Update the Course Name'),
         content: StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-          return Column(
-            children: [
-              TextField(
+          return Form(
+            key: formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+              TextFormField(
                 autofocus: true,
-                decoration: InputDecoration(labelText: 'New Course name', hintText: 'Leave Blank For no Change'),
-                onChanged: (value) {
-                  courseName = value;
-                },
+              initialValue: courseName,
+              decoration: InputDecoration(
+                  labelText: 'New Course Name',
+                  hintText: 'Enter New Course Name',
+                  border: OutlineInputBorder()
               ),
-              SizedBox(height: 25,),
-              ElevatedButton(
-                onPressed: () async {
-                  services.updateCourseName(courseUid, courseName);
-                  Navigator.pop(context);
-                },
-                child: const Text('Update'),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.purple,
-                  onPrimary: Colors.white,
-                  shape: RoundedRectangleBorder( // The shape of the button
-                    borderRadius: BorderRadius.circular(20),
-                    side: const BorderSide(color: Colors.black,
-                        width: 2), // The border
+              validator: (value) {
+                if (value!.length < 1) {
+                  return 'Name must be at least 1 character';
+                }
+                else if(value.length > 20){
+                  return 'Name can not be more than 20 characters';
+                }
+                return null;
+              },
+              onChanged: (value){
+                courseName = value;
+              },
+            ),
+                SizedBox(height: 30,),
+                ElevatedButton(
+                  onPressed: () async{
+                    if (formKey.currentState!.validate()) {
+                      services.updateCourseName(courseUid, courseName);
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blueAccent[100],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20), // Adjust the value as needed
+                    ),
                   ),
-                  elevation: 10,
-                  // The elevation of the button
-                  padding: const EdgeInsets.all(
-                      15), // The padding of the button
+                  child: Text('Update',
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white
+                    ),
+                  ),
                 ),
-              ),
-              Text(error, style: TextStyle(color: Colors.red,fontSize: 18),),
-            ],
+                Text(error, style: TextStyle(fontSize: 18,color: Colors.red, fontWeight: FontWeight.bold),)
+              ],
+            ),
           );
-
         }
         ),
 
@@ -244,6 +255,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
 
   void updateCoursePassword(BuildContext context,String courseUid){
     String password = '';
+    final formKey = GlobalKey<FormState>();
 
     showDialog(context: context, builder: (BuildContext context){
       String error = '';
@@ -251,40 +263,56 @@ class _CourseTeacherState extends State<CourseTeacher> {
       return AlertDialog(
         title: Text('Update the Password'),
         content: StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-          return Column(
-            children: [
-              TextField(
-                autofocus: true,
-                decoration: InputDecoration(labelText: 'New Password', hintText: 'Leave Blank For no Password'),
-                onChanged: (value) {
-                  password = value;
-                },
-              ),
-              SizedBox(height: 25,),
-              ElevatedButton(
-                onPressed: () async {
-                  services.updateCourseName(courseUid, password);
-                  Navigator.pop(context);
-                },
-                child: const Text('Update'),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.purple,
-                  onPrimary: Colors.white,
-                  shape: RoundedRectangleBorder( // The shape of the button
-                    borderRadius: BorderRadius.circular(20),
-                    side: const BorderSide(color: Colors.black,
-                        width: 2), // The border
+          return Form(
+            key: formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextFormField(
+                  autofocus: true,
+                  initialValue: password,
+                  decoration: InputDecoration(
+                      labelText: 'New Password',
+                      hintText: 'Leave Blank For no Password',
+                      border: OutlineInputBorder()
                   ),
-                  elevation: 10,
-                  // The elevation of the button
-                  padding: const EdgeInsets.all(
-                      15), // The padding of the button
+                  validator: (value) {
+                    if(value!.length > 35){
+                      return 'Password can not be more than 35 characters';
+                    }
+                    return null;
+                  },
+                  onChanged: (value){
+                    password = value;
+                  },
                 ),
-              ),
-              Text(error, style: TextStyle(color: Colors.red,fontSize: 18),),
-            ],
+                SizedBox(height: 30,),
+                ElevatedButton(
+                  onPressed: () async{
+                    if (formKey.currentState!.validate()) {
+                      services.updatePassword(courseUid, password);
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blueAccent[100],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20), // Adjust the value as needed
+                    ),
+                  ),
+                  child: Text('Update',
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white
+                    ),
+                  ),
+                ),
+                Text(error, style: TextStyle(fontSize: 18,color: Colors.red, fontWeight: FontWeight.bold),)
+              ],
+            ),
           );
-
         }
         ),
 
@@ -361,7 +389,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
                     int index = studentUids.indexOf(e);
                     return Container(
                         key: GlobalKey(),
-                        child: StudentCard(studentUid: e, pastName: names[studentUids.indexOf(e)], changeName: changeName, index: studentUids.indexOf(e),color: colouringUtility.colouring(index,), shuffled: shuffled,delete: delete, courseUid: widget.courseUid,)
+                        child: StudentCard(studentUid: e, pastName: names[studentUids.indexOf(e)], changeName: changeName, index: studentUids.indexOf(e),color: colouringUtility.colouring(index,), shuffled: shuffled,)
                     );
                   } ).toList()
               ),
@@ -438,6 +466,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
                           });
                         },
                       ),
+
                       ListTile(
                         leading: Icon(Icons.edit),
                         title: Text(
