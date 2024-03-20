@@ -3,6 +3,7 @@ import 'package:teacher_assign/shared/custom_password_field.dart';
 import 'package:teacher_assign/shared/custom_text_field.dart';
 import 'package:teacher_assign/shared/custom_loading.dart';
 import '../services/auth_services.dart';
+import 'package:teacher_assign/shared/snackbar_messager.dart';
 
 class SignInTeacher extends StatefulWidget {
   Function toggleView;
@@ -19,7 +20,6 @@ class _SignInTeacherState extends State<SignInTeacher> {
   String email = "";
   String password = "";
   String error = '';
-
   bool isLoading = false;
 
 
@@ -69,6 +69,7 @@ class _SignInTeacherState extends State<SignInTeacher> {
 
                     if (result !=null){
                       Navigator.pop(context);
+                    //  message.welcoming(context);
                     }
                     else{
                       setState(() {
