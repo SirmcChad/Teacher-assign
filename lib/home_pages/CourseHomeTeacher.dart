@@ -6,6 +6,8 @@ import 'package:teacher_assign/shared/custom_loading.dart';
 import 'package:teacher_assign/cards/student_card.dart';
 import 'package:teacher_assign/shared/utils.dart';
 
+import '../services/database_services_student.dart';
+
 class CourseTeacher extends StatefulWidget {
   String courseUid;
   CourseTeacher({Key? key, required this.courseUid}) : super(key: key);
@@ -319,6 +321,11 @@ class _CourseTeacherState extends State<CourseTeacher> {
       );
     });
   }
+  void delete(String studentUid){
+    shuffled = true;
+    DatabaseServicesStudent().removeCourseFromStudent(studentUid, widget.courseUid);
+    DatabaseServicesCourses().removeStudentFromCourse(widget.courseUid, studentUid);
+  }
 
 
   @override
@@ -389,7 +396,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
                     int index = studentUids.indexOf(e);
                     return Container(
                         key: GlobalKey(),
-                        child: StudentCard(studentUid: e, pastName: names[studentUids.indexOf(e)], changeName: changeName, index: studentUids.indexOf(e),color: colouringUtility.colouring(index,), shuffled: shuffled,)
+                        child: StudentCard(studentUid: e, pastName: names[studentUids.indexOf(e)], changeName: changeName, index: studentUids.indexOf(e),color: colouringUtility.colouring(index,), shuffled: shuffled,delete: delete, courseUid: widget.courseUid,)
                     );
                   } ).toList()
               ),
