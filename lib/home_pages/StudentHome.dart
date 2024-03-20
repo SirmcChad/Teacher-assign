@@ -61,6 +61,7 @@ class _StudentState extends State<Student> {
             title: Text('Password Required'),
             content: StatefulBuilder(builder: (BuildContext context, StateSetter setState){
               return Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   TextField(
                     onChanged: (value){
@@ -190,7 +191,6 @@ class _StudentState extends State<Student> {
                   );
               }),
           actions: [
-            // Text(error, style: TextStyle(color: Colors.red),),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
