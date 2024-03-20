@@ -6,7 +6,6 @@ import 'package:teacher_assign/services/auth_services.dart';
 import 'package:teacher_assign/services/database_services_courses.dart';
 import 'package:teacher_assign/services/database_services_teacher.dart';
 import 'package:teacher_assign/shared/custom_loading.dart';
-import 'package:teacher_assign/shared/snackbar_messager.dart';
 
 import '../models/TeacherModel.dart';
 
@@ -29,7 +28,6 @@ class _TeacherState extends State<Teacher> {
   void addCourse(BuildContext context,String teacherName, List<String> courses){
     String courseName = 'default name';
     String password = '';
-    Message message = Message(context: context);
 
 
     showDialog(context: context, builder: (BuildContext context){
@@ -40,6 +38,7 @@ class _TeacherState extends State<Teacher> {
         title: Text('create a course'),
         content: StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
           return Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 autofocus: true,
@@ -59,10 +58,18 @@ class _TeacherState extends State<Teacher> {
               SizedBox(height: 25,),
               ElevatedButton(
                 onPressed: () async {
-                  if (courses.length >= 5) { // TODO remove this before publishing
+                  if (courses.length >= 20) {
                     setState(() {
                       error = "Maximum number of courses exceeded";
                     });
+                  }
+
+                  else if(courseName.length > 20){
+                    error = 'Course Name can not be more than 20 characters';
+                  }
+
+                  else if(password!.length > 35){
+                    error = 'Password can not be more than 35 characters';
                   }
 
                   else {
@@ -74,7 +81,6 @@ class _TeacherState extends State<Teacher> {
                       DatabaseServicesTeacher().addCourseToTeacher(
                           user!.uid, courseuid);
                       Navigator.pop(context);
-                      message.showCustomLovely('Course Created Successfully', 3);
                     });
                   }
                 },
@@ -123,139 +129,137 @@ class _TeacherState extends State<Teacher> {
 
 
     return StreamBuilder<TeacherModel?>(
-      stream:  DatabaseServicesTeacher().getTeacherData(user!.uid),
-      initialData: null,
-      builder: (context, snapshot) {
-        if (snapshot.hasData){
-          String name = snapshot.data!.name;
-          //coursesList = snapshot.data!.courses.cast<CourseModel>();
-          coursesList = snapshot.data!.courses;
-        return Scaffold(
-          drawer: Drawer(
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: [
-                // use the UserAccountsDrawerHeader widget
-                UserAccountsDrawerHeader(
-                  accountName: Text(name),
-                  accountEmail: Text('Number of Courses: ${coursesList!.length}'),
-                  // add an account picture
-                  currentAccountPicture: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: Text(
-                      '${name[0]}',
-                      style: TextStyle(fontSize: 40.0, color: Colors.blue),
-                    ),
-                  ),
-                  // add a background image
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(
-                          'https://picsum.photos/id/122/800/400'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  // add other icons
+        stream:  DatabaseServicesTeacher().getTeacherData(user!.uid),
+        initialData: null,
+        builder: (context, snapshot) {
+          if (snapshot.hasData){
+            String name = snapshot.data!.name;
+            //coursesList = snapshot.data!.courses.cast<CourseModel>();
+            coursesList = snapshot.data!.courses;
+            return Scaffold(
+              drawer: Drawer(
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: [
+                    // use the UserAccountsDrawerHeader widget
+                    UserAccountsDrawerHeader(
+                      accountName: Text(name),
+                      accountEmail: Text('Number of Courses: ${coursesList!.length}'),
+                      // add an account picture
+                      currentAccountPicture: CircleAvatar(
+                        backgroundColor: Colors.white,
+                        child: Text(
+                          '${name[0]}',
+                          style: TextStyle(fontSize: 40.0, color: Colors.blue),
+                        ),
+                      ),
+                      // add a background image
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              'https://picsum.photos/id/122/800/400'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      // add other icons
 
+                    ),
+                    // use the ListTileTheme widget
+                    ListTileTheme(
+                      // change the text color and style
+                      textColor: Colors.blue,
+                      style: ListTileStyle.drawer,
+                      // change the icon color and shape
+                      iconColor: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Column(
+                        children: [
+
+                          // use the Divider widget
+                          Divider(),
+                          ListTile(
+                            leading: Icon(Icons.logout),
+                            title: Text('Log Out'),
+                            onTap: () {
+                              Navigator.pop(context);
+                              AuthServices().signOutUser();
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                // use the ListTileTheme widget
-                ListTileTheme(
-                  // change the text color and style
-                  textColor: Colors.blue,
-                  style: ListTileStyle.drawer,
-                  // change the icon color and shape
-                  iconColor: Colors.blue,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+              ),
+              appBar:AppBar(
+                title: Text('Welcome ${name}!'),
+                titleTextStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+                backgroundColor: Colors.brown,
+                elevation: 5,
+                actions: [
+                  IconButton(
+                    icon: Icon(Icons.add, color: Colors.white),
+                    color: Colors.red[300],
+                    onPressed: () {
+                      setState(() {
+                        addCourse(context,name, coursesList!);
+                      });
+                    },
                   ),
+                ],
+              ),
+              body: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
                   child: Column(
                     children: [
-
-                      // use the Divider widget
-                      Divider(),
-                      ListTile(
-                        leading: Icon(Icons.logout),
-                        title: Text('Log Out'),
-                        onTap: () {
-                          Navigator.pop(context);
-                          AuthServices().signOutUser();
-                        },
+                      Text(hereAreCourses(coursesList!.length), style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                      const SizedBox(height:8),
+                      Expanded(
+                        // use a GridView widget instead of a Column widget
+                        child: GridView.builder(
+                          // set the scroll direction to horizontal
+                          scrollDirection: Axis.vertical,
+                          // set the cross axis count to 2
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            // set the aspect ratio of each item to 1.5
+                            childAspectRatio: 1.5,
+                          ),
+                          // set the item count to the length of the courses list
+                          itemCount: coursesList!.length,
+                          // return a Card widget for each item
+                          itemBuilder: (context, index) {
+                            return Card(
+                              // set the shape property to customize the border radius
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              // wrap the CourseCardTeacher widget with the Card widget
+                              child: CourseCardTeacher(
+                                  courseUid: coursesList![index],
+                                  teacherUid: user.uid),
+                            );
+                          },
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ],
-            ),
-          ),
-          appBar:AppBar(
-            title: Text('Welcome ${name}!'),
-            titleTextStyle: TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-            backgroundColor: Colors.brown,
-            elevation: 5,
-            actions: [
-              IconButton(
-                icon: Icon(Icons.add, color: Colors.white),
-                color: Colors.red[300],
-                onPressed: () {
-                  setState(() {
-                    addCourse(context,name, coursesList!);
-                  });
-                },
               ),
-            ],
-          ),
-          body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Center(
-              child: Column(
-                children: [
-                  Text(hereAreCourses(coursesList!.length), style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-                  const SizedBox(height:8),
-                  Expanded(
-                    // use a GridView widget instead of a Column widget
-                    child: GridView.builder(
-                      // set the scroll direction to horizontal
-                      scrollDirection: Axis.vertical,
-                      // set the cross axis count to 2
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        // set the aspect ratio of each item to 1.5
-                        childAspectRatio: 1.5,
-                      ),
-                      // set the item count to the length of the courses list
-                      itemCount: coursesList!.length,
-                      // return a Card widget for each item
-                      itemBuilder: (context, index) {
-                        return Card(
-                          // set the shape property to customize the border radius
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          // wrap the CourseCardTeacher widget with the Card widget
-                          child: CourseCardTeacher(
-                              courseUid: coursesList![index],
-                              teacherUid: user.uid),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
 
-        );
+            );
+          }
+          else{
+            return Loading();
+          }
         }
-        else{
-          return Loading();
-        }
-      }
     );
   }
-
-
 }
