@@ -85,13 +85,11 @@ class _StudentState extends State<Student> {
                             setState((){
                               error = 'Wrong Password';
                             });
-                            //Todo: Implement wrong password message
                           }
                         }catch(e){
                           setState((){
                             error = 'An Error Occured While Checking Password';
                           });
-                          //Todo: Implement error message
                         }
                       },
                       child: Text('Join Course')),
@@ -156,7 +154,6 @@ class _StudentState extends State<Student> {
                             subtitle: Text('Teacher: ${course.teacherName}'),
                             onTap: () {
                               // Navigate to course details screen (implement this).
-                              // Todo Provide an option for the user to join the course.
                               if(course.students.length >= 50){
                                 setState((){
                                   error = 'The Course is Full';
@@ -167,7 +164,6 @@ class _StudentState extends State<Student> {
                                 setState((){
                                   error = 'Maximum Number of Courses Reached';
                                 });
-                                //Todo, display message saying that you have reached the maximum number of courses
                               }
 
                               else if(course.password == ''){
@@ -218,6 +214,7 @@ class _StudentState extends State<Student> {
           String name = snapshot.data!.name;
           return Scaffold(
             drawer: Drawer(
+
               child: ListView(
                 padding: EdgeInsets.zero,
                 children: [
@@ -275,6 +272,9 @@ class _StudentState extends State<Student> {
             ),
 
             appBar: AppBar(
+              iconTheme: IconThemeData(
+                color: Colors.white,
+              ),
               title: Text('Hi ${snapshot.data!.name}!'),
               titleTextStyle: TextStyle(
                 color: Colors.white,
