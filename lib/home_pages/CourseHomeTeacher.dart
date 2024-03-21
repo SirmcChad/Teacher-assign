@@ -519,7 +519,7 @@ class _CourseTeacherState extends State<CourseTeacher> {
                       ListTile(
                         leading: Icon(Icons.logout),
                         title: Text(
-                          'Logout',
+                          'Exit',
                           style: TextStyle(fontSize: 18.0),
                         ),
                         onTap: () {

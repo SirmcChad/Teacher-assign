@@ -24,8 +24,8 @@ class CourseCardStudent extends CourseCard {
             builder: (BuildContext context) {
               // Create an AlertDialog widget and set its properties
               return AlertDialog(
-                title: const Text('Do you really want to delete that course?'),
-                content: const Text('This action cannot be undone.'),
+                title: const Text('Do You Really Want To Leave This Course?'),
+                content: const Text('You Can Choose To Rejoin This Course Later'),
                 actions: [
                   // Add a TextButton widget that deletes the course when pressed
                   TextButton(

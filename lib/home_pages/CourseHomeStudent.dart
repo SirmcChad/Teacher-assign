@@ -137,7 +137,7 @@ class _CourseStudentState extends State<CourseStudent> {
                           Divider(),
                           ListTile(
                             leading: Icon(Icons.logout),
-                            title: Text('Log Out'),
+                            title: Text('Exit'),
                             onTap: () {
                               Navigator.pop(context);
                               Navigator.pop(context);
@@ -159,7 +159,6 @@ class _CourseStudentState extends State<CourseStudent> {
                 iconTheme: IconThemeData(
                   color: Colors.white,
                 ),
-
               ),
               body: GridView.count(
                 scrollDirection: Axis.horizontal,

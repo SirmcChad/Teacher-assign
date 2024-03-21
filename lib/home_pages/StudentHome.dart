@@ -59,50 +59,46 @@ class _StudentState extends State<Student> {
 
           return AlertDialog(
             title: Text('Password Required'),
-            content: SingleChildScrollView(
-              child: StatefulBuilder(builder: (BuildContext context, StateSetter setState){
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextField(
-                      onChanged: (value){
-                        password = value;
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'Enter Password'
-                      ),
+            content: StatefulBuilder(builder: (BuildContext context, StateSetter setState){
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    onChanged: (value){
+                      password = value;
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'Enter Password'
                     ),
-                    const SizedBox(height: 25,),
-                    ElevatedButton(
-                        onPressed: ()async{
-                          try{
-                            if(await courseServices.checkPassword(courseUid, password)){
-                             await studentServices.addCourseToStudent(user!.uid,courseUid);
-                              courseServices.addStudentToCourse(courseUid, user.uid);
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            }
-                            else{
-                              setState((){
-                                error = 'Wrong Password';
-                              });
-                              //Todo: Implement wrong password message
-                            }
-                          }catch(e){
-                            setState((){
-                              error = 'An Error Occured While Checking Password';
-                            });
-                            //Todo: Implement error message
+                  ),
+                  const SizedBox(height: 25,),
+                  ElevatedButton(
+                      onPressed: ()async{
+                        try{
+                          if(await courseServices.checkPassword(courseUid, password)){
+                           await studentServices.addCourseToStudent(user!.uid,courseUid);
+                            courseServices.addStudentToCourse(courseUid, user.uid);
+                            Navigator.pop(context);
+                            Navigator.pop(context);
                           }
-                        },
-                        child: Text('Join Course')),
-                    const SizedBox(height: 25,),
+                          else{
+                            setState((){
+                              error = 'Wrong Password';
+                            });
+                          }
+                        }catch(e){
+                          setState((){
+                            error = 'An Error Occured While Checking Password';
+                          });
+                        }
+                      },
+                      child: Text('Join Course')),
+                  const SizedBox(height: 25,),
 
-                    Text(error, style: TextStyle(color: Colors.red))
-                  ],
-                );
-              }),
-            )
+                  Text(error, style: TextStyle(color: Colors.red))
+                ],
+              );
+            })
           );
         }
     );
@@ -119,81 +115,77 @@ class _StudentState extends State<Student> {
         return AlertDialog(
           shadowColor: Colors.white30,
           title: Text('Search Courses'),
-          content: SingleChildScrollView(
-            child: StatefulBuilder(builder: (BuildContext context, StateSetter setState){
-              List<CourseModel> filtCourses = filteredCourses(allCourses, searchText, coursesList);
-              return Container(
-                height: 300,
-                width: 300,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextFormField(
-                      autofocus: true,
-                      initialValue: searchText,
-                      onChanged: (value) {
-                        setState(() {
-                          searchText = value;
-                        });
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'Enter course name',
-                        prefixIcon: Icon(Icons.search),
-                      ),
+          content: StatefulBuilder(builder: (BuildContext context, StateSetter setState){
+            List<CourseModel> filtCourses = filteredCourses(allCourses, searchText, coursesList);
+            return Container(
+              height: 300,
+              width: 300,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextFormField(
+                    autofocus: true,
+                    initialValue: searchText,
+                    onChanged: (value) {
+                      setState(() {
+                        searchText = value;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'Enter course name',
+                      prefixIcon: Icon(Icons.search),
                     ),
-                    SizedBox(height: 16),
-                    Expanded(
-                      child: Container(
-                        color: Colors.white.withRed(245),
-                        child: ListView.builder(
-                          itemCount: filtCourses.length == 0 ? 1: filtCourses.length,
-                          itemBuilder: (context, index) {
-                            if (filtCourses.length == 0){
-                              return ListTile(
-                                title: Text("No Course Matches Your Description", style: TextStyle(fontSize: 14),)
-                              );
-                            }
-                            CourseModel course = filtCourses[index];
+                  ),
+                  SizedBox(height: 16),
+                  Expanded(
+                    child: Container(
+                      color: Colors.white.withRed(245),
+                      child: ListView.builder(
+                        itemCount: filtCourses.length == 0 ? 1: filtCourses.length,
+                        itemBuilder: (context, index) {
+                          if (filtCourses.length == 0){
                             return ListTile(
-                              title: Text(course.courseSubject),
-                              subtitle: Text('Teacher: ${course.teacherName}'),
-                              onTap: () {
-                                // Navigate to course details screen (implement this).
-                                // Todo Provide an option for the user to join the course.
-                                if(course.students.length >= 50){
-                                  setState((){
-                                    error = 'The Course is Full';
-                                  });
-                                }
-            
-                                else if(coursesList.length >= 20){
-                                  setState((){
-                                    error = 'Maximum Number of Courses Reached';
-                                  });
-                                  //Todo, display message saying that you have reached the maximum number of courses
-                                }
-            
-                                else if(course.password == ''){
-                                  setState(() async{
-                                    await studentServices.addCourseToStudent(user!.uid,course.uid);
-                                    courseServices.addStudentToCourse(course.uid, user.uid);
-                                    Navigator.pop(context);
-                                  });
-                                }
-                                else{
-                                  _showEnterPasswordDialog(context, course.uid);
-                                }
+                              title: Text("No Course Matches Your Description", style: TextStyle(fontSize: 14),)
+                            );
+                          }
+                          CourseModel course = filtCourses[index];
+                          return ListTile(
+                            title: Text(course.courseSubject),
+                            subtitle: Text('Teacher: ${course.teacherName}'),
+                            onTap: () {
+                              // Navigate to course details screen (implement this).
+                              if(course.students.length >= 50){
+                                setState((){
+                                  error = 'The Course is Full';
                                 });
-                              },
-                            )
-                          ),
+                              }
+
+                              else if(coursesList.length >= 20){
+                                setState((){
+                                  error = 'Maximum Number of Courses Reached';
+                                });
+                              }
+
+                              else if(course.password == ''){
+                                setState(() async{
+                                  await studentServices.addCourseToStudent(user!.uid,course.uid);
+                                  courseServices.addStudentToCourse(course.uid, user.uid);
+                                  Navigator.pop(context);
+                                });
+                              }
+                              else{
+                                _showEnterPasswordDialog(context, course.uid);
+                              }
+                              });
+                            },
+                          )
                         ),
-                    Text(error, style: TextStyle(color: Colors.red, fontSize: 18),),
-                      ],
                       ),
-                    );
-                }),
-          ),
+                  Text(error, style: TextStyle(color: Colors.red, fontSize: 18),),
+                    ],
+                    ),
+                  );
+              }),
           actions: [
             TextButton(
               onPressed: () {
@@ -222,6 +214,7 @@ class _StudentState extends State<Student> {
           String name = snapshot.data!.name;
           return Scaffold(
             drawer: Drawer(
+
               child: ListView(
                 padding: EdgeInsets.zero,
                 children: [
@@ -279,6 +272,9 @@ class _StudentState extends State<Student> {
             ),
 
             appBar: AppBar(
+              iconTheme: IconThemeData(
+                color: Colors.white,
+              ),
               title: Text('Hi ${snapshot.data!.name}!'),
               titleTextStyle: TextStyle(
                 color: Colors.white,

@@ -200,6 +200,9 @@ class _TeacherState extends State<Teacher> {
             ),
           ),
           appBar:AppBar(
+            iconTheme: IconThemeData(
+              color: Colors.white,
+            ),
             title: Text('Hi ${name}!'),
             titleTextStyle: TextStyle(
               color: Colors.white,
