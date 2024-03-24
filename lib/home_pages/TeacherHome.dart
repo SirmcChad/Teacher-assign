@@ -90,8 +90,8 @@ class _TeacherState extends State<Teacher> {
                 },
                 child: const Text('Create'),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.purple,
-                  onPrimary: Colors.white,
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.purple,
                   shape: RoundedRectangleBorder( // The shape of the button
                     borderRadius: BorderRadius.circular(20),
                     side: const BorderSide(color: Colors.black,

@@ -38,7 +38,7 @@ class CourseCardStudent extends CourseCard {
                     child: const Text('Yes'),
                     // Change the color of the button to red
                     style: TextButton.styleFrom(
-                      primary: Colors.red,
+                      foregroundColor: Colors.red,
                     ),
                   ),
                   // Add a TextButton widget that cancels the action when pressed
