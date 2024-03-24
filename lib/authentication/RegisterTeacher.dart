@@ -62,7 +62,7 @@ class _RegisterTeacherState extends State<RegisterTeacher> {
               SizedBox(height: 30,),
               CustomTextField(title: "Email", initialValue: email, onChange: (value) {email = value;}, moreChars: true,),
               SizedBox(height: 30,),
-              CustomPasswordField(title: "Password", initialPassword: password, visiblePassword: false, onChange: (value) {password = value;},),
+              CustomPasswordField(title: "Password", initialPassword: password, visiblePassword: true, onChange: (value) {password = value;},),
               SizedBox(height: 20,),
               ElevatedButton(
                 onPressed: () async{
