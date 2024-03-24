@@ -170,8 +170,8 @@ class _CourseTeacherState extends State<CourseTeacher> {
                 },
                 child: const Text('Shuffle'),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.purple,
-                  onPrimary: Colors.white,
+                  backgroundColor: Colors.purple,
+                  foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder( // The shape of the button
                     borderRadius: BorderRadius.circular(20),
                     side: const BorderSide(color: Colors.black,
